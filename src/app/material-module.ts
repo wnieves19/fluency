@@ -4,7 +4,6 @@ import {CdkTableModule} from '@angular/cdk/table';
 import {CdkTreeModule} from '@angular/cdk/tree';
 import {A11yModule} from '@angular/cdk/a11y';
 import {NgModule} from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
 import {
   MatAutocompleteModule,
   MatBadgeModule,
