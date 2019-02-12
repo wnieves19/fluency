@@ -16,7 +16,15 @@ import { ProfitabilityComponent } from './company-snapshot/profitability/profita
 import { PerformanceComponent } from './company-snapshot/performance/performance.component';
 import {AppRoutingModule} from './app-routing.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import { LoginComponent } from './user-authentication/login/login.component';
+import { RegisterComponent } from './user-authentication/register/register.component';
+import {AuthService} from './user-authentication/auth.service';
+import { UserAuthenticationComponent } from './user-authentication/user-authentication.component';
+import {environment} from '../environments/environment';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import {AngularFireAuthModule} from 'angularfire2/auth';
+import {ReactiveFormsModule} from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,17 +38,25 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     CompanySnapshotComponent,
     LiquidityComponent,
     ProfitabilityComponent,
-    PerformanceComponent
+    PerformanceComponent,
+    LoginComponent,
+    RegisterComponent,
+    UserAuthenticationComponent
   ],
   imports: [
     BrowserModule,
+    AngularFireModule.initializeApp(environment.firebase, 'fluencyanalysis'),
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
     BrowserAnimationsModule,
     MaterialModule,
+    ReactiveFormsModule,
     AppRoutingModule,
+
 
   ],
   entryComponents: [CompanySnapshotComponent],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

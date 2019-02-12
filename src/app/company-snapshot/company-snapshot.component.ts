@@ -1,6 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {MediaMatcher} from '@angular/cdk/layout';
+import {AuthService} from '../user-authentication/auth.service';
 
 @Component({
   selector: 'app-company-snapshot',
@@ -10,22 +11,27 @@ import {MediaMatcher} from '@angular/cdk/layout';
 export class CompanySnapshotComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
-  fillerNav = [{name: 'Profitability', route: '/profitability'},
-    {name: 'Liquidity', route: '/liquidity'}, {name: 'Productivity',
-      route: '/productivity'}];
+  fillerNav = [{name: 'Profitability', route: 'profitability'},
+    {name: 'Liquidity', route: 'liquidity'}, {name: 'Performance',
+      route: 'performance'}];
 
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private router: Router) {
+  constructor(private authService: AuthService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private router: Router, private route: ActivatedRoute) {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   navigateToRoute(routeName: string) {
-    this.router.navigate([routeName]);
+    this.router.navigate([routeName], {relativeTo: this.route});
+    console.log(routeName)
   }
   ngOnInit() {
+  }
+
+  onLogoutClicked(){
+    this.authService.logout();
   }
 
 }

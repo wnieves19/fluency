@@ -4,12 +4,23 @@ import {Routes, RouterModule} from '@angular/router';
 import {ProfitabilityComponent} from './company-snapshot/profitability/profitability.component';
 import {LiquidityComponent} from './company-snapshot/liquidity/liquidity.component';
 import {PerformanceComponent} from './company-snapshot/performance/performance.component';
+import {UserAuthenticationComponent} from './user-authentication/user-authentication.component';
+import {CompanySnapshotComponent} from './company-snapshot/company-snapshot.component';
+import {LoginComponent} from './user-authentication/login/login.component';
+import {AppComponent} from './app.component';
+import {AuthGuardService} from './user-authentication/auth-guard.service';
 
 const appRoutes: Routes = [
-  { path: '', component: ProfitabilityComponent},
-  { path: 'profitability', component: ProfitabilityComponent},
-  { path: 'liquidity', component: LiquidityComponent},
-  { path: 'performance', component: PerformanceComponent},
+  { path: '', component: AppComponent},
+  { path: 'user-authentication', component: UserAuthenticationComponent},
+  { path: 'company-snapshot',canActivate: [AuthGuardService], component: CompanySnapshotComponent,  children: [
+      {path: '', component: ProfitabilityComponent},
+      { path: 'profitability', component: ProfitabilityComponent},
+      { path: 'liquidity', component: LiquidityComponent},
+      { path: 'performance', component: PerformanceComponent},
+    ]},
+  { path: 'login', component: LoginComponent},
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
