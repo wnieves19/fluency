@@ -1,0 +1,16 @@
+<mat-card class="login_card">
+  <mat-card-title>Login</mat-card-title>
+  <mat-card-content>
+    <mat-form-field>
+      <input matInput placeholder="Email" [formControl]="email" required >
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Password" [formControl]="password" required [type]="'password'">
+    </mat-form-field>
+    <div>
+    <button class="btn btn-success" (click)="loginClicked()">Login</button>
+    </div>
+    <p style="color:red;">{{error}}</p>
+  </mat-card-content>
+
+</mat-card>
