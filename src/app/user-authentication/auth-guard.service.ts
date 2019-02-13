@@ -8,7 +8,7 @@ import {Observable} from 'rxjs';
 })
 export class AuthGuardService implements CanActivate, CanActivateChild{
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
     if(this.authService.user)return true;

@@ -14,9 +14,9 @@ const appRoutes: Routes = [
   { path: '', component: AppComponent},
   { path: 'user-authentication', component: UserAuthenticationComponent},
   { path: 'company-snapshot',canActivate: [AuthGuardService], component: CompanySnapshotComponent,  children: [
-      {path: '', component: ProfitabilityComponent},
-      { path: 'profitability', component: ProfitabilityComponent},
+      {path: '', component: LiquidityComponent},
       { path: 'liquidity', component: LiquidityComponent},
+      { path: 'profitability', component: ProfitabilityComponent},
       { path: 'performance', component: PerformanceComponent},
     ]},
   { path: 'login', component: LoginComponent},

@@ -11,9 +11,9 @@ import {AuthService} from '../user-authentication/auth.service';
 export class CompanySnapshotComponent implements OnInit {
 
   mobileQuery: MediaQueryList;
-  fillerNav = [{name: 'Profitability', route: 'profitability'},
-    {name: 'Liquidity', route: 'liquidity'}, {name: 'Performance',
-      route: 'performance'}];
+  fillerNav = [{name: 'Liquidity', route: 'liquidity'},
+    {name: 'Profitability', route: 'profitability'},
+     {name: 'Performance', route: 'performance'}];
 
   private _mobileQueryListener: () => void;
 

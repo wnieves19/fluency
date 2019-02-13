@@ -1,3 +1,16 @@
-<p>
-  liquidity works!
-</p>
+<mat-tab-group [dynamicHeight]="true">
+  <mat-tab label="Cash Flow Analysis">
+    <app-liquidity-balance-widget></app-liquidity-balance-widget>
+    <div class="row">
+      <div class="col-sm-6">
+        <app-liquidity-cashflow-waterfall></app-liquidity-cashflow-waterfall>
+      </div>
+      <div class="col-sm-6">
+        <app-liquidity-cashflow-charts></app-liquidity-cashflow-charts>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Cash Flow Projections">
+
+  </mat-tab>
+</mat-tab-group>
