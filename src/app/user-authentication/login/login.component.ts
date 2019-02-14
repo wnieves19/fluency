@@ -18,10 +18,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.authService.afAuth.authState.subscribe(user => {
       if (user){
-        this.router.navigate(['/company-snapshot/profitability']);
+        this.router.navigate(['/company-snapshot/liquidity']);
       }
       else{
-        console.log("Not LoggedIn")
+
       }
     })
   }

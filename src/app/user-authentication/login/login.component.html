@@ -1,17 +1,20 @@
 <div class="login-card" >
 <div fxLayout fxFill fxLayoutAlign="space-around center">
+
 <mat-card class="mat-card-login" >
   <mat-card-title fxLayoutAlign="center center">Login</mat-card-title>
   <mat-card-content >
+    <form class="my-form">
     <mat-form-field fxLayoutAlign="center center" >
-      <input matInput placeholder="Email" [formControl]="email" required >
+      <input matInput placeholder="Email" [formControl]="email" required autocomplete="username email">
     </mat-form-field>
     <mat-form-field fxLayoutAlign="center center">
-      <input fxLayoutAlign="center center" matInput placeholder="Password" [formControl]="password" required [type]="'password'">
+      <input fxLayoutAlign="center center" matInput placeholder="Password" [formControl]="password" autocomplete="current-password" required [type]="'password'">
     </mat-form-field>
     <div fxLayoutAlign="center center" >
       <button mat-raised-button color="primary" (click)="loginClicked()" mat-raised-button>Login</button>
     </div>
+    </form>
     <p style="color:red;">{{error}}</p>
   </mat-card-content>
 </mat-card>

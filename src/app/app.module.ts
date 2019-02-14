@@ -25,14 +25,14 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {ReactiveFormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { LiquidityBalanceWidgetComponent } from './company-snapshot/liquidity/liquidity-balance-widget/liquidity-balance-widget.component';
 import { LiquidityCashflowChartsComponent } from './company-snapshot/liquidity/liquidity-cashflow-charts/liquidity-cashflow-charts.component';
 import { LiquidityCashflowWaterfallComponent } from './company-snapshot/liquidity/liquidity-cashflow-waterfall/liquidity-cashflow-waterfall.component';
 import { ChartsModule as KendoChartsModule } from '@progress/kendo-angular-charts';
 import 'hammerjs';
-
-
+import { LiquidityBalanceDialogComponent } from './company-snapshot/liquidity/liquidity-balance-widget/liquidity-balance-dialog/liquidity-balance-dialog.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +53,8 @@ import 'hammerjs';
     UserAuthenticationComponent,
     LiquidityBalanceWidgetComponent,
     LiquidityCashflowChartsComponent,
-    LiquidityCashflowWaterfallComponent
+    LiquidityCashflowWaterfallComponent,
+    LiquidityBalanceDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -65,11 +66,12 @@ import 'hammerjs';
     ReactiveFormsModule,
     AppRoutingModule,
     FlexLayoutModule,
-    KendoChartsModule
+    KendoChartsModule,
+    FormsModule
 
 
   ],
-  entryComponents: [CompanySnapshotComponent],
+  entryComponents: [CompanySnapshotComponent, LiquidityBalanceDialogComponent],
   providers: [AuthService],
   bootstrap: [AppComponent]
 })
