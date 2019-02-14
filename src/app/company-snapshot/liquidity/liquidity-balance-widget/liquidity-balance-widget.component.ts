@@ -14,6 +14,8 @@ export class LiquidityBalanceWidgetComponent implements OnInit {
   ngOnInit() {
 
   }
+  public data: any[] =
+    [165, 210, 287, 144, 190, 167, 212, 50, 240, 140, 205, 250];
 
   onCardClicked(widgetName){
     this.dialog.open(LiquidityBalanceDialogComponent, {

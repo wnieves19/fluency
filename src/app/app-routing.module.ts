@@ -9,6 +9,8 @@ import {CompanySnapshotComponent} from './company-snapshot/company-snapshot.comp
 import {LoginComponent} from './user-authentication/login/login.component';
 import {AppComponent} from './app.component';
 import {AuthGuardService} from './user-authentication/auth-guard.service';
+import {CompanySettingsComponent} from './company-management/company-settings/company-settings.component';
+import {UserAccountComponent} from './user-account/user-account.component';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent},
@@ -18,8 +20,11 @@ const appRoutes: Routes = [
       { path: 'liquidity', component: LiquidityComponent},
       { path: 'profitability', component: ProfitabilityComponent},
       { path: 'performance', component: PerformanceComponent},
+      { path: 'settings', component: CompanySettingsComponent},
+      { path: 'account-details', component: UserAccountComponent},
     ]},
   { path: 'login', component: LoginComponent},
+
   { path: '**', redirectTo: '' }
 ];
 

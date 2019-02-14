@@ -33,6 +33,7 @@ import { LiquidityCashflowWaterfallComponent } from './company-snapshot/liquidit
 import { ChartsModule as KendoChartsModule } from '@progress/kendo-angular-charts';
 import 'hammerjs';
 import { LiquidityBalanceDialogComponent } from './company-snapshot/liquidity/liquidity-balance-widget/liquidity-balance-dialog/liquidity-balance-dialog.component';
+import { UserAccountComponent } from './user-account/user-account.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { LiquidityBalanceDialogComponent } from './company-snapshot/liquidity/li
     LiquidityBalanceWidgetComponent,
     LiquidityCashflowChartsComponent,
     LiquidityCashflowWaterfallComponent,
-    LiquidityBalanceDialogComponent
+    LiquidityBalanceDialogComponent,
+    UserAccountComponent
   ],
   imports: [
     BrowserModule,

@@ -6,12 +6,11 @@
   <div class="toolbar-settings">
     <mat-menu #appMenu="matMenu">
       <ng-template matMenuContent let-name="name">
-        <button mat-menu-item>Settings</button>
+        <button mat-menu-item [routerLink]="['account-details']">Account Details</button>
         <button mat-menu-item (click)="onLogoutClicked()">Log out</button>
       </ng-template>
     </mat-menu>
-
-    <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{name: 'Sally'}">
+    <button mat-icon-button [matMenuTriggerFor]="appMenu">
       <mat-icon>account_circle</mat-icon>
     </button>
   </div>

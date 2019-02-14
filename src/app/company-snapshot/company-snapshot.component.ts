@@ -13,7 +13,9 @@ export class CompanySnapshotComponent implements OnInit {
   mobileQuery: MediaQueryList;
   fillerNav = [{name: 'Liquidity', route: 'liquidity'},
     {name: 'Profitability', route: 'profitability'},
-     {name: 'Performance', route: 'performance'}];
+     {name: 'Performance', route: 'performance'},
+     {name: 'Company Settings', route: 'settings'}
+  ];
 
   private _mobileQueryListener: () => void;
 

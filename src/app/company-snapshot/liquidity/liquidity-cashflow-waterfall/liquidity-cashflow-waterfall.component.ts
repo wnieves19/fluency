@@ -14,7 +14,7 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
 
   public series: any[] = [{
     name: "Cash Flow",
-    data: [1.4, -.78, -.47, .6]
+    data: [1483550, -788324, -477590, 0, -11863, 17489, 66459, -211966, 31220,0, 0, -34246, 0 , 4227, -27680, 0 , 0, 0, 0 ]
   }];
   public categories: string[] = ["Revenue", "COGS", "Expenses", "Other Income", "Cash Tax Paid", "Change in Accounts Payable",
     "Change in Current Liabilities", "Change in Accounts Receivable", "Change in Inventory", "Change in Work in Progress",
@@ -24,9 +24,9 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
 
   public pointColor(point: any): string {
     if (point.value > 0) {
-      return '#78D237';
+      return '#88B540';
     } else {
-      return '#FF7C73';
+      return '#D10C21';
     }
   }
 
