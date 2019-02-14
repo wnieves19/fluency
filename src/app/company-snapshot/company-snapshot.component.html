@@ -4,11 +4,15 @@
     <mat-icon mat-ripple>menu</mat-icon></button>
   <h1 class="app-name">Fluency</h1>
   <div class="toolbar-settings">
-    <button mat-icon-button>
-    <mat-icon mat-ripple class="settings-item">settings</mat-icon>
-    </button>
-    <button mat-icon-button>
-  <mat-icon mat-ripple class="settings-item" (click)="onLogoutClicked()">account_circle</mat-icon>
+    <mat-menu #appMenu="matMenu">
+      <ng-template matMenuContent let-name="name">
+        <button mat-menu-item>Settings</button>
+        <button mat-menu-item (click)="onLogoutClicked()">Log out</button>
+      </ng-template>
+    </mat-menu>
+
+    <button mat-icon-button [matMenuTriggerFor]="appMenu" [matMenuTriggerData]="{name: 'Sally'}">
+      <mat-icon>account_circle</mat-icon>
     </button>
   </div>
 </mat-toolbar>
