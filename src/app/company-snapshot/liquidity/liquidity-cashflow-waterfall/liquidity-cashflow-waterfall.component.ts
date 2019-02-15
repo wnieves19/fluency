@@ -22,6 +22,9 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
     "Change in Intangible Assets", "Change in Investment or Other Non-Current Assets", "Net Interest (after tax)",
     "Change in Other Non-Current Liabilities", "Dividends", "Change in Retained Earnings and Other Equity", "Adjustments" ];
 
+  getCategories(){
+    return this.categories;
+  }
   public pointColor(point: any): string {
     if (point.value > 0) {
       return '#88B540';
