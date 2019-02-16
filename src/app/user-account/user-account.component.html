@@ -6,12 +6,13 @@
         <mat-card-content>
           <div class="row">
             <div class="col-sm-7">
-              <form >
+              <form [formGroup]="profileForm">
                 <div class="form-group">
                   <div class="row">
                     <div class="col-sm-12">
                       <label>First Name: </label>
-                      <input  placeholder="First Name" class="form-control" [formControl]="firstName" required autocomplete="user name">
+                      <input  placeholder="First Name" class="form-control" formControlName="firstName" [ngClass]="{'is-invalid': profileForm.get('firstName').touched && profileForm.get('firstName').invalid}" required autocomplete="user name">
+
                     </div>
                   </div>
                 </div>
@@ -19,7 +20,8 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <label>Last Name: </label>
-                      <input fxLayoutAlign="center center"class="form-control"  placeholder="Last Name" [formControl]="lastName" required>
+                      <input fxLayoutAlign="center center"class="form-control"  placeholder="Last Name"  formControlName="lastName"  [ngClass]="{'is-invalid': profileForm.get('lastName').touched && profileForm.get('lastName').invalid}"required>
+
                     </div>
                   </div>
                 </div>
@@ -27,7 +29,8 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <label>Email</label>
-                      <input placeholder="Email" class="form-control" [formControl]="email" required>
+                      <input placeholder="Email" class="form-control" formControlName="email" [ngClass]="{'is-invalid': profileForm.get('email').touched && profileForm.get('email').invalid}"required>
+
                     </div>
                   </div>
                 </div>
@@ -35,11 +38,12 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <label>Phone </label>
-                      <input  placeholder="Phone" class="form-control" [formControl]="phone" required>
+                      <input  placeholder="Phone" class="form-control" formControlName="phone" [ngClass]="{'is-invalid': profileForm.get('phone').touched && profileForm.get('phone').invalid}" required>
+
                     </div>
                   </div>
                 </div>
-                <button class="btn btn-primary" (click)="saveProfile()" type="submit">Save</button>
+                <button class="btn btn-primary" [disabled]="!profileForm.valid" (click)="saveProfile()" type="submit">Save</button>
               </form>
             </div>
           </div>

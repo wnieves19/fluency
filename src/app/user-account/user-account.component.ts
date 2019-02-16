@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {FormControl} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../user-authentication/auth.service';
 import {MatSnackBar} from '@angular/material';
 
@@ -8,28 +8,43 @@ import {MatSnackBar} from '@angular/material';
   templateUrl: './user-account.component.html',
   styleUrls: ['./user-account.component.css']
 })
-export class UserAccountComponent implements OnInit {
-  firstName = new FormControl('');
-  lastName = new FormControl('');
-  email = new FormControl('');
-  phone = new FormControl('');
+export class UserAccountComponent implements OnInit{
+
+  profileForm: FormGroup;
+  subscription;
 
   constructor(private authService: AuthService,private snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.profileForm = new FormGroup({
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      phone: new FormControl('', Validators.required)
+    })
 
-    this.firstName.setValue(this.authService.account.firstName);
-    this.lastName.setValue(this.authService.account.lastName);
-    this.email.setValue(this.authService.account.email);
-    this.phone.setValue(this.authService.account.phone);
+    this.setProfileFields()
+
+    this.authService.accountListner.subscribe(account => {
+      this.setProfileFields()
+      console.log(account)
+    });
+
+  }
+
+  setProfileFields(){
+    this.profileForm.get('firstName').setValue(this.authService.account.firstName);
+    this.profileForm.get('lastName').setValue(this.authService.account.lastName);
+    this.profileForm.get('email').setValue(this.authService.account.email);
+    this.profileForm.get('phone').setValue(this.authService.account.phone);
   }
 
 
   saveProfile(){
-    this.authService.account.firstName = this.firstName.value;
-    this.authService.account.lastName = this.lastName.value;
-    this.authService.account.email = this.email.value;
-    this.authService.account.phone = this.phone.value;
+    this.authService.account.firstName =  this.profileForm.get('firstName').value
+    this.authService.account.lastName = this.profileForm.get('lastName').value
+    this.authService.account.email = this.profileForm.get('email').value
+    this.authService.account.phone = this.profileForm.get('phone').value
 
     this.authService.saveProfile().then(_ => {this.snackBar.open('Profile saved','Close',{
       duration: 2000,
@@ -37,5 +52,7 @@ export class UserAccountComponent implements OnInit {
     })
       .catch(err => console.log(err, 'You do not have access!'));
   }
+
+
 
 }
