@@ -6,7 +6,7 @@
         <mat-card-content>
           <div class="row">
             <div class="col-sm-7">
-              <form [formGroup]="profileForm">
+              <form [formGroup]="profileForm" (ngSubmit)="profileForm.valid &&  saveProfile()">
                 <div class="form-group">
                   <div class="row">
                     <div class="col-sm-12">
@@ -29,8 +29,13 @@
                   <div class="row">
                     <div class="col-sm-12">
                       <label>Email</label>
-                      <input placeholder="Email" class="form-control" formControlName="email" [ngClass]="{'is-invalid': profileForm.get('email').touched && profileForm.get('email').invalid}"required>
+                      <input placeholder="Email" class="form-control" formControlName="email"
+                             [ngClass]="{'is-invalid': profileForm.get('email').touched && profileForm.get('email').invalid}"required>
 
+                      <div *ngIf="{'is-invalid': profileForm.get('email').touched && profileForm.get('email').invalid}" class="invalid-feedback">
+                        <div *ngIf="profileForm.get('email').required">Email is Required</div>
+                        <div *ngIf="profileForm.get('email').email">Email must be a valid email </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -39,11 +44,10 @@
                     <div class="col-sm-12">
                       <label>Phone </label>
                       <input  placeholder="Phone" class="form-control" formControlName="phone" [ngClass]="{'is-invalid': profileForm.get('phone').touched && profileForm.get('phone').invalid}" required>
-
                     </div>
                   </div>
                 </div>
-                <button class="btn btn-primary" [disabled]="!profileForm.valid" (click)="saveProfile()" type="submit">Save</button>
+                <button class="btn btn-primary" [disabled]="!profileForm.valid"  type="submit">Save</button>
               </form>
             </div>
           </div>

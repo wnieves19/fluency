@@ -11,7 +11,6 @@ import {MatSnackBar} from '@angular/material';
 export class UserAccountComponent implements OnInit{
 
   profileForm: FormGroup;
-  subscription;
 
   constructor(private authService: AuthService,private snackBar: MatSnackBar) { }
 
@@ -27,7 +26,6 @@ export class UserAccountComponent implements OnInit{
 
     this.authService.accountListner.subscribe(account => {
       this.setProfileFields()
-      console.log(account)
     });
 
   }
