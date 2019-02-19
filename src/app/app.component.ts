@@ -14,7 +14,7 @@ export class AppComponent implements OnInit{
   ngOnInit() {
     this.authService.afAuth.authState.subscribe(user => {
       if (user){
-        this.router.navigate(['/company-snapshot']);
+        this.router.navigate(['/company-management']);
       }
       else{
         this.router.navigate(['/user-authentication']);

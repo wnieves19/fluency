@@ -7,7 +7,7 @@
   <kendo-chart-series *ngFor="let item of series;let i =index" >
     <kendo-chart-series-item type="horizontalWaterfall"  style="smooth;"
                              [data]="item.data" [name]="item.name" [color]="pointColor" [border]="{width:0}" >
-      <kendo-chart-series-item-labels  background="transparent" color="grey" format="C0" position="outsideEnd">
+      <kendo-chart-series-item-labels  background="transparent" color="black" format="C0" position="insideEnd">
       </kendo-chart-series-item-labels>
     </kendo-chart-series-item>
   </kendo-chart-series>

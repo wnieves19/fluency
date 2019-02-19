@@ -11,10 +11,19 @@ import {AppComponent} from './app.component';
 import {AuthGuardService} from './user-authentication/auth-guard.service';
 import {CompanySettingsComponent} from './company-management/company-settings/company-settings.component';
 import {UserAccountComponent} from './user-account/user-account.component';
+import {CompanyManagementComponent} from './company-management/company-management.component';
+import {CompanyListComponent} from './company-management/company-list/company-list.component';
+import {CompanyItemComponent} from './company-management/company-list/company-item/company-item.component';
+import {CompanyDetailsComponent} from './company-management/company-settings/company-details/company-details.component';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent},
   { path: 'user-authentication', component: UserAuthenticationComponent},
+  { path: 'company-management', canActivate: [AuthGuardService],component: CompanyManagementComponent,  children: [
+      {path: '', component: CompanyListComponent},
+      {path: 'company-list', component: CompanyListComponent},
+      {path: 'company/:id', component: CompanyDetailsComponent}
+    ]},
   { path: 'company-snapshot',canActivate: [AuthGuardService], component: CompanySnapshotComponent,  children: [
       {path: '', component: LiquidityComponent},
       { path: 'liquidity', component: LiquidityComponent},

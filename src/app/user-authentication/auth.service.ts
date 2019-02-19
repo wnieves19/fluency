@@ -18,10 +18,9 @@ export class AuthService {
     this.afAuth.authState.subscribe(user => {
       if (user){
         this.user = user;
-        this.accountListner = db.object('account/'+ this.user.uid).valueChanges();
+        this.accountListner = db.object('user/'+ this.user.uid).valueChanges();
         this.accountListner.subscribe(account => {
           this.account = account;
-          console.log(account)
         });
       }
       else{
@@ -37,7 +36,7 @@ export class AuthService {
 
 
   async saveProfile(){
-    const itemsRef = this.db.list('account/');
+    const itemsRef = this.db.list('user/');
     return itemsRef.update(this.user.uid, this.account);
   }
 

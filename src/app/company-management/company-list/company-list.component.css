@@ -1,0 +1,7 @@
+table {
+  width: 100%;
+  margin: auto;
+}
+tr:hover{
+  background-color:#40404010;
+}
