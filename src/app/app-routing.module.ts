@@ -13,7 +13,6 @@ import {CompanySettingsComponent} from './company-management/company-settings/co
 import {UserAccountComponent} from './user-account/user-account.component';
 import {CompanyManagementComponent} from './company-management/company-management.component';
 import {CompanyListComponent} from './company-management/company-list/company-list.component';
-import {CompanyItemComponent} from './company-management/company-list/company-item/company-item.component';
 import {CompanyDetailsComponent} from './company-management/company-settings/company-details/company-details.component';
 
 const appRoutes: Routes = [

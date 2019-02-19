@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import {MaterialModule} from './material-module';
 import { CompanyListComponent } from './company-management/company-list/company-list.component';
-import { CompanyItemComponent } from './company-management/company-list/company-item/company-item.component';
 import { CompanyManagementComponent } from './company-management/company-management.component';
 import { CompanySettingsComponent } from './company-management/company-settings/company-settings.component';
 import { CompanyDetailsComponent } from './company-management/company-settings/company-details/company-details.component';
@@ -39,7 +38,6 @@ import { UserAccountComponent } from './user-account/user-account.component';
   declarations: [
     AppComponent,
     CompanyListComponent,
-    CompanyItemComponent,
     CompanyManagementComponent,
     CompanySettingsComponent,
     CompanyDetailsComponent,

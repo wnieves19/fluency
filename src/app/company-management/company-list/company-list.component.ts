@@ -1,25 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import {AngularFireDatabase} from '@angular/fire/database';
-import {Observable} from 'rxjs';
-import {AuthService} from '../../user-authentication/auth.service';
+import {Company} from '../company.model';
+import {MatTableDataSource} from '@angular/material';
+import {Router} from '@angular/router';
+import {CompanyService} from '../company.service';
 
-interface Company{
-  companyName: string,
-  currency: string
-}
 @Component({
   selector: 'app-company-list',
   templateUrl: './company-list.component.html',
   styleUrls: ['./company-list.component.css']
 })
 export class CompanyListComponent implements OnInit {
-  companies: Observable<any[]>;
-  displayedColumns: string[] = ['companyName', 'currency'];
+  companies: MatTableDataSource<any[]>;
+  companiesArray = new Array()
 
-  constructor(private db: AngularFireDatabase, private authService: AuthService) {
+  displayedColumns: string[] = ['companyName', 'currency', 'actions'];
+
+  constructor(private companyService: CompanyService, private router: Router) {
+
+    this.companyService.getCompanies()
+      .subscribe(actions => {
+        this.companies = new MatTableDataSource(this.companiesArray);
+        actions.forEach(action => {
+          //If there's only one company, go to its snapshot
+          if(actions.length===1){
+            this.companySelected(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
+          }
+          this.companiesArray.push(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
+
+        });
+      });
+  }
+
+  ngOnInit(): void {
 
   }
-  ngOnInit(): void {
-    this.companies = this.db.list<Company>('user-companies/'+this.authService.user.uid).valueChanges();
+
+  companySelected(company:Company){
+    this.router.navigate(['/company-snapshot']);
+    this.companyService.selectedCompany = company;
   }
 }
