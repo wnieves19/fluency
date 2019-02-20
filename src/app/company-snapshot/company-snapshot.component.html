@@ -6,7 +6,11 @@
   <div style="margin:auto">
     <h4>{{company.companyName}}</h4>
   </div>
+
   <div class="toolbar-settings">
+    <button mat-icon-button [routerLink]="['/company-management']">
+      <mat-icon>settings</mat-icon>
+    </button>
     <mat-menu #appMenu="matMenu">
       <ng-template matMenuContent let-name="name">
         <button mat-menu-item [routerLink]="['account-details']">Profile</button>

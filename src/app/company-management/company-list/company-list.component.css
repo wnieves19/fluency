@@ -1,7 +1,8 @@
 table {
-  width: 100%;
+  width: 50%;
   margin: auto;
 }
-tr:hover{
+.mat-row:hover{
   background-color:#40404010;
+
 }

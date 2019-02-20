@@ -21,7 +21,9 @@ const appRoutes: Routes = [
   { path: 'company-management', canActivate: [AuthGuardService],component: CompanyManagementComponent,  children: [
       {path: '', component: CompanyListComponent},
       {path: 'company-list', component: CompanyListComponent},
+      {path: 'company', component: CompanyDetailsComponent},
       {path: 'company/:id', component: CompanyDetailsComponent}
+
     ]},
   { path: 'company-snapshot',canActivate: [AuthGuardService], component: CompanySnapshotComponent,  children: [
       {path: '', component: LiquidityComponent},

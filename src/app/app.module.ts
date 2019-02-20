@@ -26,6 +26,7 @@ import {AngularFireAuthModule} from 'angularfire2/auth';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LiquidityBalanceWidgetComponent } from './company-snapshot/liquidity/liquidity-balance-widget/liquidity-balance-widget.component';
 import { LiquidityCashflowChartsComponent } from './company-snapshot/liquidity/liquidity-cashflow-charts/liquidity-cashflow-charts.component';
 import { LiquidityCashflowWaterfallComponent } from './company-snapshot/liquidity/liquidity-cashflow-waterfall/liquidity-cashflow-waterfall.component';
@@ -33,6 +34,7 @@ import { ChartsModule as KendoChartsModule } from '@progress/kendo-angular-chart
 import 'hammerjs';
 import { LiquidityBalanceDialogComponent } from './company-snapshot/liquidity/liquidity-balance-widget/liquidity-balance-dialog/liquidity-balance-dialog.component';
 import { UserAccountComponent } from './user-account/user-account.component';
+import {CredentialsInterceptorService} from './interceptor';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,7 @@ import { UserAccountComponent } from './user-account/user-account.component';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebase, 'fluencyanalysis'),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
@@ -67,12 +70,12 @@ import { UserAccountComponent } from './user-account/user-account.component';
     AppRoutingModule,
     FlexLayoutModule,
     KendoChartsModule,
-    FormsModule
+    FormsModule,
 
 
   ],
   entryComponents: [CompanySnapshotComponent, LiquidityBalanceDialogComponent],
-  providers: [AuthService],
+  providers: [AuthService,{provide: HTTP_INTERCEPTORS, useClass: CredentialsInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

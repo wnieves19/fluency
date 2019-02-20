@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Company} from '../company.model';
 import {MatTableDataSource} from '@angular/material';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CompanyService} from '../company.service';
 
 @Component({
@@ -13,17 +13,18 @@ export class CompanyListComponent implements OnInit {
   companies: MatTableDataSource<any[]>;
   companiesArray = new Array()
 
-  displayedColumns: string[] = ['companyName', 'currency', 'actions'];
+  displayedColumns: string[] = ['companyName', 'currency', 'actions', 'addCompany'];
 
-  constructor(private companyService: CompanyService, private router: Router) {
+  constructor(private companyService: CompanyService, private router: Router, private route: ActivatedRoute) {
 
     this.companyService.getCompanies()
       .subscribe(actions => {
         this.companies = new MatTableDataSource(this.companiesArray);
         actions.forEach(action => {
           //If there's only one company, go to its snapshot
-          if(actions.length===1){
-            this.companySelected(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
+          if(actions.length===1 && this.companyService.selectedCompany===undefined){
+            //TODO: Uncomment this code
+            // this.companyClicked(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
           }
           this.companiesArray.push(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
 
@@ -35,8 +36,11 @@ export class CompanyListComponent implements OnInit {
 
   }
 
-  companySelected(company:Company){
+  companyClicked(company:Company){
     this.router.navigate(['/company-snapshot']);
     this.companyService.selectedCompany = company;
+  }
+  addCompanyClicked(){
+    this.router.navigate(['company'], {relativeTo:this.route})
   }
 }
