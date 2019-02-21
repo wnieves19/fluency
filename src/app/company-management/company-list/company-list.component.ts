@@ -18,15 +18,15 @@ export class CompanyListComponent implements OnInit {
   constructor(private companyService: CompanyService, private router: Router, private route: ActivatedRoute) {
 
     this.companyService.getCompanies()
-      .subscribe(actions => {
+      .subscribe(companiesSnapshot => {
         this.companies = new MatTableDataSource(this.companiesArray);
-        actions.forEach(action => {
+        companiesSnapshot.forEach(company => {
           //If there's only one company, go to its snapshot
-          if(actions.length===1 && this.companyService.selectedCompany===undefined){
+          if(companiesSnapshot.length===1 && this.companyService.selectedCompany===undefined){
             //TODO: Uncomment this code
             // this.companyClicked(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
           }
-          this.companiesArray.push(new Company(action.key, action.payload.val().name,action.payload.val().email ));
+          this.companiesArray.push(new Company(company.key, company.payload.val().name,company.payload.val().email, company.payload.val().realm));
 
         });
       });

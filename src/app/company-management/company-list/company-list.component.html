@@ -21,7 +21,14 @@
         <td mat-cell *matCellDef="let company">
           <button mat-icon-button (click)="companyClicked(company)">
             <mat-icon>insert_chart_outlined</mat-icon>
-          </button></td>
+          </button>
+          <button mat-icon-button >
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+          <button mat-icon-button>
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
       </ng-container>
       <ng-container matColumnDef="addCompany">
         <th style="padding-right:0px; text-align:right;"mat-header-cell *matHeaderCellDef>

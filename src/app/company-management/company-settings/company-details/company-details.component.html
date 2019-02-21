@@ -3,8 +3,7 @@
     <h1>Accounting Source</h1>
   </div>
 </div>
-
-<div class="row justify-content-center">
+<div *ngIf="!loading" class="row justify-content-center">
   <div class="col-sm-1">
     <img width="100px" height="100px"
          src="https://quickbooks.intuit.com/content/dam/intuit/quickbooks/common/qb_thumb.png"
@@ -25,6 +24,7 @@
 <div *ngIf="loading" class="row justify-content-center">
   <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
 </div>
+<br />
 <div class="row justify-content-center">
   {{loadingMessage}}
 </div>
