@@ -13,7 +13,7 @@ export class CompanyListComponent implements OnInit {
   companies: MatTableDataSource<any[]>;
   companiesArray = new Array()
 
-  displayedColumns: string[] = ['companyName', 'currency', 'actions', 'addCompany'];
+  displayedColumns: string[] = ['companyName', 'email', 'actions', 'addCompany'];
 
   constructor(private companyService: CompanyService, private router: Router, private route: ActivatedRoute) {
 
@@ -26,7 +26,7 @@ export class CompanyListComponent implements OnInit {
             //TODO: Uncomment this code
             // this.companyClicked(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
           }
-          this.companiesArray.push(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
+          this.companiesArray.push(new Company(action.key, action.payload.val().name,action.payload.val().email ));
 
         });
       });

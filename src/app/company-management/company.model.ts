@@ -1,12 +1,12 @@
 export class Company{
   companyId: string;
-  companyName: string;
-  currency: string;
+  name: string;
+  email: string;
 
 
-  constructor(companyId: string, companyName: string, currency: string) {
+  constructor(companyId: string, companyName: string, email: string) {
     this.companyId = companyId;
-    this.companyName = companyName;
-    this.currency = currency;
+    this.name = companyName;
+    this.email = email;
   }
 }
