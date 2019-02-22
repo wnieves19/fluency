@@ -10,33 +10,25 @@ import {AuthService} from '../../../user-authentication/auth.service';
   styleUrls: ['./company-details.component.css']
 })
 export class CompanyDetailsComponent implements OnInit {
-loading = false;
-loadingMessage: string;
-  constructor(private companyService: CompanyService,private authService: AuthService, private router: Router, private route: ActivatedRoute) {
-    companyService.getCompanies().subscribe(companies => {
+  loading = false;
+  loadingMessage: string;
+  constructor(private companyService: CompanyService,
+              private authService: AuthService,
+              private router: Router) {}
+
+  ngOnInit() {
+    this.companyService.getCompanies().subscribe(companies => {
       companies.forEach(company => {
-        if(company.type==="child_added" && companyService.requestCompanyInfo){
+        if(company.type==="child_added" && this.companyService.requestCompanyInfo){
           this.loading = true;
-          this.loadingMessage = "Starting the  Millenium Falcon...";
-          console.log("New company created: " + company.payload.val().name)
-          this.companyService.getCompanyData(company.key, company.payload.val().realm)
+          this.companyService.getCompanyDataFromSource(company.key, company.payload.val().realm)
             .subscribe(
-            (val) => {
-              this.loadingMessage = "Preparing for hyperdrive...";
-            },
-            response => {
-              console.log("POST call in error", response);
-            },
-            () => {
-              console.log("The POST observable is now completed.");
-            });
-          //TODO:get companyId firebase and  realmId and call the getCompanyData() method in company.service
+              (val) => {
+                this.loadingMessage = "Starting the  Millenium Falcon...";
+              });
         }
       });
     });
-  }
-
-  ngOnInit() {
   }
 
   quickbooksClicked(){
