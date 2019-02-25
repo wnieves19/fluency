@@ -4,6 +4,9 @@
   display: flex;
   flex-direction: column;
 }
+.login-button{
+  text-align: right;
+}
 .mat-card-login{
   width:400px;
 }

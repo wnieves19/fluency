@@ -2,7 +2,7 @@
 <div fxLayout fxFill fxLayoutAlign="space-around center">
 
 <mat-card class="mat-card-login  mat-elevation-z6 " >
-  <mat-card-title fxLayoutAlign="center center">Login</mat-card-title>
+  <mat-card-title fxLayoutAlign="center center">Log in</mat-card-title>
   <mat-card-content >
     <form class="my-form">
     <mat-form-field fxLayoutAlign="center center" >
@@ -12,7 +12,7 @@
       <input fxLayoutAlign="center center" matInput placeholder="Password" [formControl]="password" autocomplete="current-password" required [type]="'password'">
     </mat-form-field>
     <div fxLayoutAlign="center center" >
-      <button mat-raised-button color="primary" (click)="loginClicked()" mat-raised-button>Login</button>
+      <button class="btn btn-success" (click)="loginClicked()" mat-raised-button>Log in</button>
     </div>
     </form>
     <p style="color:red;">{{error}}</p>

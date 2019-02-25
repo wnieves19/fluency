@@ -1,11 +1,11 @@
-<div class="basic-container">
+<div class="basic-container" >
   <div class="row">
     <div class="col-sm-5">
-      <mat-card class="mat-card-profile" class="mat-elevation-z4" >
-        <mat-card-title >Profile</mat-card-title>
-        <mat-card-content>
+      <mat-card class="mat-card-profile"style="margin-left: 30px" class="mat-elevation-z4" >
+        <mat-card-content style="margin: 30px">
+          <mat-card-title >Profile</mat-card-title>
           <div class="row">
-            <div class="col-sm-7">
+            <div class="col-sm-9">
               <form [formGroup]="profileForm" (ngSubmit)="profileForm.valid &&  saveProfile()">
                 <div class="form-group">
                   <div class="row">
@@ -47,7 +47,9 @@
                     </div>
                   </div>
                 </div>
+                <div>
                 <button class="btn btn-primary" [disabled]="!profileForm.valid"  type="submit">Save</button>
+                </div>
               </form>
             </div>
           </div>
