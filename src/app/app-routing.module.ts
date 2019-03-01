@@ -22,6 +22,7 @@ const appRoutes: Routes = [
       {path: '', component: CompanyListComponent},
       {path: 'company-list', component: CompanyListComponent},
       {path: 'company', component: CompanyDetailsComponent},
+      { path: 'account-details', component: UserAccountComponent},
       {path: 'company/:id', component: CompanyDetailsComponent}
 
     ]},

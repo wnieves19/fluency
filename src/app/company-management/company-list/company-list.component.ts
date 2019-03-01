@@ -43,4 +43,8 @@ export class CompanyListComponent implements OnInit {
   addCompanyClicked(){
     this.router.navigate(['company'], {relativeTo:this.route})
   }
+  editCompanyClicked(companyId: string){
+    console.log(companyId)
+    this.router.navigate(['company', { id: companyId}], {relativeTo:this.route})
+  }
 }

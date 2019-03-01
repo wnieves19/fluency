@@ -1,30 +1,108 @@
 <div class="row">
-  <div class="header-container">
+  <div *ngIf="!editMode; else companyDetails"class="header-container">
     <h1>Accounting Source</h1>
   </div>
 </div>
-<div *ngIf="!loading" class="row justify-content-center">
+<div *ngIf="!loading && !editMode" class="row justify-content-center">
   <div class="col-sm-1">
-    <img width="100px" height="100px"
+    <img class="source_button" width="100px" height="100px"
          src="https://quickbooks.intuit.com/content/dam/intuit/quickbooks/common/qb_thumb.png"
          (click)="quickbooksClicked()"/>
   </div>
   <div class="col-sm-1">
-    <img width="100px" height="100px"
+    <img class="source_button" width="100px" height="100px"
          src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Xero_software_logo.svg/1024px-Xero_software_logo.svg.png"
          (click)="xeroClicked()"/>
   </div>
   <div class="col-sm-1">
-    <img width="100px" height="100px"
+    <img class="source_button" width="100px" height="100px"
          src="https://firebasestorage.googleapis.com/v0/b/fluencyanalysis.appspot.com/o/document%20(1).png?alt=media&token=68cf6b8f-dbd7-4b86-972b-f1aa984ff851"
          (click)="csvClicked()"/>
   </div>
 </div>
 <br />
-<div *ngIf="loading" class="row justify-content-center">
+<div *ngIf="loading && !editMode " class="row justify-content-center">
   <mat-progress-spinner color="warn" mode="indeterminate"></mat-progress-spinner>
 </div>
 <br />
-<div class="row justify-content-center">
+<div *ngIf="loading && !editMode " class="row justify-content-center">
   {{loadingMessage}}
+</div>
+<ng-template #companyDetails>
+      <div class="header-container">
+        <h1>Company Details</h1>
+      </div>
+</ng-template>
+
+<div class="row justify-content-center" *ngIf="editMode">
+    <div class="col-sm-10" class="company-form"  >
+      <mat-card class="mat-card-profile"style="margin-left: 30px"  class="mat-elevation-z0" >
+        <mat-card-content style="margin: 30px">
+          <mat-card-title >Basic Information</mat-card-title>
+          <div class="row">
+            <div class="col-sm-9">
+              <form [formGroup]="companyDetailsForm" (ngSubmit)="companyDetailsForm.valid &&  saveProfile()">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-10">
+                      <label>Company Name: </label>
+                      <input  placeholder="Company Name" class="form-control" formControlName="na" [ngClass]="{'is-invalid': companyDetailsForm.get('name').touched && companyDetailsForm.get('name').invalid}" required autocomplete="company">
+
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <label>Email</label>
+                      <input placeholder="Email" class="form-control"  formControlName="email"
+                             [ngClass]="{'is-invalid': companyDetailsForm.get('email').touched && companyDetailsForm.get('email').invalid}"required>
+                      <div *ngIf="{'is-invalid': companyDetailsForm.get('email').touched && companyDetailsForm.get('email').invalid}" class="invalid-feedback">
+                        <div *ngIf="companyDetailsForm.get('email').required">Email is Required</div>
+                        <div *ngIf="companyDetailsForm.get('email').email">Email must be a valid email </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-8">
+                      <label>Phone </label>
+                      <input  placeholder="Phone" class="form-control" formControlName="phone" [ngClass]="{'is-invalid': companyDetailsForm.get('phone').touched && companyDetailsForm.get('phone').invalid}" required>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-10">
+                      <label>Address: </label>
+                      <input fxLayoutAlign="center center"class="form-control"  placeholder="Address"  formControlName="address"  [ngClass]="{'is-invalid': companyDetailsForm.get('address').touched && companyDetailsForm.get('address').invalid}"required>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label>City: </label>
+                      <input fxLayoutAlign="center center"class="form-control"  placeholder="City"  formControlName="city"  [ngClass]="{'is-invalid': companyDetailsForm.get('city').touched && companyDetailsForm.get('city').invalid}"required>
+                    </div>
+                    <div class="col-sm-3">
+                      <label>State: </label>
+                      <input fxLayoutAlign="center center"class="form-control"  placeholder="State"  formControlName="state"  [ngClass]="{'is-invalid': companyDetailsForm.get('state').touched && companyDetailsForm.get('state').invalid}"required>
+                    </div>
+                    <div class="col-sm-3">
+                      <label>Zip: </label>
+                      <input fxLayoutAlign="center center"class="form-control"  placeholder="Zip"  formControlName="zip"  [ngClass]="{'is-invalid': companyDetailsForm.get('zip').touched && companyDetailsForm.get('zip').invalid}"required>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <button class="btn btn-primary" [disabled]="!companyDetailsForm.valid"  type="submit">Save</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
 </div>

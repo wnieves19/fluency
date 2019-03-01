@@ -15,14 +15,11 @@ export class CompanyManagementComponent implements OnInit {
 
     this.route.queryParams.subscribe(
       (queryParams: Params) => {
-        console.log("QUEYR PARAMS " + queryParams['action'] );
         if(queryParams['action'] === 'close' ){
-          console.log("CLOSEEEEEEE");
           window.close();
         }
       }
     );
-    // this.router.navigate(['company-list'], {relativeTo: this.route});
   }
   onLogoutClicked(){
     this.authService.logout();

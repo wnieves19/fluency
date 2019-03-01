@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {CompanyService} from '../../company.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {DOCUMENT} from '@angular/common';
 import {AuthService} from '../../../user-authentication/auth.service';
 
@@ -11,17 +11,27 @@ import {AuthService} from '../../../user-authentication/auth.service';
 })
 export class CompanyDetailsComponent implements OnInit {
   loading = false;
+  editMode = false;
   loadingMessage: string;
   constructor(private companyService: CompanyService,
               private authService: AuthService,
-              private router: Router) {}
+              private route: ActivatedRoute) {}
 
   ngOnInit() {
+    this.route.params.subscribe(
+      (queryParams: Params) => {
+        if(queryParams['id']){
+          console.log("OOOPS " + queryParams['id'])
+          this.editMode = true;
+          this.loadCompany(queryParams['id']);
+        }
+      }
+    );
     this.companyService.getCompanies().subscribe(companies => {
-      companies.forEach(company => {
-        if(company.type==="child_added" && this.companyService.requestCompanyInfo){
+      companies.forEach(companySnapshot => {
+        if(companySnapshot.type==="child_added" && this.companyService.requestCompanyInfo){
           this.loading = true;
-          this.companyService.getCompanyDataFromSource(company.key, company.payload.val().realm)
+          this.companyService.getCompanyDataFromSource(companySnapshot.key, companySnapshot.payload.val().realm)
             .subscribe(
               (val) => {
                 this.loadingMessage = "Starting the  Millenium Falcon...";
@@ -29,6 +39,10 @@ export class CompanyDetailsComponent implements OnInit {
         }
       });
     });
+  }
+
+  loadCompany(id: string){
+
   }
 
   quickbooksClicked(){
