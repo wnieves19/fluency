@@ -10,25 +10,19 @@ import {CompanyService} from '../company.service';
   styleUrls: ['./company-list.component.css']
 })
 export class CompanyListComponent implements OnInit {
-  companies: MatTableDataSource<any[]>;
-  companiesArray = new Array()
-
+  companiesTable: MatTableDataSource<any[]>;
   displayedColumns: string[] = ['companyName', 'email', 'actions', 'addCompany'];
 
   constructor(private companyService: CompanyService, private router: Router, private route: ActivatedRoute) {
 
-    this.companyService.getCompanies()
+    this.companyService.companiesObservable
       .subscribe(companiesSnapshot => {
-        this.companies = new MatTableDataSource(this.companiesArray);
-        companiesSnapshot.forEach(company => {
-          //If there's only one company, go to its snapshot
-          if(companiesSnapshot.length===1 && this.companyService.selectedCompany===undefined){
-            //TODO: Uncomment this code
-            // this.companyClicked(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
-          }
-          this.companiesArray.push(new Company(company.key, company.payload.val().name,company.payload.val().email, company.payload.val().realm));
-
-        });
+        this.companiesTable = new MatTableDataSource(this.companyService.companies);
+        //If there's only one company, go to its snapshot
+        if(companiesSnapshot.length===1 && this.companyService.selectedCompany===undefined){
+          //TODO: Uncomment this code
+          // this.companyClicked(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
+        }
       });
   }
 

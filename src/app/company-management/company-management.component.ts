@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AuthService} from '../user-authentication/auth.service';
+import {CompanyService} from './company.service';
 
 @Component({
   selector: 'app-company-management',
@@ -9,7 +10,9 @@ import {AuthService} from '../user-authentication/auth.service';
 })
 export class CompanyManagementComponent implements OnInit {
 
-  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService) {
+
+  }
 
   ngOnInit() {
 

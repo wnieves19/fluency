@@ -3,3 +3,7 @@
   right: 0px;
   width: 50px;
 }
+mat-toolbar{
+  min-height:54px;
+  max-height:54px
+}
