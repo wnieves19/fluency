@@ -26,14 +26,15 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.companyDetailsForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      phone: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      phone: new FormControl('', Validators.required),
       address: new FormControl(''),
       city: new FormControl(''),
       state: new FormControl(''),
       zip: new FormControl(''),
-      webAddress: new FormControl(''),
+      url: new FormControl(''),
     })
+
     this.route.params.subscribe(
       (queryParams: Params) => {
         if(queryParams['id']){
@@ -62,7 +63,14 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
 
   loadCompany(id: string){
     this.company = this.companyService.getCompanyById(id);
-    console.log("SELECTED COMPANY " + this.company.name)
+    this.companyDetailsForm.get('name').setValue(this.company.name);
+    this.companyDetailsForm.get('email').setValue(this.company.email);
+    this.companyDetailsForm.get('phone').setValue(this.company.phone);
+    this.companyDetailsForm.get('address').setValue(this.company.address);
+    this.companyDetailsForm.get('city').setValue(this.company.city);
+    this.companyDetailsForm.get('state').setValue(this.company.state);
+    this.companyDetailsForm.get('zip').setValue(this.company.zip);
+    this.companyDetailsForm.get('url').setValue(this.company.url);
   }
 
   quickbooksClicked(){
