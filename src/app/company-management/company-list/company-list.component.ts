@@ -1,21 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Company} from '../company.model';
 import {MatTableDataSource} from '@angular/material';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CompanyService} from '../company.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-company-list',
   templateUrl: './company-list.component.html',
   styleUrls: ['./company-list.component.css']
 })
-export class CompanyListComponent implements OnInit {
+export class CompanyListComponent implements OnInit, OnDestroy {
   companiesTable: MatTableDataSource<any[]>;
   displayedColumns: string[] = ['companyName', 'email', 'actions', 'addCompany'];
+  subscription: Subscription;
 
   constructor(private companyService: CompanyService, private router: Router, private route: ActivatedRoute) {
 
-    this.companyService.companiesObservable
+    this.subscription = this.companyService.companiesObservable
       .subscribe(companiesSnapshot => {
         this.companiesTable = new MatTableDataSource(this.companyService.companies);
         //If there's only one company, go to its snapshot
@@ -40,5 +42,10 @@ export class CompanyListComponent implements OnInit {
   editCompanyClicked(companyId: string){
     console.log(companyId)
     this.router.navigate(['company', { id: companyId}], {relativeTo:this.route})
+  }
+
+  ngOnDestroy(): void {
+    if(this.subscription)
+    this.subscription.unsubscribe();
   }
 }

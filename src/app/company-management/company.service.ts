@@ -18,9 +18,11 @@ export class CompanyService {
     this.fetchCompanies()
       .subscribe(companiesSnapshot => {
         companiesSnapshot.forEach(company => {
-          this.companies.push(new Company(company.key, company.payload.val().name,company.payload.val().email,
-            company.payload.val().phone,company.payload.val().address,company.payload.val().city,
-            company.payload.val().state, company.payload.val().zip,company.payload.val().url,company.payload.val().realm));
+          if(!this.companyExists(company.key))
+          this.companies.push(new Company(company.key, company.payload.val().name, company.payload.val().email,
+            company.payload.val().phone, company.payload.val().address, company.payload.val().city,
+            company.payload.val().state, company.payload.val().zip, company.payload.val().url, company.payload.val().realm));
+
         });
       });
   }
@@ -55,6 +57,12 @@ export class CompanyService {
 
 
     return this.dataSource;
+  }
+
+  companyExists(companyId){
+    for(let company of this.companies){
+      if(companyId===company.companyId)return true
+    }
   }
 
 
