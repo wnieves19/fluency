@@ -16,16 +16,21 @@ export class AppComponent implements OnInit{
       (queryParams: Params) => {
         if(queryParams['action'] === 'close' ){
           window.close();
+        }else if(queryParams['action'] ==='companyExists'){
+          alert("Company is already in Fluency");
+          window.close();
+        }else{
+          this.authService.afAuth.authState.subscribe(user => {
+            if (user){
+              this.router.navigate(['/company-management']);
+            }
+            else{
+              this.router.navigate(['/user-authentication']);
+            }
+          })
         }
       }
     );
-    this.authService.afAuth.authState.subscribe(user => {
-      if (user){
-        this.router.navigate(['/company-management']);
-      }
-      else{
-        this.router.navigate(['/user-authentication']);
-      }
-    })
+
   }
 }

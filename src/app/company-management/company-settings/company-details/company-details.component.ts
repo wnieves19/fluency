@@ -1,10 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CompanyService} from '../../company.service';
-import {ActivatedRoute, Params} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AuthService} from '../../../user-authentication/auth.service';
 import {Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Company} from '../../company.model';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-company-details',
@@ -21,7 +22,9 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
   loadingMessage: string;
   constructor(private companyService: CompanyService,
               private authService: AuthService,
-              private route: ActivatedRoute) {}
+              private router: Router,
+              private route: ActivatedRoute,
+              private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.companyDetailsForm = new FormGroup({
@@ -88,8 +91,28 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
 
   }
 
+  saveCompanyDetails(){
+    this.company.name = this.companyDetailsForm.get('name').value,
+      this.company.email = this.companyDetailsForm.get('email').value,
+      this.company.phone = this.companyDetailsForm.get('phone').value,
+      this.company.address = this.companyDetailsForm.get('address').value,
+      this.company.city = this.companyDetailsForm.get('city').value,
+      this.company.state = this.companyDetailsForm.get('state').value,
+      this.company.zip = this.companyDetailsForm.get('zip').value,
+      this.company.url = this.companyDetailsForm.get('url').value
+
+    this.companyService.updateCompany(this.company)
+      .then((val)=>{
+        this.snackBar.open('Profile saved','Close',{
+          duration: 2000,
+        })
+        this.router.navigate(['../'], {relativeTo: this.route});
+      });
+
+  }
+
   ngOnDestroy(): void {
     if(this.subscription)
-    this.subscription.unsubscribe()
+      this.subscription.unsubscribe()
   }
 }
