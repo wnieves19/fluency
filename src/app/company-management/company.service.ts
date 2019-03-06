@@ -18,11 +18,11 @@ export class CompanyService {
     this.fetchCompanies()
       .subscribe(companiesSnapshot => {
         companiesSnapshot.forEach(company => {
-          if(!this.companyExists(company.key))
-          this.companies.push(new Company(company.key, company.payload.val().name, company.payload.val().email,
-            company.payload.val().phone, company.payload.val().address, company.payload.val().city,
-            company.payload.val().state, company.payload.val().zip, company.payload.val().url, company.payload.val().realm));
-
+          if(!this.getCompanyById(company.key)) {
+            this.companies.push(new Company(company.key, company.payload.val().name, company.payload.val().email,
+              company.payload.val().phone, company.payload.val().address, company.payload.val().city,
+              company.payload.val().state, company.payload.val().zip, company.payload.val().url, company.payload.val().realm));
+          }
         });
       });
   }
@@ -39,11 +39,14 @@ export class CompanyService {
       }
     }
   }
-
+  saveCompanyData(response){
+    this.getCompanyById(response.companyId).accountingData = response.companyData;
+  }
   updateCompany(company: Company){
     return this.db.list('user-companies/'+this.authService.user.uid).update(company.companyId,company)
   }
   getCompanyDataFromSource(companyId: string, realmId: string){
+
     this.dataSource = this.http.post("http://localhost:3000/get_company_data",
       {
         "companyId": companyId,
@@ -54,16 +57,10 @@ export class CompanyService {
     //    this.db.list('company-data/'+companyKey).snapshotChanges(["child_added"])
     //
     // });
-
-
     return this.dataSource;
+
   }
 
-  companyExists(companyId){
-    for(let company of this.companies){
-      if(companyId===company.companyId)return true
-    }
-  }
 
 
 }

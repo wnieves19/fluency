@@ -9,6 +9,7 @@ export class Company{
   zip: string;
   url: string;
   realm: string;
+  companyData;
 
   constructor(companyId: string, name: string, email: string, phone: string,
               address: string, city: string, state: string, zip: string,

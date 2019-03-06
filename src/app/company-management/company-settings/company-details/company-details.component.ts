@@ -18,7 +18,7 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
   requestCompanyInfo = false;
   loading = false;
   editMode = false;
-  subscription: Subscription;
+  subscriptions = new Array();
   loadingMessage: string;
   constructor(private companyService: CompanyService,
               private authService: AuthService,
@@ -50,18 +50,24 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
   }
 
   listenForCompanyEvents(){
-    this.subscription = this.companyService.fetchCompanies().subscribe(companies => {
-      companies.forEach(companySnapshot => {
-        if(companySnapshot.type==="child_added" && this.requestCompanyInfo){
-          this.loading = true;
-          this.companyService.getCompanyDataFromSource(companySnapshot.key, companySnapshot.payload.val().realm)
-            .subscribe(
-              (val) => {
-                this.loadingMessage = "Starting the  Millenium Falcon...";
-              });
-        }
+    let subscription: Subscription = this.companyService.companiesObservable
+      .subscribe(companies => {
+        companies.forEach(companySnapshot => {
+          //TODO If company doesn't have Accounts fetched
+          if(companySnapshot.type ==="child_added" && this.requestCompanyInfo){
+            this.loading = true;
+            this.requestCompanyInfo = false;
+            this.companyService.getCompanyDataFromSource(companySnapshot.key, companySnapshot.payload.val().realm)
+            let sub: Subscription = this.companyService.dataSource
+              .subscribe(
+                (response) => {
+                  this.loadingMessage = "Starting the  Millenium Falcon...";
+                });
+            this.subscriptions.push(sub);
+          }
+        });
       });
-    });
+    this.subscriptions.push(subscription);
   }
 
   loadCompany(id: string){
@@ -112,7 +118,10 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if(this.subscription)
-      this.subscription.unsubscribe()
+    for (let subscription of this.subscriptions){
+      if(subscription)
+        subscription.unsubscribe()
+    }
+
   }
 }
