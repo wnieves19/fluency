@@ -52,11 +52,6 @@ export class CompanyService {
         "companyId": companyId,
         "realmId": realmId
       })
-    // this.dataSource.subscribe(
-    // (val) => {
-    //    this.db.list('company-data/'+companyKey).snapshotChanges(["child_added"])
-    //
-    // });
     return this.dataSource;
 
   }
