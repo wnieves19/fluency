@@ -39,14 +39,11 @@ export class CompanyService {
       }
     }
   }
-  saveCompanyData(response){
-    this.getCompanyById(response.companyId).accountingData = response.companyData;
-  }
+
   updateCompany(company: Company){
     return this.db.list('user-companies/'+this.authService.user.uid).update(company.companyId,company)
   }
   getCompanyDataFromSource(companyId: string, realmId: string){
-
     this.dataSource = this.http.post("http://localhost:3000/get_company_data",
       {
         "companyId": companyId,

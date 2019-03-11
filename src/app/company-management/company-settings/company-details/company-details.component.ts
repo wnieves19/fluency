@@ -56,12 +56,14 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
           //TODO If company doesn't have Accounts fetched
           if(companySnapshot.type ==="child_added" && this.requestCompanyInfo){
             this.loading = true;
+            this.loadingMessage = "Starting the  Millenium Falcon...";
             this.requestCompanyInfo = false;
             this.companyService.getCompanyDataFromSource(companySnapshot.key, companySnapshot.payload.val().realm)
             let sub: Subscription = this.companyService.dataSource
               .subscribe(
                 (response) => {
-                  this.loadingMessage = "Starting the  Millenium Falcon...";
+                  console.log(response);
+                  this.loadingMessage = "Preparing for hyperdrive...";
                 });
             this.subscriptions.push(sub);
           }
