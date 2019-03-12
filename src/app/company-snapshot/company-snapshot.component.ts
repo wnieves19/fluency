@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {AuthService} from '../user-authentication/auth.service';
 import {CompanyService} from '../company-management/company.service';
-import {Company} from '../company-management/company.model';
+import {Company} from '../company-management/models/company.model';
 @Component({
   selector: 'app-company-snapshot',
   templateUrl: './company-snapshot.component.html',

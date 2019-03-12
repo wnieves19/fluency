@@ -1,3 +1,5 @@
+import {TrialBalance} from './trial-balance.model';
+
 export class Company{
   companyId: string;
   name: string;
@@ -9,7 +11,7 @@ export class Company{
   zip: string;
   url: string;
   realm: string;
-  companyData;
+  trialBalance: TrialBalance[];
 
   constructor(companyId: string, name: string, email: string, phone: string,
               address: string, city: string, state: string, zip: string,

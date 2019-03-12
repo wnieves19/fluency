@@ -4,7 +4,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AuthService} from '../../../user-authentication/auth.service';
 import {Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Company} from '../../company.model';
+import {Company} from '../../models/company.model';
 import {MatSnackBar} from '@angular/material';
 
 @Component({
@@ -58,14 +58,15 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
             this.loading = true;
             this.loadingMessage = "Starting the  Millenium Falcon...";
             this.requestCompanyInfo = false;
-            this.companyService.getCompanyDataFromSource(companySnapshot.key, companySnapshot.payload.val().realm)
-            let sub: Subscription = this.companyService.dataSource
+            this.companyService.fetchCompanySource(companySnapshot.key, companySnapshot.payload.val().realm)
+            let dataSubscription: Subscription = this.companyService.dataSource
               .subscribe(
                 (response) => {
                   console.log(response);
                   this.loadingMessage = "Preparing for hyperdrive...";
+                  this.companyService.fetchTrailBalances(companySnapshot.key)
                 });
-            this.subscriptions.push(sub);
+            this.subscriptions.push(dataSubscription);
           }
         });
       });

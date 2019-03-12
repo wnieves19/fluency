@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {Company} from './company.model';
+import {Company} from './models/company.model';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {AuthService} from '../user-authentication/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {TrialBalance} from './models/trial-balance.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class CompanyService {
   selectedCompany: Company;
   dataSource: Observable<any>
   companiesObservable: Observable<any>;
+  trialBalancesObservable: Observable<any>;
   constructor(private db: AngularFireDatabase, private authService: AuthService, private http: HttpClient ) {
     this.fetchCompanies()
       .subscribe(companiesSnapshot => {
@@ -43,7 +45,20 @@ export class CompanyService {
   updateCompany(company: Company){
     return this.db.list('user-companies/'+this.authService.user.uid).update(company.companyId,company)
   }
-  getCompanyDataFromSource(companyId: string, realmId: string){
+
+  fetchTrailBalances(companyId: string){
+    console.log("Will fetch Trial Balances of "+ companyId);
+    this.db.list<TrialBalance>('company-data/'+companyId).valueChanges()
+      .subscribe(
+        (trialBalanceArray) => {
+          trialBalanceArray.forEach(trialBalance => {
+            console.log("Start Period " + trialBalance.startPeriod)
+          });
+        }
+      )
+  }
+
+  fetchCompanySource(companyId: string, realmId: string){
     this.dataSource = this.http.post("http://localhost:3000/get_company_data",
       {
         "companyId": companyId,
@@ -52,6 +67,9 @@ export class CompanyService {
     return this.dataSource;
 
   }
+
+
+
 
 
 
