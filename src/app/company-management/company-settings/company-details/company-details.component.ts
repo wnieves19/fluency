@@ -62,7 +62,6 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
             let dataSubscription: Subscription = this.companyService.dataSource
               .subscribe(
                 (response) => {
-                  console.log(response);
                   this.loadingMessage = "Preparing for hyperdrive...";
                   this.companyService.fetchTrailBalances(companySnapshot.key)
                 });
