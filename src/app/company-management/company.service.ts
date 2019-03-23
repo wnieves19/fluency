@@ -15,7 +15,6 @@ export class CompanyService {
   selectedCompany: Company;
   dataSource: Observable<any>
   companiesObservable: Observable<any>;
-  trialBalancesObservable: Observable<any>;
   constructor(private db: AngularFireDatabase, private authService: AuthService, private http: HttpClient ) {
     this.fetchCompanies()
       .subscribe(companiesSnapshot => {
@@ -47,16 +46,53 @@ export class CompanyService {
   }
 
   fetchTrailBalances(companyId: string){
-    console.log("Will fetch Trial Balances of "+ companyId);
+    var tbProcessed = 0;
     this.db.list<TrialBalance>('company-data/'+companyId).valueChanges()
       .subscribe(
         (trialBalanceArray) => {
           trialBalanceArray.forEach(trialBalance => {
-            console.log("Start Period " + trialBalance.startPeriod)
+            this.getCompanyById(companyId).trialBalance.push(trialBalance);
+            tbProcessed ++;
+            if(tbProcessed === trialBalanceArray.length){
+              this.calculateCharts(companyId);
+            }
           });
         }
-      )
+      )}
+
+  calculateCharts(companyId: string){
+    let company = this.getCompanyById(companyId)
+    let trialBalance = company.trialBalance.filter(trialBalance =>{
+      return trialBalance.startPeriod === "2019-03-01";
+    });
+    var cashAccounts = trialBalance[0].accounts.filter(account =>{
+      return account.subCategory === "Cash";
+    });
+    var cashBalance = this.getBalanceTotal(cashAccounts);
+
+    var receivables = trialBalance[0].accounts.filter(account =>{
+      return account.subCategory === "Accounts Receivable";
+    });
+    var receivableBalance = this.getBalanceTotal(receivables);
+
+    var payables = trialBalance[0].accounts.filter(account => {
+      return account.subCategory === "Accounts Payable";
+    });
+    var payableBalance = this.getBalanceTotal(payables);
+
+    var inventory = trialBalance[0].accounts.filter(account => {
+      return account.detailType === "Inventory";
+    });
+    var inventoryBalance = this.getBalanceTotal(inventory);
   }
+
+  getBalanceTotal(accountsArray){
+    var total = 0
+    accountsArray.forEach(account =>{
+      total = total + Number(account.balance);
+    })
+    return total;
+}
 
   fetchCompanySource(companyId: string, realmId: string){
     this.dataSource = this.http.post("http://localhost:3000/get_company_data",

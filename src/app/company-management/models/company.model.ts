@@ -26,5 +26,6 @@ export class Company{
     this.zip = zip;
     this.url = url;
     this.realm = realm;
+    this.trialBalance = [];
   }
 }

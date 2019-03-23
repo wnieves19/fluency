@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../user-authentication/auth.service';
 import {MatSnackBar} from '@angular/material';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-account',
@@ -12,7 +13,7 @@ export class UserAccountComponent implements OnInit{
 
   profileForm: FormGroup;
 
-  constructor(private authService: AuthService,private snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService,private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.profileForm = new FormGroup({
@@ -47,6 +48,7 @@ export class UserAccountComponent implements OnInit{
     this.authService.saveProfile().then(_ => {this.snackBar.open('Profile saved','Close',{
       duration: 2000,
     })
+      this.router.navigate(['../'], {relativeTo: this.route});
     })
       .catch(err => console.log(err, 'You do not have access!'));
   }

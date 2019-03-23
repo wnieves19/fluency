@@ -5,7 +5,7 @@ export class AccountModel{
   balance:string;
   entryType:string;
   category:string;
-  subcategory:string;
+  subCategory:string;
   detailType:string;
 
 }

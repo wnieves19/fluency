@@ -4,4 +4,8 @@ export class TrialBalance{
   startPeriod;
   endPeriod;
   accounts: AccountModel[]
+
+  constructor() {
+    this.accounts = [];
+  }
 }
