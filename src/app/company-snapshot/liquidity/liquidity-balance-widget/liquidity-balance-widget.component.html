@@ -1,40 +1,40 @@
 <div class="row">
   <div class="col-sm-3">
-    <mat-card  mat-ripple (click)="onCardClicked('Cash Balance')">
+    <mat-card  mat-ripple (click)="onCardClicked('Cash Balance', cashHistory)">
       <mat-card-subtitle fxLayoutAlign="center" >Cash Balance</mat-card-subtitle>
-      <mat-card-title fxLayoutAlign="center"><h2>$19,855.00</h2></mat-card-title>
+      <mat-card-title fxLayoutAlign="center"><h2>${{cashHistory[cashHistory.length-1]}}</h2></mat-card-title>
       <div fxLayoutAlign="center" class="last-child" >
-      <kendo-sparkline [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="data" type="column">
+      <kendo-sparkline [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="cashHistory" type="column">
       </kendo-sparkline>
       </div>
     </mat-card>
   </div>
   <div class="col-sm-3" >
-    <mat-card mat-ripple (click)="onCardClicked('Accounts Receivable')">
+    <mat-card mat-ripple (click)="onCardClicked('Accounts Receivable', receivablesHistory)">
       <mat-card-subtitle fxLayoutAlign="center" >Accounts Receivable</mat-card-subtitle>
-      <mat-card-title fxLayoutAlign="center" ><h2>$3,544.00</h2></mat-card-title>
+      <mat-card-title fxLayoutAlign="center" ><h2>${{receivablesHistory[receivablesHistory.length-1]}}</h2></mat-card-title>
       <div fxLayoutAlign="center" class="last-child">
-        <kendo-sparkline  [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="data" type="column">
+        <kendo-sparkline  [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="receivablesHistory" type="column">
         </kendo-sparkline>
       </div>
     </mat-card>
   </div>
   <div class="col-sm-3">
-    <mat-card class="info-card" mat-ripple (click)="onCardClicked('Accounts Payable')">
+    <mat-card class="info-card" mat-ripple (click)="onCardClicked('Accounts Payable', payablesHistory)">
       <mat-card-subtitle fxLayoutAlign="center" >Accounts Payable</mat-card-subtitle>
-      <mat-card-title  fxLayoutAlign="center"><h2>$2,577.88</h2></mat-card-title>
+      <mat-card-title  fxLayoutAlign="center"><h2>${{payablesHistory[payablesHistory.length-1]}}</h2></mat-card-title>
       <div fxLayoutAlign="center" class="last-child" >
-        <kendo-sparkline  [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="data" type="column">
+        <kendo-sparkline  [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="payablesHistory" type="column">
         </kendo-sparkline>
       </div>
     </mat-card>
   </div>
   <div class="col-sm-3">
-    <mat-card class="info-card" mat-ripple (click)="onCardClicked('Inventory')">
+    <mat-card class="info-card" mat-ripple (click)="onCardClicked('Inventory', inventoryHistory)">
       <mat-card-subtitle fxLayoutAlign="center" >Inventory</mat-card-subtitle>
-      <mat-card-title fxLayoutAlign="center"><h2>$2,577.88</h2></mat-card-title>
+      <mat-card-title fxLayoutAlign="center"><h2>${{inventoryHistory[inventoryHistory.length-1]}}</h2></mat-card-title>
       <div fxLayoutAlign="center" class="last-child">
-        <kendo-sparkline   [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="data" type="column">
+        <kendo-sparkline   [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="inventoryHistory" type="column">
         </kendo-sparkline>
       </div>
     </mat-card>

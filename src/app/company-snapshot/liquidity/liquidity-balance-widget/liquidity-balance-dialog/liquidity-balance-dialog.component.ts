@@ -9,11 +9,13 @@ import {MAT_DIALOG_DATA} from '@angular/material';
 })
 export class LiquidityBalanceDialogComponent implements OnInit {
   widgetName = "";
+  historyArray = ""
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<LiquidityBalanceDialogComponent>) { }
 
   ngOnInit() {
     this.widgetName = this.data.widgetName;
+    this.historyArray = this.data.historyData
   }
 
   okClicked(){

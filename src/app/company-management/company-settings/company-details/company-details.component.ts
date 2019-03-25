@@ -64,6 +64,14 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
                 (response) => {
                   this.loadingMessage = "Preparing for hyperdrive...";
                   this.companyService.fetchTrailBalances(companySnapshot.key)
+                    .subscribe(
+                      (response) => {
+                        this.company = this.companyService.getCompanyById(companySnapshot.key)
+                        this.loadingMessage = "Made the Kessel Run in 12 parsecs...";
+                        this.router.navigate(['/company-snapshot']);
+                        this.companyService.selectedCompany = this.company;
+                      }
+                    )
                 });
             this.subscriptions.push(dataSubscription);
           }
