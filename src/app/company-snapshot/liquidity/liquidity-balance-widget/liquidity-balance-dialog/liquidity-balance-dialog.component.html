@@ -18,9 +18,8 @@
     <kendo-chart-series>
       <kendo-chart-series-item type="line" [data]="[123, 276, 310, 212, 240, 156, 98, 100, 300, 200, 240, 190]">
       </kendo-chart-series-item>
-      <kendo-chart-series-item type="line" [data]="[165, 210, 287, 144, 190, 167, 212, 50, 240, 140, 205, 250]">
-      </kendo-chart-series-item>
-      <kendo-chart-series-item type="bar" [color]="'#88B540'"[data]="historyArray">
+      <kendo-chart-series-item type="bar" [color]="'#88B540'" format="{0:c}"[data]="historyArray">
+        <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
       </kendo-chart-series-item>
     </kendo-chart-series>
   </kendo-chart>
