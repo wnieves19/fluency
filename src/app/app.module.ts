@@ -35,6 +35,8 @@ import 'hammerjs';
 import { LiquidityBalanceDialogComponent } from './company-snapshot/liquidity/liquidity-balance-widget/liquidity-balance-dialog/liquidity-balance-dialog.component';
 import { UserAccountComponent } from './user-account/user-account.component';
 import {CredentialsInterceptorService} from './interceptor';
+import {LiquidityService} from './company-snapshot/liquidity/liquidity.service';
+import {CompanyService} from './company-management/company.service';
 
 @NgModule({
   declarations: [
@@ -75,7 +77,7 @@ import {CredentialsInterceptorService} from './interceptor';
 
   ],
   entryComponents: [CompanySnapshotComponent, LiquidityBalanceDialogComponent],
-  providers: [AuthService,{provide: HTTP_INTERCEPTORS, useClass: CredentialsInterceptorService, multi: true}],
+  providers: [AuthService,CompanyService, LiquidityService,{provide: HTTP_INTERCEPTORS, useClass: CredentialsInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

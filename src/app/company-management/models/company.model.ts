@@ -11,7 +11,7 @@ export class Company{
   zip: string;
   url: string;
   realm: string;
-  trialBalance: TrialBalance[];
+  trialBalanceList: TrialBalance[];
 
   constructor(companyId: string, name: string, email: string, phone: string,
               address: string, city: string, state: string, zip: string,
@@ -26,6 +26,6 @@ export class Company{
     this.zip = zip;
     this.url = url;
     this.realm = realm;
-    this.trialBalance = [];
+    this.trialBalanceList = [];
   }
 }

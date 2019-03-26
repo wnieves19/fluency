@@ -18,7 +18,7 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
   requestCompanyInfo = false;
   loading = false;
   editMode = false;
-  subscriptions = new Array();
+  subscriptions: Subscription[]=[];
   loadingMessage: string;
   constructor(private companyService: CompanyService,
               private authService: AuthService,
@@ -61,15 +61,18 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
             this.companyService.fetchCompanySource(companySnapshot.key, companySnapshot.payload.val().realm)
             let dataSubscription: Subscription = this.companyService.dataSource
               .subscribe(
-                (response) => {
+                () => {
                   this.loadingMessage = "Preparing for hyperdrive...";
-                  this.companyService.fetchTrailBalances(companySnapshot.key)
+                  this.companyService.fetchTrialBalances(companySnapshot.key)
                     .subscribe(
-                      (response) => {
+                      () => {
                         this.company = this.companyService.getCompanyById(companySnapshot.key)
                         this.loadingMessage = "Made the Kessel Run in 12 parsecs...";
-                        this.router.navigate(['/company-snapshot']);
-                        this.companyService.selectedCompany = this.company;
+                        setTimeout(() => {
+                          this.router.navigate(['/company-snapshot']);
+                          this.companyService.selectedCompany = this.company;
+                        }, 2000);
+
                       }
                     )
                 });

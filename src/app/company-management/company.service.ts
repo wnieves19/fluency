@@ -16,11 +16,6 @@ export class CompanyService {
   dataSource: Observable<any>
   companiesObservable: Observable<any>;
 
-  cashHistory=[]
-  receivableHistory=[]
-  payableHistory=[]
-  inventoryHistory=[]
-
   constructor(private db: AngularFireDatabase, private authService: AuthService, private http: HttpClient ) {
     this.fetchCompanies()
       .subscribe(companiesSnapshot => {
@@ -51,55 +46,25 @@ export class CompanyService {
     return this.db.list('user-companies/'+this.authService.user.uid).update(company.companyId,company)
   }
 
-  fetchTrailBalances(companyId: string): Observable<any>{
+  fetchTrialBalances(companyId: string): Observable<any>{
     var tbProcessed = 0;
-   return new Observable((observer) => {
-     this.db.list<TrialBalance>('company-data/' + companyId).valueChanges()
-       .subscribe((trialBalanceArray) => {
-         trialBalanceArray.forEach(trialBalance => {
-           this.getCompanyById(companyId).trialBalance.push(trialBalance);
-           tbProcessed++;
-           if (tbProcessed === trialBalanceArray.length) {
-             let company = this.getCompanyById(companyId)
-             company.trialBalance.forEach(trialBalance => {
-               var cashAccounts = trialBalance.accounts.filter(account => {
-                 return account.subCategory === "Cash";
-               });
-               this.cashHistory.push(this.getBalanceTotal(cashAccounts));
+    return new Observable((observer) => {
+      this.getCompanyById(companyId).trialBalanceList=[]
+        this.db.list<TrialBalance>('company-data/' + companyId).valueChanges()
+        .subscribe((trialBalanceArray) => {
+          trialBalanceArray.forEach(trialBalance => {
+            this.getCompanyById(companyId).trialBalanceList.push(trialBalance);
+            tbProcessed++;
+            if (tbProcessed === trialBalanceArray.length) {
+              observer.next();
+              observer.complete()
+            }
+          });
+        })
 
-               var receivables = trialBalance.accounts.filter(account => {
-                 return account.subCategory === "Accounts Receivable";
-               });
-               this.receivableHistory.push(this.getBalanceTotal(receivables));
-
-               var payables = trialBalance.accounts.filter(account => {
-                 return account.subCategory === "Accounts Payable";
-               });
-               this.payableHistory.push(this.getBalanceTotal(payables));
-
-               var inventory = trialBalance.accounts.filter(account => {
-                 return account.detailType === "Inventory";
-               });
-               this.inventoryHistory.push(this.getBalanceTotal(inventory));
-
-             });
-            observer.next(this.cashHistory);
-            observer.complete()
-           }
-         });
-       })
-   })
-  }
-
-
-
-  getBalanceTotal(accountsArray){
-    var total = 0
-    accountsArray.forEach(account =>{
-      total = total + Number(account.balance);
     })
-    return total;
   }
+
 
   fetchCompanySource(companyId: string, realmId: string){
     this.dataSource = this.http.post("http://localhost:3000/get_company_data",
