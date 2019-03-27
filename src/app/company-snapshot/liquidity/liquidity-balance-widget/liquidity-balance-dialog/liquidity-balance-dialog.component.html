@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>{{widgetName}}</h1>
 <div mat-dialog-content>
-  This is normal text that can be used for providing further info about the chart.
+  {{widgetDescription}}
 </div>
 <br />
 <div mat-dialog-content>
   <kendo-chart style="height: 300px;">
-    <kendo-chart-title text="Cashflow Summary"></kendo-chart-title>
+    <kendo-chart-title text="{{widgetName}} Summary"></kendo-chart-title>
     <kendo-chart-axis-defaults [majorGridLines]="{ visible : false}">
     </kendo-chart-axis-defaults>
     <kendo-chart-legend></kendo-chart-legend>
@@ -18,7 +18,7 @@
     <kendo-chart-series>
       <kendo-chart-series-item type="line" [data]="[123, 276, 310, 212, 240, 156, 98, 100, 300, 200, 240, 190]">
       </kendo-chart-series-item>
-      <kendo-chart-series-item type="bar" [color]="'#88B540'" format="{0:c}"[data]="historyArray">
+      <kendo-chart-series-item type="bar" [color]="'#54B701'" format="{0:c}"[data]="historyArray">
         <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
       </kendo-chart-series-item>
     </kendo-chart-series>

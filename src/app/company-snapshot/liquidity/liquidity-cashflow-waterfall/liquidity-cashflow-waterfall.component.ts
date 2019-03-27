@@ -27,7 +27,7 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
   }
   public pointColor(point: any): string {
     if (point.value > 0) {
-      return '#88B540';
+      return '#54B701';
     } else {
       return '#D10C21';
     }

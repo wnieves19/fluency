@@ -4,7 +4,7 @@
       <mat-card-subtitle fxLayoutAlign="center" >Cash Balance</mat-card-subtitle>
       <mat-card-title fxLayoutAlign="center"><h2>{{cashHistory[cashHistory.length-1] | currency}}</h2></mat-card-title>
       <div fxLayoutAlign="center" class="last-child" >
-      <kendo-sparkline [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="cashHistory" type="column">
+      <kendo-sparkline [seriesDefaults]="{color: '#54B701'}" style="width: 150px; height: 50px;" [data]="cashHistory" type="column">
         <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
       </kendo-sparkline>
       </div>
@@ -15,7 +15,7 @@
       <mat-card-subtitle fxLayoutAlign="center" >Accounts Receivable</mat-card-subtitle>
       <mat-card-title fxLayoutAlign="center" ><h2>{{receivablesHistory[receivablesHistory.length-1] | currency}}</h2></mat-card-title>
       <div fxLayoutAlign="center" class="last-child">
-        <kendo-sparkline  [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="receivablesHistory" type="column">        <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
+        <kendo-sparkline  [seriesDefaults]="{color: '#54B701'}" style="width: 150px; height: 50px;" [data]="receivablesHistory" type="column">        <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
           <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
         </kendo-sparkline>
       </div>
@@ -26,7 +26,7 @@
       <mat-card-subtitle fxLayoutAlign="center" >Accounts Payable</mat-card-subtitle>
       <mat-card-title  fxLayoutAlign="center"><h2>{{payablesHistory[payablesHistory.length-1] | currency}}</h2></mat-card-title>
       <div fxLayoutAlign="center" class="last-child" >
-        <kendo-sparkline  [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="payablesHistory" type="column">
+        <kendo-sparkline  [seriesDefaults]="{color: '#54B701'}" style="width: 150px; height: 50px;" [data]="payablesHistory" type="column">
           <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
         </kendo-sparkline>
       </div>
@@ -37,7 +37,7 @@
       <mat-card-subtitle fxLayoutAlign="center" >Inventory</mat-card-subtitle>
       <mat-card-title fxLayoutAlign="center"><h2>{{inventoryHistory[inventoryHistory.length-1] | currency}}</h2></mat-card-title>
       <div fxLayoutAlign="center" class="last-child">
-        <kendo-sparkline   [seriesDefaults]="{color: '#88B540'}" style="width: 150px; height: 50px;" [data]="inventoryHistory" type="column">
+        <kendo-sparkline   [seriesDefaults]="{color: '#54B701'}" style="width: 150px; height: 50px;" [data]="inventoryHistory" type="column">
           <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
         </kendo-sparkline>
       </div>

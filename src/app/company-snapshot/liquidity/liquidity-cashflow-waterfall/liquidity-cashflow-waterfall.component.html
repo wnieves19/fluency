@@ -3,12 +3,13 @@
   <kendo-chart-axis-defaults [majorGridLines]="{ visible : false}" >
   </kendo-chart-axis-defaults>
   <kendo-chart-legend [visible]="false"></kendo-chart-legend>
-  <kendo-chart-tooltip format="C0"></kendo-chart-tooltip>
-  <kendo-chart-series *ngFor="let item of series;let i =index" >
+  <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
+  <kendo-chart-series *ngFor="let item of series" >
     <kendo-chart-series-item type="horizontalWaterfall"  style="smooth;"
                              [data]="item.data" [name]="item.name" [color]="pointColor" [border]="{width:0}" >
       <kendo-chart-series-item-labels  background="transparent" color="black" format="C0" position="insideEnd">
       </kendo-chart-series-item-labels>
     </kendo-chart-series-item>
   </kendo-chart-series>
+
 </kendo-chart>
