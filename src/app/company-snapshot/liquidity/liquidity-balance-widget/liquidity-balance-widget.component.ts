@@ -14,6 +14,12 @@ export class LiquidityBalanceWidgetComponent implements OnInit {
   receivablesHistory;
   payablesHistory;
   inventoryHistory;
+
+  cashArray=[];
+  receivablesArray=[];
+  payablesArray=[];
+  inventoryArray=[];
+
   constructor(private dialog: MatDialog,private companyService: CompanyService, private liquidityService: LiquidityService) { }
 
   ngOnInit() {
@@ -23,9 +29,26 @@ export class LiquidityBalanceWidgetComponent implements OnInit {
         this.receivablesHistory = this.liquidityService.receivableHistory;
         this.payablesHistory = this.liquidityService.payableHistory;
         this.inventoryHistory = this.liquidityService.inventoryHistory;
+        this.initArrays();
       })
   }
 
+  initArrays(){
+    for (let obj of this.cashHistory){
+      this.cashArray.push(obj.balance)
+    }
+    for(let obj of this.receivablesHistory){
+      this.receivablesArray.push(obj.balance)
+    }
+    for (let obj of this.payablesHistory){
+      this.payablesArray.push(obj.balance)
+    }
+    for(let obj of this.inventoryHistory){
+      this.inventoryArray.push(obj.balance)
+    }
+
+
+  }
   onCardClicked(widgetName, data){
     this.dialog.open(LiquidityBalanceDialogComponent, {
       width: '700px',

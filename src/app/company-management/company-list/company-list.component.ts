@@ -22,26 +22,26 @@ export class CompanyListComponent implements OnInit, OnDestroy {
         this.companiesTable = new MatTableDataSource(this.companyService.companies);
         //If there's only one company, go to its snapshot
         if(companiesSnapshot.length===1 && this.companyService.selectedCompany===undefined){
-          //TODO: Uncomment this code
-          // this.companyClicked(new Company(action.key, action.payload.val().companyName,action.payload.val().currency ));
+          this.loadCompanyData(this.companyService.companies[0]);
         }
       });
     this.subscriptions.push(subscription)
+  }
+
+  private loadCompanyData(company: Company) {
+    let tbSubscription = this.companyService.fetchTrialBalances(company.companyId)
+      .subscribe(() => {
+          this.router.navigate(['/company-snapshot']);
+          this.companyService.selectedCompany = company;
+        }
+      );
+    this.subscriptions.push(tbSubscription);
   }
 
   ngOnInit(): void {
 
   }
 
-  companyClicked(company:Company){
-    let tbSubscription = this.companyService.fetchTrialBalances(company.companyId)
-      .subscribe(() => {
-          this.router.navigate(['/company-snapshot']);
-          this.companyService.selectedCompany = company;
-        }
-      )
-    this.subscriptions.push(tbSubscription)
-  }
   addCompanyClicked(){
     this.router.navigate(['company'], {relativeTo:this.route})
   }

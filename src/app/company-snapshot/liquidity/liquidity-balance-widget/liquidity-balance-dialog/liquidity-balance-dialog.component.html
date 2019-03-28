@@ -9,16 +9,13 @@
     <kendo-chart-axis-defaults [majorGridLines]="{ visible : false}">
     </kendo-chart-axis-defaults>
     <kendo-chart-legend></kendo-chart-legend>
-    <kendo-chart-category-axis>
-      <kendo-chart-category-axis-item
-        [categories]="['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Ago', 'Sep','Oct', 'Nov', 'Dec']">
-      </kendo-chart-category-axis-item>
-    </kendo-chart-category-axis>
+
     <kendo-chart-tooltip format="{0}"></kendo-chart-tooltip>
     <kendo-chart-series>
-      <kendo-chart-series-item type="line" [data]="[123, 276, 310, 212, 240, 156, 98, 100, 300, 200, 240, 190]">
+      <kendo-chart-series-item type="line" [data]="historyArray" field="balance">
+        <kendo-chart-tooltip [visible]="false"></kendo-chart-tooltip>
       </kendo-chart-series-item>
-      <kendo-chart-series-item type="bar" [color]="'#54B701'" format="{0:c}"[data]="historyArray">
+      <kendo-chart-series-item type="bar" [color]="'#54B701'" format="{0:c}"[data]="historyArray" field="balance" categoryField="startPeriod">
         <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
       </kendo-chart-series-item>
     </kendo-chart-series>

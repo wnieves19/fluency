@@ -12,7 +12,6 @@ export class LiquidityBalanceDialogComponent implements OnInit {
   widgetName;
   historyArray;
   widgetDescription;
-  periodArray;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
               private constants: Constants,

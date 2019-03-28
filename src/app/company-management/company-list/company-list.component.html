@@ -19,7 +19,7 @@
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef><label style="font-size:16px">Actions</label></th>
         <td mat-cell *matCellDef="let company">
-          <button mat-icon-button (click)="companyClicked(company)">
+          <button mat-icon-button (click)="loadCompanyData(company)">
             <mat-icon>insert_chart_outlined</mat-icon>
           </button>
           <button mat-icon-button (click)="editCompanyClicked(company.companyId)">
