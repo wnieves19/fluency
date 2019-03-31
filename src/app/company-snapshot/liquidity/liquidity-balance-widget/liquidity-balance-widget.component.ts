@@ -25,27 +25,27 @@ export class LiquidityBalanceWidgetComponent implements OnInit {
   ngOnInit() {
     this.liquidityService.getWidgetData(this.companyService.selectedCompany.companyId)
       .subscribe(()=>{
-        this.cashHistory = this.liquidityService.cashHistory;
-        this.receivablesHistory = this.liquidityService.receivableHistory;
-        this.payablesHistory = this.liquidityService.payableHistory;
-        this.inventoryHistory = this.liquidityService.inventoryHistory;
+        this.cashHistory = this.liquidityService.getAccountHistory("Cash");
+        this.receivablesHistory = this.liquidityService.getAccountHistory("Accounts Receivable");
+        this.payablesHistory = this.liquidityService.getAccountHistory("Accounts Payable");
+        // this.inventoryHistory = this.liquidityService.getAccountHistory("Cash");
         this.initArrays();
       })
   }
 
   initArrays(){
-    for (let obj of this.cashHistory){
-      this.cashArray.push(obj.balance)
+    for (var i=0; i<this.cashHistory.length; i++){
+      this.cashArray.push(this.cashHistory[i].balance);
     }
-    for(let obj of this.receivablesHistory){
-      this.receivablesArray.push(obj.balance)
+    for(var i=0; i<this.receivablesHistory.length; i++){
+      this.receivablesArray.push(this.receivablesHistory[i].balance);
     }
-    for (let obj of this.payablesHistory){
-      this.payablesArray.push(obj.balance)
+    for (var i=0; i< this.payablesHistory.length; i++){
+      this.payablesArray.push(this.payablesHistory[i].balance);
     }
-    for(let obj of this.inventoryHistory){
-      this.inventoryArray.push(obj.balance)
-    }
+    // for(let obj of this.inventoryHistory){
+    //   this.inventoryArray.push(obj.balance)
+    // }
 
 
   }
