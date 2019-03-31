@@ -9,13 +9,14 @@ import {AccountHistory} from '../AccountHistory';
 })
 export class LiquidityService {
   accountsArray = [
-    new AccountHistory("Cash"),
-    new AccountHistory("Accounts Receivable"),
-    new AccountHistory("Accounts Payable"),
-    new AccountHistory("Revenue"),
-    new AccountHistory("Cost of Sales"),
-    new AccountHistory("Expenses"),
-    new AccountHistory("Other Income")]
+    new AccountHistory("Cash", "subCategory"),
+    new AccountHistory("Accounts Receivable", "subCategory"),
+    new AccountHistory("Accounts Payable", "subCategory"),
+    new AccountHistory("Inventory", "detailType"),
+    new AccountHistory("Revenue", "subCategory"),
+    new AccountHistory("Cost of Sales", "category"),
+    new AccountHistory("Expenses", "category"),
+    new AccountHistory("Other Income", "type")]
 
   constructor(private companyService: CompanyService) { }
 
@@ -24,16 +25,6 @@ export class LiquidityService {
     return new Observable((observer) => {
       company.trialBalanceList.forEach(trialBalance => {
         this.insertAccountSummary(trialBalance);
-
-        // var inventory = trialBalance.accounts.filter(account => {
-        //   return account.detailType === "Inventory";
-        // });
-        // this.inventoryHistory.splice(0, 0,
-        //   {
-        //     startPeriod: this.getMonthFromPeriod(trialBalance.startPeriod),
-        //     balance: this.getBalanceTotal(inventory)
-        //   }
-        // );
       });
       observer.next()
       observer.complete();
@@ -50,15 +41,34 @@ export class LiquidityService {
 
   insertAccountSummary(trialBalance: TrialBalance){
     for(var i=0; i<this.accountsArray.length; i++){
-      var account = trialBalance.accounts.filter(account => {
-        return account.subCategory === this.accountsArray[i].accountName;
-      });
-      this.accountsArray[i].history.splice(0, 0,
-        {
-          startPeriod: this.getMonthFromPeriod(trialBalance.startPeriod),
-          balance: this.getBalanceTotal(account)
-        }
-      );
+      var account
+      if(this.accountsArray[i].property==="subCategory") {
+        account = trialBalance.accounts.filter(acct => {
+          return acct.subCategory === this.accountsArray[i].accountName;
+        });
+      }
+      if(this.accountsArray[i].property==="category") {
+        account = trialBalance.accounts.filter(acct => {
+          return acct.category === this.accountsArray[i].accountName;
+        });
+      }
+      if(this.accountsArray[i].property==="detailType") {
+        account = trialBalance.accounts.filter(acct => {
+          return acct.detailType === this.accountsArray[i].accountName;
+        });
+      }
+      if(this.accountsArray[i].property==="type") {
+        account = trialBalance.accounts.filter(acct => {
+          return acct.type === this.accountsArray[i].accountName;
+        });
+      }
+        this.accountsArray[i].history.splice(0, 0,
+          {
+            startPeriod: this.getMonthFromPeriod(trialBalance.startPeriod),
+            balance: this.getBalanceTotal(account)
+          }
+        );
+
       console.log(this.accountsArray[i])
     }
   }

@@ -28,7 +28,7 @@ export class LiquidityBalanceWidgetComponent implements OnInit {
         this.cashHistory = this.liquidityService.getAccountHistory("Cash");
         this.receivablesHistory = this.liquidityService.getAccountHistory("Accounts Receivable");
         this.payablesHistory = this.liquidityService.getAccountHistory("Accounts Payable");
-        // this.inventoryHistory = this.liquidityService.getAccountHistory("Cash");
+        this.inventoryHistory = this.liquidityService.getAccountHistory("Inventory");
         this.initArrays();
       })
   }
@@ -43,9 +43,9 @@ export class LiquidityBalanceWidgetComponent implements OnInit {
     for (var i=0; i< this.payablesHistory.length; i++){
       this.payablesArray.push(this.payablesHistory[i].balance);
     }
-    // for(let obj of this.inventoryHistory){
-    //   this.inventoryArray.push(obj.balance)
-    // }
+    for(let obj of this.inventoryHistory){
+      this.inventoryArray.push(obj.balance)
+    }
 
 
   }

@@ -32,15 +32,15 @@
       </div>
     </mat-card>
   </div>
-  <!--<div class="col-sm-3">-->
-    <!--<mat-card class="info-card" mat-ripple (click)="onCardClicked('Inventory', inventoryHistory)">-->
-      <!--<mat-card-subtitle fxLayoutAlign="center" >Inventory</mat-card-subtitle>-->
-      <!--<mat-card-title fxLayoutAlign="center"><h2>{{inventoryHistory[inventoryHistory.length-1].balance | currency}}</h2></mat-card-title>-->
-      <!--<div fxLayoutAlign="center" class="last-child">-->
-        <!--<kendo-sparkline   [seriesDefaults]="{color: '#54B701'}" style="width: 150px; height: 50px;" [data]="inventoryArray" type="column">-->
-          <!--<kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>-->
-        <!--</kendo-sparkline>-->
-      <!--</div>-->
-    <!--</mat-card>-->
-  <!--</div>-->
+  <div class="col-sm-3">
+    <mat-card class="info-card" mat-ripple (click)="onCardClicked('Inventory', inventoryHistory)">
+      <mat-card-subtitle fxLayoutAlign="center" >Inventory</mat-card-subtitle>
+      <mat-card-title fxLayoutAlign="center"><h2>{{inventoryHistory[inventoryHistory.length-1].balance | currency}}</h2></mat-card-title>
+      <div fxLayoutAlign="center" class="last-child">
+        <kendo-sparkline   [seriesDefaults]="{color: '#54B701'}" style="width: 150px; height: 50px;" [data]="inventoryArray" type="column">
+          <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
+        </kendo-sparkline>
+      </div>
+    </mat-card>
+  </div>
 </div>
