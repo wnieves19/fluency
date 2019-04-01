@@ -9,14 +9,19 @@ import {AccountHistory} from '../AccountHistory';
 })
 export class LiquidityService {
   accountsArray = [
-    new AccountHistory("Cash", "subCategory"),
-    new AccountHistory("Accounts Receivable", "subCategory"),
-    new AccountHistory("Accounts Payable", "subCategory"),
-    new AccountHistory("Inventory", "detailType"),
-    new AccountHistory("Revenue", "subCategory"),
-    new AccountHistory("Cost of Sales", "category"),
-    new AccountHistory("Expenses", "category"),
-    new AccountHistory("Other Income", "type")]
+    new AccountHistory("Cash", "subCategory", "widget", "add", "compound"),
+    new AccountHistory("Revenue", "subCategory", "waterfall", "add" , "compound"),
+    new AccountHistory("Cost of Sales", "category", "waterfall", "subtract" , "compound"),
+    new AccountHistory("Expenses", "category", "waterfall", "subtract" , "compound"),
+    new AccountHistory("Other Income", "type", "waterfall", "add" , "compound"),
+    new AccountHistory("Global Tax Payable", "detailType", "waterfall", "subtract", "compound"),
+    new AccountHistory("Accounts Payable", "subCategory","waterfall", "subtract", "change"),
+    new AccountHistory("Other Current Liabilities", "detailType","waterfall", "subtract", "change"),
+    new AccountHistory("Accounts Receivable", "subCategory", "waterfall", "subtract", "change"),
+    new AccountHistory("Inventory", "detailType", "waterfall", "subtract", "change"),
+    new AccountHistory("Other Current Assets", "subCategory", "waterfall", "add", "change"),
+    new AccountHistory("Operating Cash Flow", "summary", "waterfall", "add", "compound")
+  ]
 
   constructor(private companyService: CompanyService) { }
 
@@ -40,6 +45,7 @@ export class LiquidityService {
   }
 
   insertAccountSummary(trialBalance: TrialBalance){
+    // this.emptyHistory();
     for(var i=0; i<this.accountsArray.length; i++){
       var account
       if(this.accountsArray[i].property==="subCategory") {
@@ -62,15 +68,45 @@ export class LiquidityService {
           return acct.type === this.accountsArray[i].accountName;
         });
       }
-        this.accountsArray[i].history.splice(0, 0,
-          {
-            startPeriod: this.getMonthFromPeriod(trialBalance.startPeriod),
-            balance: this.getBalanceTotal(account)
-          }
-        );
-
-      console.log(this.accountsArray[i])
+      this.accountsArray[i].history.splice(0, 0,
+        {
+          startPeriod: this.getMonthFromPeriod(trialBalance.startPeriod),
+          balance: this.getBalanceTotal(account)
+        }
+      );
     }
+  }
+  emptyHistory(){
+    for(var i=0; i<this.accountsArray.length; i++){
+      this.accountsArray[i].history = [];
+    }
+  }
+  /** Gets data of each account of the waterfall chart */
+  getWaterfallAccounts(){
+    var waterfallAccounts = new Array();
+    for(let account of this.accountsArray){
+      if(account.component==="waterfall"){
+        var balance = 0;
+        var currentPeriodBalance = account.history[account.history.length-2].balance
+        var previousPeriodBalance = account.history[account.history.length-3].balance
+
+        if(account.categoryType==="change"){
+          balance = currentPeriodBalance - previousPeriodBalance;
+        }else{
+          balance =  currentPeriodBalance;
+        }
+
+        if(account.action === "subtract"){
+          balance = - balance;
+        }
+        if(account.property==="summary"){
+          waterfallAccounts.push({category: account.accountName, summary: "runningTotal"})
+        }else {
+          waterfallAccounts.push({category: account.accountName, balance: balance})
+        }
+      }
+    }
+    return waterfallAccounts
   }
 
   getMonthFromPeriod(dateString: string){
