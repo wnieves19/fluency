@@ -1,13 +1,12 @@
-<kendo-chart style="height: 600px;"[categoryAxis]="{ categories: categories }" >
+<kendo-chart style="height: 600px;" [categoryAxis]="{ categories: categories}">
   <kendo-chart-axis-defaults [majorGridLines]="{ visible : false}" >
   </kendo-chart-axis-defaults>
   <kendo-chart-legend [visible]="false"></kendo-chart-legend>
   <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
   <kendo-chart-series>
     <kendo-chart-series-item type="horizontalWaterfall"
-                             [data]="series" summaryField="summary" field="balance"  [color]="pointColor" [border]="{width:0}" >
-      <kendo-chart-series-item-labels  background="transparent" color="black" format="{0:c}" position="insideEnd">
-      </kendo-chart-series-item-labels>
+                             [data]="series" summaryField="summary" field="balance"  [color]="pointColor" [labels]="seriesLabels" [border]="{width:0}" >
+
     </kendo-chart-series-item>
   </kendo-chart-series>
   <kendo-chart-value-axis>

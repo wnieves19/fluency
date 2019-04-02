@@ -15,9 +15,9 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
   }
   public categories: string[] = ["Revenue", "COGS", "Expenses", "Other Income", "Cash Tax Paid", "Change in Accounts Payable",
     "Change in Current Liabilities", "Change in Accounts Receivable", "Change in Inventory",
-    "Change in Other Current Assets","Operating Cash Flow", "Change in Fixed Assets",
-    "Change in Intangible Assets", "Change in Investment", "Free Cash Flow", "Net Interest (after tax)",
-    "Change in Other Non-Current Liabilities", "Dividends", "Change in Retained Earnings and Other Equity", "Adjustments", "Net Cash Flow" ];
+    "Change in Other Current Assets","OPERATING CASH FLOW", "Change in Fixed Assets",
+    "Change in Intangible Assets", "Change in Investment", "FREE CASH FLOW", "Net Interest (after tax)",
+    "Change in Other Non-Current Liabilities", "Dividends", "Change in Retained Earnings and Other Equity", "Adjustments", "NET CASH FLOW" ];
 
   public pointColor(point: any): string {
     var summary = point.dataItem.summary;
@@ -29,6 +29,30 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
     } else {
       return '#D10C21';
     }
+  }
+  public seriesLabels(point: any) {
+    var summary = point.dataItem.summary;
+    var category = point.dataItem.category;
+
+    if (summary) {
+      return {
+        visible: true, // Note that visible defaults to false
+        padding: 3,
+        font: 'bold 20px Arial, sans-serif',
+        format: "{0:c}"
+      };
+    }
+    if (category) {
+      return {
+        visible: true, // Note that visible defaults to false
+        padding: 3,
+        font: '12px Arial, sans-serif',
+        position: 'insideEnd',
+        format: "{0:c}"
+      };
+    }
+
+
   }
 
 }
