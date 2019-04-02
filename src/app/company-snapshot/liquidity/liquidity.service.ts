@@ -20,12 +20,23 @@ export class LiquidityService {
     new AccountHistory("Accounts Receivable", "subCategory", "waterfall", "subtract", "change"),
     new AccountHistory("Inventory", "detailType", "waterfall", "subtract", "change"),
     new AccountHistory("Other Current Assets", "subCategory", "waterfall", "add", "change"),
-    new AccountHistory("Operating Cash Flow", "summary", "waterfall", "add", "compound")
+    new AccountHistory("Operating Cash Flow", "summary", "waterfall", "add", "compound"),
+    new AccountHistory("Fixed Assets", "subCategory", "waterfall", "subtract", "change"),
+    new AccountHistory("Intangible Assets", "subCategory", "waterfall", "subtract", "change"),
+    new AccountHistory("Investments Other", "subCategory", "waterfall", "subtract", "change"),
+    new AccountHistory("Free Cash Flow", "summary", "waterfall", "add", "compound"),
+    new AccountHistory("Interest Expenses", "subCategory", "waterfall", "subtract", "compound"),
+    new AccountHistory("Non-Current Liabilities", "category", "waterfall", "subtract", "change"),
+    new AccountHistory("Dividend Disbursement", "category", "waterfall", "subtract", "compound"),
+    new AccountHistory("Retained Earnings", "subCategory", "waterfall", "add", "change"),
+    new AccountHistory("Equity", "subCategory", "waterfall", "subtract", "change"),
+    new AccountHistory("Net Cash Flow", "summary", "waterfall", "add", "compound")
   ]
 
   constructor(private companyService: CompanyService) { }
 
   getWidgetData(companyId: string){
+    this.emptyHistory();
     let company = this.companyService.getCompanyById(companyId)
     return new Observable((observer) => {
       company.trialBalanceList.forEach(trialBalance => {
@@ -45,7 +56,7 @@ export class LiquidityService {
   }
 
   insertAccountSummary(trialBalance: TrialBalance){
-    // this.emptyHistory();
+
     for(var i=0; i<this.accountsArray.length; i++){
       var account
       if(this.accountsArray[i].property==="subCategory") {
@@ -77,7 +88,7 @@ export class LiquidityService {
     }
   }
   emptyHistory(){
-    for(var i=0; i<this.accountsArray.length; i++){
+    for (var i = 0; i < this.accountsArray.length; i++) {
       this.accountsArray[i].history = [];
     }
   }
@@ -96,7 +107,7 @@ export class LiquidityService {
           balance =  currentPeriodBalance;
         }
 
-        if(account.action === "subtract"){
+        if(account.action === "subtract" && account.categoryType==="compound"){
           balance = - balance;
         }
         if(account.property==="summary"){

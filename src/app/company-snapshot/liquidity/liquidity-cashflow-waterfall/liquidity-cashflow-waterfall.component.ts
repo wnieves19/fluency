@@ -16,8 +16,8 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
   public categories: string[] = ["Revenue", "COGS", "Expenses", "Other Income", "Cash Tax Paid", "Change in Accounts Payable",
     "Change in Current Liabilities", "Change in Accounts Receivable", "Change in Inventory",
     "Change in Other Current Assets","Operating Cash Flow", "Change in Fixed Assets",
-    "Change in Intangible Assets", "Change in Investment or Other Non-Current Assets", "Net Interest (after tax)",
-    "Change in Other Non-Current Liabilities", "Dividends", "Change in Retained Earnings and Other Equity", "Adjustments" ];
+    "Change in Intangible Assets", "Change in Investment", "Free Cash Flow", "Net Interest (after tax)",
+    "Change in Other Non-Current Liabilities", "Dividends", "Change in Retained Earnings and Other Equity", "Adjustments", "Net Cash Flow" ];
 
   public pointColor(point: any): string {
     var summary = point.dataItem.summary;
