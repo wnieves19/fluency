@@ -3,11 +3,13 @@ import {CompanyService} from '../../company-management/company.service';
 import {Observable} from 'rxjs';
 import {TrialBalance} from '../../company-management/models/trial-balance.model';
 import {AccountHistory} from '../AccountHistory';
+import {Company} from '../../company-management/models/company.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LiquidityService {
+  waterfallAccounts = new Array();
   accountsArray = [
     new AccountHistory("Cash", "subCategory", "widget", "add", "compound"),
     new AccountHistory("Revenue", "subCategory", "waterfall", "add" , "compound"),
@@ -33,7 +35,8 @@ export class LiquidityService {
     new AccountHistory("Net Cash Flow", "summary", "waterfall", "add", "compound")
   ]
 
-  constructor(private companyService: CompanyService) { }
+  constructor(private companyService: CompanyService) {
+  }
 
   getWidgetData(companyId: string){
     this.emptyHistory();
@@ -48,9 +51,9 @@ export class LiquidityService {
   }
 
   getAccountHistory (accountName: string){
-    for(let history of this.accountsArray){
-      if(history.accountName === accountName){
-        return history.history;
+    for(let account of this.accountsArray){
+      if(account.accountName === accountName){
+        return account.history;
       }
     }
   }
@@ -92,32 +95,56 @@ export class LiquidityService {
       this.accountsArray[i].history = [];
     }
   }
+  /** Gets data of each account of the waterfall chart for the specified period
+   * period: index of month of the year 0 - 11 */
+  getWaterfallByPeriod(period: string){
+    var waterfall;
+    waterfall = this.waterfallAccounts.filter(acct => {
+      return acct.startPeriod === period
+    });
+    return waterfall[0].accounts;
+  }
   /** Gets data of each account of the waterfall chart */
   getWaterfallAccounts(){
-    var waterfallAccounts = new Array();
-    for(let account of this.accountsArray){
-      if(account.component==="waterfall"){
+    let company: Company = this.companyService.getCompanyById(this.companyService.selectedCompany.companyId)
+      return new Observable(observer => {
+        company.trialBalanceList.forEach(trialBalance => {
+          this.waterfallAccounts.push({
+            startPeriod: trialBalance.startPeriod,
+            accounts: this.getWaterfallAccountsForPeriod()
+          })
+        })
+        observer.next();
+        observer.complete();
+      });
+
+  }
+  getWaterfallAccountsForPeriod() {
+    var periodAccounts = new Array();
+    for (let account of this.accountsArray) {
+      if (account.component === "waterfall") {
         var balance = 0;
-        var currentPeriodBalance = account.history[account.history.length-2].balance
-        var previousPeriodBalance = account.history[account.history.length-3].balance
 
-        if(account.categoryType==="change"){
+        var currentPeriodBalance = account.history[account.history.length - 1].balance
+        var previousPeriodBalance = account.history[account.history.length -2].balance
+
+        if (account.categoryType === "change") {
           balance = currentPeriodBalance - previousPeriodBalance;
-        }else{
-          balance =  currentPeriodBalance;
+        } else {
+          balance = currentPeriodBalance;
         }
 
-        if(account.action === "subtract" && account.categoryType==="compound"){
-          balance = - balance;
+        if (account.action === "subtract" && account.categoryType === "compound") {
+          balance = -balance;
         }
-        if(account.property==="summary"){
-          waterfallAccounts.push({category: account.accountName, summary: "runningTotal"})
-        }else {
-          waterfallAccounts.push({category: account.accountName, balance: balance})
+        if (account.property === "summary") {
+          periodAccounts.push({category: account.accountName, summary: "runningTotal"})
+        } else {
+          periodAccounts.push({category: account.accountName, balance: balance})
         }
       }
     }
-    return waterfallAccounts
+    return periodAccounts
   }
 
   getMonthFromPeriod(dateString: string){

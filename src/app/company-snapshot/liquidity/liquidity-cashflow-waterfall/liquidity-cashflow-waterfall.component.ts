@@ -11,7 +11,10 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
   constructor(private liquidityService: LiquidityService) { }
 
   ngOnInit() {
-    this.series = this.liquidityService.getWaterfallAccounts()
+  this.liquidityService.getWaterfallAccounts()
+     .subscribe(()=>{
+       this.series = this.liquidityService.getWaterfallByPeriod("2019-04-01")
+     });
   }
   public categories: string[] = ["Revenue", "COGS", "Expenses", "Other Income", "Cash Tax Paid", "Change in Accounts Payable",
     "Change in Current Liabilities", "Change in Accounts Receivable", "Change in Inventory",
