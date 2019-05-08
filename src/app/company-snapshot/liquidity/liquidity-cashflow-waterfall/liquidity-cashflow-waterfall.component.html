@@ -1,3 +1,14 @@
+<div class="row justify-content-end">
+    <mat-form-field>
+      <mat-label>Select Period</mat-label>
+      <mat-select [(value)]="selectedPeriod" (selectionChange)="periodSelected()"  >
+        <mat-option *ngFor="let period of periods"[value]="period.value">
+          {{period.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+</div>
+
 <kendo-chart style="height: 600px;" [categoryAxis]="{ categories: categories}">
   <kendo-chart-axis-defaults [majorGridLines]="{ visible : false}" >
   </kendo-chart-axis-defaults>
@@ -6,7 +17,6 @@
   <kendo-chart-series>
     <kendo-chart-series-item type="horizontalWaterfall"
                              [data]="series" summaryField="summary" field="balance"  [color]="pointColor" [labels]="seriesLabels" [border]="{width:0}" >
-
     </kendo-chart-series-item>
   </kendo-chart-series>
   <kendo-chart-value-axis>

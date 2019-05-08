@@ -7,15 +7,38 @@ import {LiquidityService} from '../liquidity.service';
   styleUrls: ['./liquidity-cashflow-waterfall.component.css']
 })
 export class LiquidityCashflowWaterfallComponent implements OnInit {
+  months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   series;
+  periods = new Array()
+  selectedPeriod;
+
   constructor(private liquidityService: LiquidityService) { }
 
   ngOnInit() {
-  this.liquidityService.getWaterfallAccounts()
-     .subscribe(()=>{
-       this.series = this.liquidityService.getWaterfallByPeriod("2019-04-01")
-     });
+    this.initPeriods()
+    this.liquidityService.getWaterfallAccounts()
+      .subscribe(()=>{
+        this.series = this.liquidityService.getWaterfallByPeriod(this.selectedPeriod)
+      });
   }
+
+  periodSelected(){
+    this.series = this.liquidityService.getWaterfallByPeriod(this.selectedPeriod)
+  }
+
+
+  initPeriods(){
+    var date = new Date();
+    var month = date.getMonth();
+    var i = 3
+    while (i != 0){
+      this.periods.push({value:date.getFullYear() +"-" + ("0" + month).slice(-2) +"-01", name: this.months[month]})
+      i--
+      month --;
+    }
+    this.selectedPeriod = this.periods[0].value;
+  }
+
   public categories: string[] = ["Revenue", "COGS", "Expenses", "Other Income", "Cash Tax Paid", "Change in Accounts Payable",
     "Change in Current Liabilities", "Change in Accounts Receivable", "Change in Inventory",
     "Change in Other Current Assets","OPERATING CASH FLOW", "Change in Fixed Assets",

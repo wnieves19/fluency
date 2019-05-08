@@ -84,7 +84,8 @@ export class LiquidityService {
       }
       this.accountsArray[i].history.splice(0, 0,
         {
-          startPeriod: this.getMonthFromPeriod(trialBalance.startPeriod),
+          startPeriod: trialBalance.startPeriod,
+          periodName: this.getMonthFromPeriod(trialBalance.startPeriod),
           balance: this.getBalanceTotal(account)
         }
       );
@@ -111,7 +112,7 @@ export class LiquidityService {
         company.trialBalanceList.forEach(trialBalance => {
           this.waterfallAccounts.push({
             startPeriod: trialBalance.startPeriod,
-            accounts: this.getWaterfallAccountsForPeriod()
+            accounts: this.getWaterfallAccountsForPeriod(trialBalance.startPeriod)
           })
         })
         observer.next();
@@ -119,14 +120,34 @@ export class LiquidityService {
       });
 
   }
-  getWaterfallAccountsForPeriod() {
+
+  getPreviousPeriod(period: string){
+    var date = new Date(period);
+    var month = date.getMonth()+1;
+    var year =date.getFullYear()
+    if(month === 0){
+      month = 12;
+      year --;
+    }
+    var p = year +"-" + ("0" + month).slice(-2) +"-01";
+    return p;
+  }
+  getWaterfallAccountsForPeriod(period: string) {
     var periodAccounts = new Array();
+
     for (let account of this.accountsArray) {
       if (account.component === "waterfall") {
         var balance = 0;
-
-        var currentPeriodBalance = account.history[account.history.length - 1].balance
-        var previousPeriodBalance = account.history[account.history.length -2].balance
+        var currentPeriodAcct = account.history.filter(acct => {
+          return acct.startPeriod === period;
+        });
+        var prevPeriodAcct = account.history.filter(acct => {
+          return acct.startPeriod === this.getPreviousPeriod(period);
+        });
+        console.log(period);
+        var currentPeriodBalance = currentPeriodAcct[0].balance;
+        if(prevPeriodAcct[0]===undefined)return;
+        var previousPeriodBalance = prevPeriodAcct[0].balance
 
         if (account.categoryType === "change") {
           balance = currentPeriodBalance - previousPeriodBalance;
