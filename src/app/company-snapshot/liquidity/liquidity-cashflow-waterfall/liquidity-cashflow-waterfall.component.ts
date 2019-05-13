@@ -16,7 +16,7 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
 
   ngOnInit() {
     this.initPeriods()
-    this.liquidityService.getWaterfallAccounts()
+    this.liquidityService.initWaterfallAccounts()
       .subscribe(()=>{
         this.series = this.liquidityService.getWaterfallByPeriod(this.selectedPeriod)
       });
@@ -26,13 +26,12 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
     this.series = this.liquidityService.getWaterfallByPeriod(this.selectedPeriod)
   }
 
-
   initPeriods(){
     var date = new Date();
-    var month = date.getMonth();
+    var month = date.getMonth() + 1;
     var i = 3
     while (i != 0){
-      this.periods.push({value:date.getFullYear() +"-" + ("0" + month).slice(-2) +"-01", name: this.months[month]})
+      this.periods.push({value:date.getFullYear() +"-" + ("0" + month).slice(-2) +"-01", name: this.months[month-1]})
       i--
       month --;
     }

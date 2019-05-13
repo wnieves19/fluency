@@ -61,34 +61,41 @@ export class LiquidityService {
   insertAccountSummary(trialBalance: TrialBalance){
 
     for(var i=0; i<this.accountsArray.length; i++){
+
       var account
-      if(this.accountsArray[i].property==="subCategory") {
+      var balance = 0
+      if (this.accountsArray[i].property === "subCategory") {
         account = trialBalance.accounts.filter(acct => {
           return acct.subCategory === this.accountsArray[i].accountName;
         });
       }
-      if(this.accountsArray[i].property==="category") {
+      if (this.accountsArray[i].property === "category") {
         account = trialBalance.accounts.filter(acct => {
           return acct.category === this.accountsArray[i].accountName;
         });
       }
-      if(this.accountsArray[i].property==="detailType") {
+      if (this.accountsArray[i].property === "detailType") {
         account = trialBalance.accounts.filter(acct => {
           return acct.detailType === this.accountsArray[i].accountName;
         });
       }
-      if(this.accountsArray[i].property==="type") {
+      if (this.accountsArray[i].property === "type") {
         account = trialBalance.accounts.filter(acct => {
           return acct.type === this.accountsArray[i].accountName;
         });
+      }
+
+      if(this.accountsArray[i].property!=="summary") {
+        balance = this.getBalanceTotal(account)
       }
       this.accountsArray[i].history.splice(0, 0,
         {
           startPeriod: trialBalance.startPeriod,
           periodName: this.getMonthFromPeriod(trialBalance.startPeriod),
-          balance: this.getBalanceTotal(account)
+          balance: balance
         }
       );
+
     }
   }
   emptyHistory(){
@@ -105,20 +112,28 @@ export class LiquidityService {
     });
     return waterfall[0].accounts;
   }
+  getAccountBalanceByPeriod(accountName: string, period: string){
+    var account = this.accountsArray.filter(account =>{
+      return account.accountName===accountName;
+    })
+    var per = account[0].history.filter(history =>{
+      return history.startPeriod === period;
+    })
+    return per[0].balance
+  }
   /** Gets data of each account of the waterfall chart */
-  getWaterfallAccounts(){
+  initWaterfallAccounts(){
     let company: Company = this.companyService.getCompanyById(this.companyService.selectedCompany.companyId)
-      return new Observable(observer => {
-        company.trialBalanceList.forEach(trialBalance => {
-          this.waterfallAccounts.push({
-            startPeriod: trialBalance.startPeriod,
-            accounts: this.getWaterfallAccountsForPeriod(trialBalance.startPeriod)
-          })
+    return new Observable(observer => {
+      company.trialBalanceList.forEach(trialBalance => {
+        this.waterfallAccounts.push({
+          startPeriod: trialBalance.startPeriod,
+          accounts: this.getWaterfallAccountsForPeriod(trialBalance.startPeriod)
         })
-        observer.next();
-        observer.complete();
-      });
-
+      })
+      observer.next();
+      observer.complete();
+    });
   }
 
   getPreviousPeriod(period: string){
@@ -134,7 +149,7 @@ export class LiquidityService {
   }
   getWaterfallAccountsForPeriod(period: string) {
     var periodAccounts = new Array();
-
+    var summaryBalance = 0;
     for (let account of this.accountsArray) {
       if (account.component === "waterfall") {
         var balance = 0;
@@ -144,22 +159,21 @@ export class LiquidityService {
         var prevPeriodAcct = account.history.filter(acct => {
           return acct.startPeriod === this.getPreviousPeriod(period);
         });
-        console.log(period);
         var currentPeriodBalance = currentPeriodAcct[0].balance;
         if(prevPeriodAcct[0]===undefined)return;
         var previousPeriodBalance = prevPeriodAcct[0].balance
-
         if (account.categoryType === "change") {
           balance = currentPeriodBalance - previousPeriodBalance;
         } else {
           balance = currentPeriodBalance;
         }
-
         if (account.action === "subtract" && account.categoryType === "compound") {
           balance = -balance;
         }
+        summaryBalance = summaryBalance + balance;
         if (account.property === "summary") {
-          periodAccounts.push({category: account.accountName, summary: "runningTotal"})
+          periodAccounts.push({category: account.accountName, summary: "runningTotal", balance : summaryBalance})
+          summaryBalance = 0;
         } else {
           periodAccounts.push({category: account.accountName, balance: balance})
         }
