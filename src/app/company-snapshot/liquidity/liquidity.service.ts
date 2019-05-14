@@ -116,11 +116,10 @@ export class LiquidityService {
     });
     return waterfall[0].accounts;
   }
+  /** Returns the balance of an account in a specified period*/
   getAccountBalanceByPeriod(accountName: string, period: string){
-    var account = this.accountsArray.filter(account =>{
-      return account.accountName===accountName;
-    })
-    var per = account[0].history.filter(history =>{
+    var history = this.getAccountHistory(accountName)
+    var per = history.filter(history =>{
       return history.startPeriod === period;
     })
     return per[0].balance

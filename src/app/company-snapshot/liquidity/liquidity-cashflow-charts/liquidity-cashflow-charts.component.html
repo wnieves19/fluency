@@ -15,11 +15,15 @@
         </kendo-chart-series-item>
         <kendo-chart-series-item [border]="{width:0}" type="line" [data]="series" field="freeCashFlow" name="Free Cash Flow">
         </kendo-chart-series-item>
-        <kendo-chart-series-item [border]="{width:0}" type="line" [data]="series" field="netCashFlow" name="Net Cash Flow">
+        <kendo-chart-series-item [border]="{width:0}" [color]="'#007ab7'" type="line" [data]="series" field="netCashFlow" name="Net Cash Flow">
         </kendo-chart-series-item>
-        <kendo-chart-series-item [border]="{width:0}" type="bar"  [data]="series" field="cash" name="Cash">
+        <kendo-chart-series-item [border]="{width:0}" [color]="'#54B701'" type="bar"  [data]="series" field="cash" name="Cash">
         </kendo-chart-series-item>
       </kendo-chart-series>
+      <kendo-chart-value-axis>
+        <kendo-chart-value-axis-item [labels]="{ format: 'C0' }">
+        </kendo-chart-value-axis-item>
+      </kendo-chart-value-axis>
     </kendo-chart>
   </div>
 </div>
