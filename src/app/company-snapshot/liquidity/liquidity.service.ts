@@ -103,6 +103,10 @@ export class LiquidityService {
       this.accountsArray[i].history = [];
     }
   }
+  emptyWaterfallAccounts(){
+      this.waterfallAccounts = [];
+
+  }
   /** Gets data of each account of the waterfall chart for the specified period
    * period: index of month of the year 0 - 11 */
   getWaterfallByPeriod(period: string){
@@ -123,6 +127,7 @@ export class LiquidityService {
   }
   /** Gets data of each account of the waterfall chart */
   initWaterfallAccounts(){
+    this.emptyWaterfallAccounts();
     let company: Company = this.companyService.getCompanyById(this.companyService.selectedCompany.companyId)
     return new Observable(observer => {
       company.trialBalanceList.forEach(trialBalance => {
