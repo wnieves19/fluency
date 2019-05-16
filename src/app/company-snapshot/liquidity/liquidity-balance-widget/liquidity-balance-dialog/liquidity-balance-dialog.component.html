@@ -18,6 +18,12 @@
       <kendo-chart-series-item type="bar" [color]="'#54B701'" format="{0:c}"[data]="historyArray" field="balance" categoryField="periodName">
         <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
       </kendo-chart-series-item>
+      <kendo-chart-value-axis>
+        <kendo-chart-value-axis-item>
+          <kendo-chart-value-axis-item-labels [content]="labelContent">
+          </kendo-chart-value-axis-item-labels>
+        </kendo-chart-value-axis-item>
+      </kendo-chart-value-axis>
     </kendo-chart-series>
   </kendo-chart>
 </div>

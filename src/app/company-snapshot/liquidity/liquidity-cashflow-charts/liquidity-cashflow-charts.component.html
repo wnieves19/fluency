@@ -21,7 +21,9 @@
         </kendo-chart-series-item>
       </kendo-chart-series>
       <kendo-chart-value-axis>
-        <kendo-chart-value-axis-item [labels]="{ format: 'C0' }">
+        <kendo-chart-value-axis-item>
+          <kendo-chart-value-axis-item-labels [content]="labelContent">
+          </kendo-chart-value-axis-item-labels>
         </kendo-chart-value-axis-item>
       </kendo-chart-value-axis>
     </kendo-chart>

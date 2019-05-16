@@ -9,7 +9,8 @@
     <table mat-table [dataSource]="companiesTable" class="mat-elevation-z0">
       <ng-container matColumnDef="companyName">
         <th mat-header-cell *matHeaderCellDef>  <label style="font-size:16px">Name</label></th>
-        <td mat-cell *matCellDef="let company"><div class="row"><div class="col-sm-1"><mat-icon style="margin-right: 10px">account_circle</mat-icon></div><div class="col-sm-11">{{company.name}} </div> </div></td>
+
+        <td mat-cell *matCellDef="let company"><a style="cursor: pointer"(click)="loadCompanyData(company)"><div fxLayoutAlign="center center" class="row"><div class="col-sm-2"><mat-icon style="margin-right: 10px">account_circle</mat-icon></div><div class="col-sm-10">{{company.name}} </div> </div></a></td>
       </ng-container>
       <!-- Name Column -->
       <ng-container matColumnDef="email">

@@ -37,7 +37,14 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
     }
     this.selectedPeriod = this.periods[0].value;
   }
-
+  public labelContent = (e: any) => {
+    if(e.value < 1000) return e.value
+    if (e.value >999 && e.value < 1000000){
+      return  "$"+ e.value/1000 + "K"
+    }else if(e.value > 999999 && e.value < 1000000000){
+      return  "$"+ e.value/1000 + "M"
+    }
+  }
   public categories: string[] = ["Revenue", "COGS", "Expenses", "Other Income", "Cash Tax Paid", "Change in Accounts Payable",
     "Change in Current Liabilities", "Change in Accounts Receivable", "Change in Inventory",
     "Change in Other Current Assets","OPERATING CASH FLOW", "Change in Fixed Assets",

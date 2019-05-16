@@ -189,7 +189,7 @@ export class LiquidityService {
   getMonthFromPeriod(dateString: string){
     var dateArray = dateString.split("-");
     var date = new Date(parseInt(dateArray[0]), parseInt(dateArray[1])-1, parseInt(dateArray[2]));
-    const month = date.toLocaleString('en-us', { month: 'long' });
+    const month = date.toLocaleString('en-us', { month: 'short' });
     return month;
   }
 
