@@ -38,7 +38,7 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
     this.selectedPeriod = this.periods[0].value;
   }
   public labelContent = (e: any) => {
-    if(e.value < 1000) return e.value
+    if(e.value < 1000) return "$"+e.value
     if (e.value >999 && e.value < 1000000){
       return  "$"+ e.value/1000 + "K"
     }else if(e.value > 999999 && e.value < 1000000000){
