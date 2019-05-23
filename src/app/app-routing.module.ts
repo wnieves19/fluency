@@ -14,6 +14,8 @@ import {UserAccountComponent} from './user-account/user-account.component';
 import {CompanyManagementComponent} from './company-management/company-management.component';
 import {CompanyListComponent} from './company-management/company-list/company-list.component';
 import {CompanyDetailsComponent} from './company-management/company-settings/company-details/company-details.component';
+import {UserAccessComponent} from './company-management/company-settings/user-access/user-access.component';
+import {CompanyDetailsFormComponent} from './company-management/company-settings/company-details/company-details-form/company-details-form.component';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent},
@@ -22,7 +24,7 @@ const appRoutes: Routes = [
       {path: '', component: CompanyListComponent},
       {path: 'company-list', component: CompanyListComponent},
       {path: 'company', component: CompanyDetailsComponent},
-      { path: 'account-details', component: UserAccountComponent},
+      {path: 'account-details', component: UserAccountComponent},
       {path: 'company/:id', component: CompanyDetailsComponent}
 
     ]},
@@ -31,8 +33,14 @@ const appRoutes: Routes = [
       { path: 'liquidity', component: LiquidityComponent},
       { path: 'profitability', component: ProfitabilityComponent},
       { path: 'performance', component: PerformanceComponent},
-      { path: 'settings', component: CompanySettingsComponent},
-      { path: 'account-details', component: UserAccountComponent},
+      { path: 'settings',component: CompanySettingsComponent,  children: [
+          { path: 'user-access', component: UserAccessComponent},
+          { path: 'delete-account', component: PerformanceComponent},
+          { path: 'company-details-form', component: CompanyDetailsFormComponent, children: [
+              {path: ':id', component: CompanyDetailsFormComponent},
+            ]},
+        ]},
+      { path: 'account-details', component: UserAccountComponent}
     ]},
   { path: 'login', component: LoginComponent},
 

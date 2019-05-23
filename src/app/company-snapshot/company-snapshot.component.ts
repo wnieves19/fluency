@@ -34,7 +34,6 @@ export class CompanySnapshotComponent implements OnInit {
 
   navigateToRoute(routeName: string) {
     this.router.navigate([routeName], {relativeTo: this.route});
-    console.log(routeName)
   }
   ngOnInit() {
 

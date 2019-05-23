@@ -1,0 +1,7 @@
+.settings-container {
+  width: 50%;
+  margin: auto;
+}
+.active{
+  color: blue;
+}

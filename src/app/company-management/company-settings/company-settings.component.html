@@ -1,3 +1,21 @@
-<p>
-  company-settings works!
-</p>
+<div class="row">
+  <div class="header-container">
+    <h1>Company Settings</h1>
+  </div>
+</div>
+<div class="basic-container">
+<div class="row settings-container">
+  <div class="col-md-4">
+    <mat-list>
+      <a mat-list-item  routerLink="." routerLinkActive="active"
+         [routerLink]="[nav.route, companyId]"
+         *ngFor="let nav of settingsNavigation">{{nav.name}}
+      </a>
+    </mat-list>
+
+  </div>
+  <div class="col-md-8">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+</div>

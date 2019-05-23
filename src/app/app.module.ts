@@ -37,6 +37,7 @@ import { UserAccountComponent } from './user-account/user-account.component';
 import {CredentialsInterceptorService} from './interceptor';
 import {LiquidityService} from './company-snapshot/liquidity/liquidity.service';
 import {CompanyService} from './company-management/company.service';
+import { CompanyDetailsFormComponent } from './company-management/company-settings/company-details/company-details-form/company-details-form.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {CompanyService} from './company-management/company.service';
     LiquidityCashflowChartsComponent,
     LiquidityCashflowWaterfallComponent,
     LiquidityBalanceDialogComponent,
-    UserAccountComponent
+    UserAccountComponent,
+    CompanyDetailsFormComponent
   ],
   imports: [
     BrowserModule,

@@ -29,6 +29,8 @@ button:focus {
   /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
      causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
   flex: 1;
+  background-color: white;
+
 }
 
 .toolbar-is-mobile .app-sidenav-container {
