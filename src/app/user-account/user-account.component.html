@@ -1,13 +1,13 @@
 <div class="row">
-  <div class="header-container">
-    <h1>User Profile</h1>
+  <div class="col-sm-12">
+    <h2 class="header-container">User Profile</h2>
   </div>
 </div>
   <div class="row justify-content-center">
     <div class="col-sm-5">
-      <mat-card class="mat-card-profile"style="margin-left: 30px" class="mat-elevation-z4" >
-        <mat-card-content style="margin: 30px">
-          <mat-card-title >Profile</mat-card-title>
+      <mat-card class="mat-card-profile"style="margin-left: 30px" class="mat-elevation-z0" >
+        <mat-card-content >
+          <mat-card-title >Personal Information</mat-card-title>
           <div class="row">
             <div class="col-sm-9">
               <form [formGroup]="profileForm" (ngSubmit)="profileForm.valid &&  saveProfile()">

@@ -1,7 +1,12 @@
 .settings-container {
-  width: 50%;
+  width: 80%;
   margin: auto;
 }
-.active{
+.inactive{
   color: blue;
+  text-decoration:none;
+}
+.active{
+  color:black;
+  font-weight: bold;
 }

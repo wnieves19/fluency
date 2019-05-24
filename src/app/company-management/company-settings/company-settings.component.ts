@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute, Params, Router} from '@angular/router';
 import {CompanyService} from '../company.service';
 
 @Component({
@@ -10,8 +10,7 @@ import {CompanyService} from '../company.service';
 export class CompanySettingsComponent implements OnInit {
   companyId;
   settingsNavigation = [{name: 'Company details', route: 'company-details-form'},
-    {name: 'User access', route: 'user-access'},
-    {name: 'Delete company', route: 'delete-company'}
+    {name: 'User access', route: 'user-access'}
   ];
   constructor(private companyService: CompanyService, private router: Router, private route: ActivatedRoute) { }
 
@@ -21,6 +20,6 @@ export class CompanySettingsComponent implements OnInit {
   }
 
   navigateToRoute(routeName: string) {
-    this.router.navigate([routeName, {id: this.companyId}], {relativeTo: this.route});
+    this.router.navigate([routeName, {id:this.companyId}],{relativeTo: this.route} );
   }
 }

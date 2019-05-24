@@ -34,11 +34,12 @@ const appRoutes: Routes = [
       { path: 'profitability', component: ProfitabilityComponent},
       { path: 'performance', component: PerformanceComponent},
       { path: 'settings',component: CompanySettingsComponent,  children: [
-          { path: 'user-access', component: UserAccessComponent},
-          { path: 'delete-account', component: PerformanceComponent},
-          { path: 'company-details-form', component: CompanyDetailsFormComponent, children: [
-              {path: ':id', component: CompanyDetailsFormComponent},
-            ]},
+          {path: 'user-access', component: UserAccessComponent, children:[
+            {path: ':id', component: UserAccessComponent}]},
+          {path: 'delete-account', component: CompanyDetailsFormComponent, children:[
+            {path: ':id', component: CompanyDetailsFormComponent}]},
+          {path: 'company-details-form', component: CompanyDetailsFormComponent, children:[
+            {path: 'company-details-form/:id', component: CompanyDetailsFormComponent}]},
         ]},
       { path: 'account-details', component: UserAccountComponent}
     ]},
