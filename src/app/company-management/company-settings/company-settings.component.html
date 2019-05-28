@@ -3,7 +3,7 @@
     <h2>Company Settings</h2>
   </div>
 <div class="row settings-container">
-  <div class="col-md-2">
+  <div class="col-md-3 settings-list ">
     <mat-list>
       <a class="inactive" mat-list-item  routerLink="." routerLinkActive="active"
          [routerLink]="[nav.route,{id:companyId}]"
@@ -12,7 +12,7 @@
     </mat-list>
 
   </div>
-  <div class="col-md-10">
+  <div class="col-md-9">
     <router-outlet></router-outlet>
   </div>
 </div>

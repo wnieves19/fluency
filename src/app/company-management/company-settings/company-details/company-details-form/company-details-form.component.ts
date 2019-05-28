@@ -39,6 +39,8 @@ export class CompanyDetailsFormComponent implements OnInit {
         if(queryParams['id']){
           this.editMode = true;
           this.loadCompany(queryParams['id']);
+        }else{
+         this.loadCompany( this.companyService.selectedCompany.companyId)
         }
       }
     );

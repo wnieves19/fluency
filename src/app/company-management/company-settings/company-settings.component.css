@@ -2,6 +2,9 @@
   width: 80%;
   margin: auto;
 }
+.settings-list{
+  padding-left: 20px
+}
 .inactive{
   color: blue;
   text-decoration:none;

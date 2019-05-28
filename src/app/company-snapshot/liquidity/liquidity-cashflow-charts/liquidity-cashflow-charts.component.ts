@@ -15,7 +15,9 @@ export class LiquidityCashflowChartsComponent implements OnInit {
 
   ngOnInit() {
     let company: Company = this.companyService.getCompanyById(this.companyService.selectedCompany.companyId);
+    var tbCount = 0;
     company.trialBalanceList.forEach(trialBalance => {
+      if(tbCount>12)return;
       var waterfallAccounts = this.liquidityService.getWaterfallByPeriod(trialBalance.startPeriod);
       this.categories.splice(0, 0,this.liquidityService.getMonthFromPeriod(trialBalance.startPeriod))
       var cashBalance = this.liquidityService.getAccountBalanceByPeriod("Cash", trialBalance.startPeriod)
@@ -39,6 +41,7 @@ export class LiquidityCashflowChartsComponent implements OnInit {
           netCashFlow: netCashFlow[0].balance
         })
       }
+      tbCount++;
     })
   }
 
