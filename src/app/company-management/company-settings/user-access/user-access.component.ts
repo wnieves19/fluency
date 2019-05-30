@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {CompanyService} from '../../company.service';
 
 @Component({
   selector: 'app-user-access',
@@ -8,11 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class UserAccessComponent implements OnInit {
   displayedColumns: string[] = ['userName', 'email', 'roles', 'addUser'];
   roles: string[] = ['Read','Edit', 'Admin'];
-  userList = [{name: "Wilfredo Nieves", email : "w.nieves19@gmail.com", role: "Admin"}, {name: "Jose Ruiz", email:"jruiz@optivon.net", role: "Read"}]
+  userList
+  // userList = [{name: "Wilfredo Nieves", email : "w.nieves19@gmail.com", role: "Admin"}, {name: "Jose Ruiz", email:"jruiz@optivon.net", role: "Read"}]
 
-  constructor() { }
+  constructor(private companyService: CompanyService) { }
 
   ngOnInit() {
+    this.userList = this.companyService.companyUsers;
   }
 
   addUserClicked(){

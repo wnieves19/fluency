@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import {Company} from './models/company.model';
-import {AngularFireDatabase} from '@angular/fire/database';
+import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
 import {AuthService} from '../user-authentication/auth.service';
 import {HttpClient} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {TrialBalance} from './models/trial-balance.model';
+import 'rxjs/add/operator/map'
+import {UserModel} from './models/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +17,8 @@ export class CompanyService {
   selectedCompany: Company;
   dataSource: Observable<any>
   companiesObservable: Observable<any>;
+  companyUsers:UserModel[] = new Array();
+  private items: AngularFireList<any>;
 
   constructor(private db: AngularFireDatabase, private authService: AuthService, private http: HttpClient ) {
     this.fetchCompanies()
@@ -25,6 +29,9 @@ export class CompanyService {
               company.payload.val().phone, company.payload.val().address, company.payload.val().city,
               company.payload.val().state, company.payload.val().zip, company.payload.val().url, company.payload.val().realm));
           }
+          this.fetchCompanyUsers(company.key).subscribe(user=>{
+
+          })
         });
       });
   }
@@ -50,7 +57,7 @@ export class CompanyService {
     var tbProcessed = 0;
     return new Observable((observer) => {
       this.getCompanyById(companyId).trialBalanceList=[]
-        this.db.list<TrialBalance>('company-data/' + companyId).valueChanges()
+      this.db.list<TrialBalance>('company-data/' + companyId).valueChanges()
         .subscribe((trialBalanceArray) => {
           trialBalanceArray.forEach(trialBalance => {
             this.getCompanyById(companyId).trialBalanceList.push(trialBalance);
@@ -65,6 +72,22 @@ export class CompanyService {
     })
   }
 
+  fetchCompanyUsers(companyId: string){
+    return new Observable((observer) => {
+      this.db.list('/company-users/'+companyId).snapshotChanges()
+        .subscribe(userKeys => {
+          userKeys.forEach(x => {
+            this.db.object<UserModel>('user/' + x.key).valueChanges()
+              .subscribe(user => {
+                user.role = x.payload.val().toString();
+                this.companyUsers.push(user);
+                observer.next();
+              })
+          })
+        });
+    });
+
+  }
 
   fetchCompanySource(companyId: string, realmId: string){
     this.dataSource = this.http.post("http://localhost:3000/get_company_data",
