@@ -78,7 +78,7 @@ import { CompanyDetailsFormComponent } from './company-management/company-settin
 
 
   ],
-  entryComponents: [CompanySnapshotComponent, LiquidityBalanceDialogComponent],
+  entryComponents: [CompanySnapshotComponent, LiquidityBalanceDialogComponent, UserDetailComponent],
   providers: [AuthService,CompanyService, LiquidityService,{provide: HTTP_INTERCEPTORS, useClass: CredentialsInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })

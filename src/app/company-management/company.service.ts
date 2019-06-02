@@ -18,7 +18,6 @@ export class CompanyService {
   dataSource: Observable<any>
   companiesObservable: Observable<any>;
   companyUsers:UserModel[] = new Array();
-  private items: AngularFireList<any>;
 
   constructor(private db: AngularFireDatabase, private authService: AuthService, private http: HttpClient ) {
     this.fetchCompanies()
@@ -29,9 +28,6 @@ export class CompanyService {
               company.payload.val().phone, company.payload.val().address, company.payload.val().city,
               company.payload.val().state, company.payload.val().zip, company.payload.val().url, company.payload.val().realm));
           }
-          this.fetchCompanyUsers(company.key).subscribe(user=>{
-
-          })
         });
       });
   }
@@ -68,11 +64,11 @@ export class CompanyService {
             }
           });
         })
-
     })
   }
 
   fetchCompanyUsers(companyId: string){
+    this.companyUsers = [];
     return new Observable((observer) => {
       this.db.list('/company-users/'+companyId).snapshotChanges()
         .subscribe(userKeys => {
@@ -81,12 +77,12 @@ export class CompanyService {
               .subscribe(user => {
                 user.role = x.payload.val().toString();
                 this.companyUsers.push(user);
-                observer.next();
               })
           })
+          observer.next();
+          observer.complete();
         });
     });
-
   }
 
   fetchCompanySource(companyId: string, realmId: string){

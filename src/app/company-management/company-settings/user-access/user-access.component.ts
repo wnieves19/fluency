@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {CompanyService} from '../../company.service';
+import {UserDetailComponent} from './user-detail/user-detail.component';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-user-access',
@@ -10,21 +12,23 @@ export class UserAccessComponent implements OnInit {
   displayedColumns: string[] = ['userName', 'email', 'roles', 'addUser'];
   roles: string[] = ['Read','Edit', 'Admin'];
   userList
-  // userList = [{name: "Wilfredo Nieves", email : "w.nieves19@gmail.com", role: "Admin"}, {name: "Jose Ruiz", email:"jruiz@optivon.net", role: "Read"}]
-
-  constructor(private companyService: CompanyService) { }
+  constructor(private dialog: MatDialog, private companyService: CompanyService) { }
 
   ngOnInit() {
     this.userList = this.companyService.companyUsers;
   }
 
   addUserClicked(){
-
+    this.dialog.open(UserDetailComponent, {
+      width: '400px',
+      data: {widgetName: "test"}
+    });
   }
 
   changeUserRole(){
 
   }
+
   deleteUser(){
 
   }

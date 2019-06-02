@@ -31,8 +31,10 @@ export class CompanyListComponent implements OnInit, OnDestroy {
   private loadCompanyData(company: Company) {
     let tbSubscription = this.companyService.fetchTrialBalances(company.companyId)
       .subscribe(() => {
-          this.router.navigate(['/company-snapshot']);
-          this.companyService.selectedCompany = company;
+          this.companyService.fetchCompanyUsers(company.companyId).subscribe(user=>{
+            this.companyService.selectedCompany = company;
+            this.router.navigate(['/company-snapshot']);
+          })
         }
       );
     this.subscriptions.push(tbSubscription);
