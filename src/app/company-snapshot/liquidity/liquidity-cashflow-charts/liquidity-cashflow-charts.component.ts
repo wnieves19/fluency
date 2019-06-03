@@ -9,7 +9,7 @@ import {CompanyService} from '../../../company-management/company.service';
   styleUrls: ['./liquidity-cashflow-charts.component.css']
 })
 export class LiquidityCashflowChartsComponent implements OnInit {
-  series = new Array();
+  cashFlowSeries = new Array();
   categories = new Array();
   constructor(private liquidityService: LiquidityService, private companyService: CompanyService) { }
 
@@ -22,7 +22,7 @@ export class LiquidityCashflowChartsComponent implements OnInit {
       this.categories.splice(0, 0,this.liquidityService.getMonthFromPeriod(trialBalance.startPeriod))
       var cashBalance = this.liquidityService.getAccountBalanceByPeriod("Cash", trialBalance.startPeriod)
       if(waterfallAccounts===undefined){
-        this.series.splice(0, 0,{startPeriod: trialBalance.startPeriod, cash: cashBalance, operatingCashFlow:0, freeCashFlow : 0, netCashFlow :0})
+        this.cashFlowSeries.splice(0, 0,{startPeriod: trialBalance.startPeriod, cash: cashBalance, operatingCashFlow:0, freeCashFlow : 0, netCashFlow :0})
       }else {
         var operatingCashFlow = waterfallAccounts.filter(acct => {
           return acct.category === "Operating Cash Flow"
@@ -33,7 +33,7 @@ export class LiquidityCashflowChartsComponent implements OnInit {
         var netCashFlow = waterfallAccounts.filter(acct => {
           return acct.category === "Net Cash Flow"
         });
-        this.series.splice(0, 0, {
+        this.cashFlowSeries.splice(0, 0, {
           startPeriod: trialBalance.startPeriod,
           cash: cashBalance,
           operatingCashFlow: operatingCashFlow[0].balance,
@@ -43,10 +43,6 @@ export class LiquidityCashflowChartsComponent implements OnInit {
       }
       tbCount++;
     })
-  }
-
-  public catContent = (e:any)=> {
-    e.value
   }
 
   public labelContent = (e: any) => {

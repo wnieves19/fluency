@@ -45,8 +45,10 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
                         this.company = this.companyService.getCompanyById(companySnapshot.key)
                         this.loadingMessage = "Made the Kessel Run in 12 parsecs...";
                         setTimeout(() => {
-                          this.router.navigate(['/company-snapshot']);
-                          this.companyService.selectedCompany = this.company;
+                          this.companyService.fetchCompanyUsers(this.company.companyId).subscribe(user=>{
+                            this.companyService.selectedCompany = this.company;
+                            this.router.navigate(['/company-snapshot']);
+                          })
                         }, 2000);
 
                       }
