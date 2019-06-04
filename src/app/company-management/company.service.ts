@@ -86,7 +86,7 @@ export class CompanyService {
   }
 
   fetchCompanySource(companyId: string, realmId: string){
-    this.dataSource = this.http.post("http://localhost:4200/get_company_data",
+    this.dataSource = this.http.post("https://fluencyanalysis.herokuapp.com/get_company_data",
       {
         "companyId": companyId,
         "realmId": realmId

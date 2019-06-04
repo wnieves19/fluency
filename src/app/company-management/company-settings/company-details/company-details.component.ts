@@ -69,7 +69,7 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
     this.requestCompanyInfo = true;
     this.listenForCompanyEvents();
     // Launch Popup
-    window.open("http://localhost:4200/connect_to_quickbooks?userId="+this.authService.user.uid,'connectPopup', parameters);
+    window.open("https://fluencyanalysis.herokuapp.com/connect_to_quickbooks?userId="+this.authService.user.uid,'connectPopup', parameters);
   }
   xeroClicked(){
 
