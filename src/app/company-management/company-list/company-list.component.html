@@ -1,4 +1,4 @@
-<div class="row" >
+<div  *ngIf="companiesTable" class="row" >
   <div class="col-sm-12">
     <h2 class="header-container">Companies</h2>
   </div>
@@ -6,7 +6,7 @@
 </div>
 <div class="row" >
   <div class="col-sm-12">
-    <table mat-table [dataSource]="companiesTable" class="mat-elevation-z0">
+    <table *ngIf="companiesTable" mat-table [dataSource]="companiesTable" class="mat-elevation-z0">
       <ng-container matColumnDef="companyName">
         <th mat-header-cell *matHeaderCellDef>  <label style="font-size:16px">Name</label></th>
 
@@ -40,5 +40,21 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-  </div>
+    <div *ngIf="noCompanies" class="loading-container" >
+      <div class="row justify-content-center">
+        No Companies Added, Add New Company
+      </div>
+      <div class="row justify-content-center">
+        <button mat-icon-button (click)="addCompanyClicked()">
+          <mat-icon>add_circle_outlined</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="loading" [ngClass]="{'loading-container': !companiesTable}">
+      <div class="row justify-content-center">
+        <mat-progress-spinner color="warn" mode="indeterminate"></mat-progress-spinner>
+      </div>
+      <div class="row justify-content-center">Loading Companies...</div>
+    </div>
+</div>
 </div>
