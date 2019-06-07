@@ -50,7 +50,7 @@
         </button>
       </div>
     </div>
-    <div *ngIf="loading" [ngClass]="{'loading-container': !companiesTable}">
+    <div *ngIf="loading" class="loading-container">
       <div class="row justify-content-center">
         <mat-progress-spinner color="warn" mode="indeterminate"></mat-progress-spinner>
       </div>
