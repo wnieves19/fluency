@@ -2,6 +2,9 @@ table {
   width: 50%;
   margin: auto;
 }
+.loading-container{
+  margin-top: 100px
+}
 .mat-row:hover{
   background-color:#40404010;
 
