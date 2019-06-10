@@ -16,9 +16,11 @@ import {CompanyListComponent} from './company-management/company-list/company-li
 import {CompanyDetailsComponent} from './company-management/company-settings/company-details/company-details.component';
 import {UserAccessComponent} from './company-management/company-settings/user-access/user-access.component';
 import {CompanyDetailsFormComponent} from './company-management/company-settings/company-details/company-details-form/company-details-form.component';
+import {RegisterComponent} from './user-authentication/register/register.component';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent},
+  { path: 'signup', component: RegisterComponent},
   { path: 'user-authentication', component: UserAuthenticationComponent},
   { path: 'company-management', canActivate: [AuthGuardService],component: CompanyManagementComponent,  children: [
       {path: '', component: CompanyListComponent},
@@ -45,7 +47,6 @@ const appRoutes: Routes = [
       { path: 'account-details', component: UserAccountComponent}
     ]},
   { path: 'login', component: LoginComponent},
-
   { path: '**', redirectTo: '' }
 ];
 

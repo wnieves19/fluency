@@ -10,7 +10,7 @@
       <ng-container matColumnDef="companyName">
         <th mat-header-cell *matHeaderCellDef>  <label style="font-size:16px">Name</label></th>
 
-        <td mat-cell *matCellDef="let company"><a style="cursor: pointer"(click)="loadCompanyData(company)"><div fxLayoutAlign="center center" class="row"><div class="col-sm-2"><mat-icon style="margin-right: 10px">account_circle</mat-icon></div><div class="col-sm-10">{{company.name}} </div> </div></a></td>
+        <td mat-cell *matCellDef="let company"><a style="cursor: pointer"(click)="loadCompanyData(company)"><div fxLayoutAlign="center center" class="row"><div class="col-sm-2"><mat-icon style="margin-right: 10px">domain</mat-icon></div><div class="col-sm-10">{{company.name}} </div> </div></a></td>
       </ng-container>
       <!-- Name Column -->
       <ng-container matColumnDef="email">
@@ -18,13 +18,10 @@
         <td mat-cell *matCellDef="let company"> {{company.email}} </td>
       </ng-container>
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef><label style="font-size:16px">Actions</label></th>
+        <th mat-header-cell *matHeaderCellDef><label style="font-size:16px">Snapshot</label></th>
         <td mat-cell *matCellDef="let company">
           <button mat-icon-button (click)="loadCompanyData(company)">
-            <mat-icon>insert_chart_outlined</mat-icon>
-          </button>
-          <button mat-icon-button (click)="editCompanyClicked(company.companyId)">
-            <mat-icon>edit</mat-icon>
+            <mat-icon>bar_chart</mat-icon>
           </button>
         </td>
       </ng-container>

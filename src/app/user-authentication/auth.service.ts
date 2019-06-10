@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {Observable} from 'rxjs';
 import {UserAccount} from './user-account.model';
+import {DataSnapshot} from '@angular/fire/database/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,6 @@ export class AuthService {
       }
       else{
         this.router.navigate(['/'])
-
       }
     })
   }
@@ -38,6 +38,57 @@ export class AuthService {
   async saveProfile(){
     const itemsRef = this.db.list('user/');
     return itemsRef.update(this.user.uid, this.account);
+  }
+
+  createUserWithCompany(userAccount: UserAccount, password:string, companyId: string, role: string, inviteId: string): Observable<any>{
+    return new Observable((observer)=>{
+      this.afAuth.auth.createUserWithEmailAndPassword(userAccount.email, password)
+        .then(userCredentials =>{
+          //create user
+          const userReference = this.db.object("user/"+userCredentials.user.uid);
+          userReference.set(userAccount)
+            .then(ref=>{
+              //fetch company and create user-companies
+              this.db.object('companies/'+companyId).query.once("value")
+                .then(companySnapshot=>{
+                  const userCompaniesRef =  this.db.object("user-companies/"+userCredentials.user.uid+"/"+companyId);
+                  userCompaniesRef.set(this.getCompanyObjetcFromSnapshot(companySnapshot))
+                    .then(value => {
+                      //create company-users
+                      this.db.object("company-users/"+companyId+"/"+userCredentials.user.uid).set(role);
+                      //TODO: Uncomment delete invite-request
+                      // this.db.object("invite-request/"+inviteId).remove();
+                      observer.next(userCredentials)
+                      observer.complete()
+                    })
+                })
+            });
+
+        }).catch(err=>{
+          console.log(err);
+      })
+    })
+
+  }
+
+  getCompanyObjetcFromSnapshot(snapshot: DataSnapshot){
+    let companyObject =
+      {
+        address : snapshot.val().address || "",
+        city : snapshot.val().city || "",
+        companyId : snapshot.val().companyId || "",
+        email : snapshot.val().email || "",
+        name : snapshot.val().name || "",
+        phone : snapshot.val().phone || "",
+        realm : snapshot.val().realm || "",
+        refreshToken : snapshot.val().refreshToken || "",
+        source : snapshot.val().source || "",
+        state : snapshot.val().state || "",
+        token : snapshot.val().token || "",
+        url : snapshot.val().url || "",
+        zip : snapshot.val().zip || "",
+      }
+    return companyObject;
   }
 
   logout(){

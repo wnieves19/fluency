@@ -1,3 +1,65 @@
-<p>
-  register works!
-</p>
+<div class="col-sm-12" class="signup-form">
+  <div fxLayout fxFill fxLayoutAlign="space-around center">
+  <mat-card class="mat-card-signup mat-elevation-z0 "  >
+    <mat-card-content >
+      <mat-card-title fxLayoutAlign="center center">Sign up</mat-card-title>
+      <div class="row" fxLayoutAlign="center center">
+        <div class="col-sm-9">
+          <form [formGroup]="signUpForm" (ngSubmit)="signUpForm.valid &&  signUp()">
+            <div class="form-group">
+              <div class="row" >
+                <div class="col-sm-12" >
+                  <label>First Name: </label>
+                  <input  placeholder="Name" class="form-control" formControlName="name" [ngClass]="{'is-invalid': signUpForm.get('name').touched && signUpForm.get('name').invalid}" required>
+
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-12">
+                  <label>Last Name: </label>
+                  <input  placeholder="Last Name" class="form-control" formControlName="lastName" [ngClass]="{'is-invalid': signUpForm.get('lastName').touched && signUpForm.get('lastName').invalid}" required>
+
+                </div>
+              </div>
+            </div>
+            <!--<div class="form-group" *ngIf="!inviteRequestId">-->
+              <!--<div class="row">-->
+                <!--<div class="col-sm-12">-->
+                  <!--<label>Email:</label>-->
+                  <!--<input placeholder="Email" class="form-control"  formControlName="email"-->
+                         <!--[ngClass]="{'is-invalid': signUpForm.get('email').touched && signUpForm.get('email').invalid}"required>-->
+                  <!--<div *ngIf="{'is-invalid': signUpForm.get('email').touched && signUpForm.get('email').invalid}" class="invalid-feedback">-->
+                    <!--<div *ngIf="signUpForm.get('email').required">Email is Required</div>-->
+                    <!--<div *ngIf="signUpForm.get('email').email">Email must be a valid email </div>-->
+                  <!--</div>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-12">
+                  <label>Password: </label>
+                  <input type="password"  placeholder="Password" class="form-control" formControlName="password"  [ngClass]="{'is-invalid': signUpForm.get('password').touched && signUpForm.get('password').invalid}" required>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-12">
+                  <label>Confirm password: </label>
+                  <input  type="password"  placeholder="Confirm Password" class="form-control" formControlName="confirm"  [ngClass]="{'is-invalid': signUpForm.get('confirm').touched && signUpForm.get('confirm').invalid}" required>
+                </div>
+              </div>
+            </div>
+            <div>
+              <button class="btn btn-primary" [disabled]="!signUpForm.valid"  type="submit">Sign up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+</div>

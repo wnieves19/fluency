@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from './user-authentication/auth.service';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import {ActivatedRoute, NavigationExtras, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -25,9 +25,14 @@ export class AppComponent implements OnInit{
               this.router.navigate(['/company-management']);
             }
             else{
-              this.router.navigate(['/user-authentication']);
+              if(queryParams['inviteId'] ) {
+                this.router.navigate(['/user-authentication'], {queryParams: { 'inviteId': queryParams['inviteId'] }});
+              }else{
+                this.router.navigate(['/user-authentication']);
+              }
             }
           })
+
         }
       }
     );
