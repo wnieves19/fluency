@@ -85,6 +85,17 @@ export class CompanyService {
     });
   }
 
+  createUserInviteRequest(userEmail: string, userRole){
+    return new Observable((observer) => {
+      const itemRef = this.db.list("invite-request");
+      itemRef.push({email: userEmail, role: userRole, companyId: this.selectedCompany.companyId})
+        .then(ref=>{
+          observer.next();
+          observer.complete()
+        });
+    });
+  }
+
   fetchCompanySource(companyId: string, realmId: string){
     this.dataSource = this.http.post("http://localhost:3000/get_company_data",
       {

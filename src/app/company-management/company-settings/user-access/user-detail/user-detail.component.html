@@ -11,7 +11,7 @@
                   <div class="col-sm-12">
                     <label>Email</label>
                     <input placeholder="Email" class="form-control" formControlName="email"
-                           [ngClass]="{'is-invalid': userForm.get('email').touched && userForm.get('email').invalid}"required>
+                           [ngClass]="{'is-invalid': userForm.get('email').touched && userForm.get('email').invalid}" required>
 
                     <div *ngIf="{'is-invalid': userForm.get('email').touched && userForm.get('email').invalid}" class="invalid-feedback">
                       <div *ngIf="userForm.get('email').required">Email is Required</div>
@@ -24,10 +24,10 @@
                 <div class="row">
                   <div class="col-sm-12">
                     <label>Role</label><br/>
-                    <mat-radio-group formControlName="role" aria-label="Select an option" required>
-                      <mat-radio-button style="margin-left: 10px" value="Read">Read</mat-radio-button>
-                      <mat-radio-button style="margin-left: 10px" value="Edit">Edit</mat-radio-button>
-                      <mat-radio-button style="margin-left: 10px" value="Admin">Admin</mat-radio-button>
+                    <mat-radio-group required formControlName="role" aria-label="Select an option" >
+                      <mat-radio-button  style="margin-left: 10px" value="Read">Read</mat-radio-button>
+                      <mat-radio-button  style="margin-left: 10px" value="Edit">Edit</mat-radio-button>
+                      <mat-radio-button  style="margin-left: 10px" value="Admin">Admin</mat-radio-button>
                     </mat-radio-group>
                   </div>
                 </div>

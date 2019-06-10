@@ -27,6 +27,7 @@ export class CompanyListComponent implements OnInit, OnDestroy {
           if(companiesSnapshot.length>0){
           this.companiesTable = new MatTableDataSource(this.companyService.companies);
           this.loading = false;
+            this.noCompanies = false;
         }else if(this.companyService.companies.length === 0){
           this.noCompanies = true;
           this.loading = false;
