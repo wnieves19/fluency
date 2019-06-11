@@ -4,6 +4,7 @@ import {ActivatedRoute, Params,} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {UserAccount} from '../user-account.model';
+import {passBoolean} from 'protractor/built/util';
 
 @Component({
   selector: 'app-register',
@@ -13,6 +14,7 @@ import {UserAccount} from '../user-account.model';
 export class RegisterComponent implements OnInit {
   signUpForm: FormGroup
   inviteRequestId;
+  error
   constructor(private db: AngularFireDatabase, private authService: AuthService, private route: ActivatedRoute) {}
 
   ngOnInit() {
@@ -33,20 +35,30 @@ export class RegisterComponent implements OnInit {
   }
 
   signUp(){
-    this.db.object('invite-request/'+this.inviteRequestId).query.once("value")
-      .then(snapshot=>{
-        let email = snapshot.val().email;
-        let name = this.signUpForm.get('name').value;
-        let lastName = this.signUpForm.get('lastName').value;
-        let userAccount = new UserAccount(name, lastName, email)
-        this.authService.createUserWithCompany(userAccount, this.signUpForm.get('password').value, snapshot.val().companyId, snapshot.val().role, this.inviteRequestId)
-          .subscribe(userCredential =>{
-            console.log(userCredential.user.getIdToken());
-          })
-        console.log(this.inviteRequestId);
-      }).catch(err=>{
-        console.log(err);
-    });
+    if(this.signUpForm.get('password').value!==this.signUpForm.get('confirm').value){
+      this.error = "Passwords don't match";
+      return;
+    }
+    if(this.inviteRequestId) { //Process User accepting invite
+      this.db.object('invite-request/' + this.inviteRequestId).query.once("value")
+        .then(snapshot => {
+          let email = snapshot.val().email;
+          let name = this.signUpForm.get('name').value;
+          let lastName = this.signUpForm.get('lastName').value;
+          let userAccount = new UserAccount(name, lastName, email)
+          this.authService.createUserWithCompany(userAccount, this.signUpForm.get('password').value, snapshot.val().companyId, snapshot.val().role, this.inviteRequestId)
+            .subscribe(userCredential => {
+              console.log(userCredential.user.getIdToken());
+            }, errorMessage=> {
+              this.error = errorMessage;
+            })
+          console.log(this.inviteRequestId);
+        }).catch(err => {
+        this.error = err.message;
+      });
+    }else{//Process sign up normal flow
+
+    }
 
   }
 

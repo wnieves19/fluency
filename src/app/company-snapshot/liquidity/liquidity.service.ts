@@ -15,8 +15,9 @@ export class LiquidityService {
     new AccountHistory("Revenue", "subCategory", "waterfall", "add" , "compound"),
     new AccountHistory("Cost of Sales", "category", "waterfall", "subtract" , "compound"),
     new AccountHistory("Expenses", "category", "waterfall", "subtract" , "compound"),
-    new AccountHistory("Other Income", "type", "waterfall", "add" , "compound"),
-    new AccountHistory("Global Tax Payable", "detailType", "waterfall", "subtract", "compound"),
+    // new AccountHistory("Other Income", "type", "waterfall", "add" , "compound"),
+    // new AccountHistory("Global Tax Payable", "detailType", "waterfall", "subtract", "compound"),
+    new AccountHistory("Net Income", "summary", "waterfall", "add", "compound"),
     new AccountHistory("Accounts Payable", "subCategory","waterfall", "subtract", "change"),
     new AccountHistory("Other Current Liabilities", "detailType","waterfall", "subtract", "change"),
     new AccountHistory("Accounts Receivable", "subCategory", "waterfall", "subtract", "change"),
@@ -188,7 +189,7 @@ export class LiquidityService {
 
   getMonthFromPeriod(dateString: string){
     var dateArray = dateString.split("-");
-    var date = new Date(parseInt(dateArray[0]), parseInt(dateArray[1])-1, parseInt(dateArray[2]));
+    var date = new Date(parseInt(dateArray[0]), parseInt(dateArray[1]), parseInt(dateArray[2]));
     const month = date.toLocaleString('en-us', { month: 'short' });
     return month;
   }
