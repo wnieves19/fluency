@@ -65,7 +65,7 @@ export class AuthService {
             });
 
         }).catch(err=>{
-          console.log(err);
+          observer.error(err.message)
       })
     })
 

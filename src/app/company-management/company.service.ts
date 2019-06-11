@@ -88,11 +88,13 @@ export class CompanyService {
   createUserInviteRequest(userEmail: string, userRole){
     return new Observable((observer) => {
       const itemRef = this.db.list("invite-request");
-      itemRef.push({email: userEmail, role: userRole, companyId: this.selectedCompany.companyId})
+      itemRef.push({email: userEmail, role: userRole, companyId: this.selectedCompany.companyId, senderId: this.authService.user.uid})
         .then(ref=>{
           observer.next();
           observer.complete()
-        });
+        }).catch(err =>{
+          observer.error(err.message)
+      });
     });
   }
 

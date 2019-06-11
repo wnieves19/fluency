@@ -45,7 +45,9 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
       return  "$"+ e.value/1000 + "M"
     }
   }
-  public categories: string[] = ["Revenue", "COGS", "Expenses", "Other Income", "Cash Tax Paid", "Change in Accounts Payable",
+  public categories: string[] = ["Revenue", "COGS", "Expenses",
+    // "Other Income", "Cash Tax Paid",
+    "Change in Accounts Payable",
     "Change in Current Liabilities", "Change in Accounts Receivable", "Change in Inventory",
     "Change in Other Current Assets","OPERATING CASH FLOW", "Change in Fixed Assets",
     "Change in Intangible Assets", "Change in Investment", "FREE CASH FLOW", "Net Interest (after tax)",
