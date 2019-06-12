@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Company} from './models/company.model';
-import {AngularFireDatabase, AngularFireList} from '@angular/fire/database';
+import {AngularFireDatabase} from '@angular/fire/database';
 import {AuthService} from '../user-authentication/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
@@ -99,7 +99,7 @@ export class CompanyService {
   }
 
   fetchCompanySource(companyId: string, realmId: string){
-    this.dataSource = this.http.post("https://fluencyanalysis-backend.herokuapp.com/get_company_data",
+    this.dataSource = this.http.post("http://localhost:3000/get_company_data",
       {
         "companyId": companyId,
         "realmId": realmId
