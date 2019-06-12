@@ -39,7 +39,7 @@ export class AuthService {
     const itemsRef = this.db.list('user/');
     return itemsRef.update(this.user.uid, this.account);
   }
-
+//TODO: Unchain promises
   createUserWithCompany(userAccount: UserAccount, password:string, companyId: string, role: string, inviteId: string): Observable<any>{
     return new Observable((observer)=>{
       this.afAuth.auth.createUserWithEmailAndPassword(userAccount.email, password)
@@ -55,15 +55,15 @@ export class AuthService {
                   userCompaniesRef.set(this.getCompanyObjetcFromSnapshot(companySnapshot))
                     .then(value => {
                       //create company-users
-                      this.db.object("company-users/"+companyId+"/"+userCredentials.user.uid).set(role);
-                      //TODO: Uncomment delete invite-request
-                      // this.db.object("invite-request/"+inviteId).remove();
-                      observer.next(userCredentials)
-                      observer.complete()
+                      this.db.object("company-users/"+companyId+"/"+userCredentials.user.uid).set(role)
+                        .then(value=>{
+                          this.db.object("invite-request/"+inviteId).remove();
+                          observer.next(userCredentials)
+                          observer.complete()
+                        });
                     })
                 })
             });
-
         }).catch(err=>{
           observer.error(err.message)
       })

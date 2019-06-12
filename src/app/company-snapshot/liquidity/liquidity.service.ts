@@ -12,9 +12,9 @@ export class LiquidityService {
   waterfallAccounts = new Array();
   accountsArray = [
     new AccountHistory("Cash", "subCategory", "widget", "add", "compound"),
-    new AccountHistory("Revenue", "subCategory", "waterfall", "add" , "compound"),
-    new AccountHistory("Cost of Sales", "category", "waterfall", "subtract" , "compound"),
-    new AccountHistory("Expenses", "category", "waterfall", "subtract" , "compound"),
+    new AccountHistory("Revenue", "subCategory", "waterfall", "add" , "change"),
+    new AccountHistory("Cost of Sales", "category", "waterfall", "subtract" , "change"),
+    new AccountHistory("Expenses", "category", "waterfall", "subtract" , "change"),
     // new AccountHistory("Other Income", "type", "waterfall", "add" , "compound"),
     // new AccountHistory("Global Tax Payable", "detailType", "waterfall", "subtract", "compound"),
     new AccountHistory("Net Income", "summary", "waterfall", "add", "compound"),
@@ -172,7 +172,7 @@ export class LiquidityService {
         } else {
           balance = currentPeriodBalance;
         }
-        if (account.action === "subtract" && account.categoryType === "compound") {
+        if (account.action === "subtract") {
           balance = -balance;
         }
         summaryBalance = summaryBalance + balance;
@@ -189,7 +189,7 @@ export class LiquidityService {
 
   getMonthFromPeriod(dateString: string){
     var dateArray = dateString.split("-");
-    var date = new Date(parseInt(dateArray[0]), parseInt(dateArray[1]), parseInt(dateArray[2]));
+    var date = new Date(parseInt(dateArray[0]), parseInt(dateArray[1]-1), parseInt(dateArray[2]));
     const month = date.toLocaleString('en-us', { month: 'short' });
     return month;
   }
