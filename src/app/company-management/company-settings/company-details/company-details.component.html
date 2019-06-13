@@ -1,23 +1,33 @@
 <div class="row">
   <div *ngIf="!editMode; else companyDetails"class="header-container">
     <h2>Accounting Source</h2>
+    <p>Select the accounting information source of your company.</p>
   </div>
 </div>
 <div *ngIf="!loading && !editMode" class="row justify-content-center">
-  <div class="col-sm-1">
-    <img class="source_button" width="100px" height="100px"
-         src="https://quickbooks.intuit.com/content/dam/intuit/quickbooks/common/qb_thumb.png"
-         (click)="quickbooksClicked()"/>
+  <div class="col-sm-2" fxLayoutAlign="center">
+    <mat-card (click)="quickbooksClicked()" mat-ripple class="source_button mat-elevation-z6">
+      <img width="100px" height="100px"
+           src="https://quickbooks.intuit.com/content/dam/intuit/quickbooks/common/qb_thumb.png"
+           />
+      <mat-card-subtitle class="last-child" fxLayoutAlign="center" >Quickbooks</mat-card-subtitle>
+    </mat-card >
   </div>
-  <div class="col-sm-1">
-    <img class="source_button" width="100px" height="100px"
-         src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Xero_software_logo.svg/1024px-Xero_software_logo.svg.png"
-         (click)="xeroClicked()"/>
+  <div class="col-sm-2" fxLayoutAlign="center">
+    <mat-card  (click)="xeroClicked()" mat-ripple class="source_button mat-elevation-z6">
+      <img width="100px" height="100px"
+           src="https://upload.wikimedia.org/wikipedia/en/thumb/9/9f/Xero_software_logo.svg/1024px-Xero_software_logo.svg.png"
+           />
+      <mat-card-subtitle class="last-child" fxLayoutAlign="center" >Xero</mat-card-subtitle>
+    </mat-card>
   </div>
-  <div class="col-sm-1">
-    <img class="source_button" width="100px" height="100px"
-         src="https://firebasestorage.googleapis.com/v0/b/fluencyanalysis.appspot.com/o/document%20(1).png?alt=media&token=68cf6b8f-dbd7-4b86-972b-f1aa984ff851"
-         (click)="csvClicked()"/>
+  <div class="col-sm-2" fxLayoutAlign="center">
+    <mat-card (click)="csvClicked()" mat-ripple class="source_button mat-elevation-z6">
+      <img  width="100px" height="100px"
+           src="https://firebasestorage.googleapis.com/v0/b/fluencyanalysis.appspot.com/o/document%20(1).png?alt=media&token=68cf6b8f-dbd7-4b86-972b-f1aa984ff851"
+           />
+      <mat-card-subtitle class="last-child" fxLayoutAlign="center" >CSV Import</mat-card-subtitle>
+    </mat-card>
   </div>
 </div>
 
