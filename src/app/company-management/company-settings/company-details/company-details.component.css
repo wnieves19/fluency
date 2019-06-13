@@ -5,3 +5,17 @@
   width: 50%;
   margin: auto;
 }
+mat-card{
+  padding-left:50px;
+  padding-right:50px;
+}
+mat-card-subtitle{
+  padding-top:16px;
+  font-size: 16px;
+}
+p{
+  margin-left: 20px;
+}
+mat-card .last-child {
+  margin-bottom: 0;
+}
