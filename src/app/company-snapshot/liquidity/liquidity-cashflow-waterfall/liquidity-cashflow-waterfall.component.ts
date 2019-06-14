@@ -58,7 +58,8 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
   public pointColor(point: any): string {
     var summary = point.dataItem.summary;
     if (summary) {
-      return summary == 'total' ? '#555' : 'gray';
+      console.log(point.dataItem.value);
+      return 'gray';
     }
     if (point.value > 0) {
       return '#54B701';
