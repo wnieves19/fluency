@@ -12,27 +12,28 @@ export class LiquidityService {
   waterfallAccounts = new Array();
   accountsArray = [
     new AccountHistory("Cash", "subCategory", "widget", "add", "compound"),
-    new AccountHistory("Revenue", "subCategory", "waterfall", "add" , "change"),
-    new AccountHistory("Cost of Sales", "category", "waterfall", "subtract" , "change"),
-    new AccountHistory("Expenses", "category", "waterfall", "subtract" , "change"),
+    new AccountHistory("Revenue", "subCategory", "waterfall", "add" , "currentToPrevious"),
+    new AccountHistory("Cost of Sales", "category", "waterfall", "subtract" , "currentToPrevious"),
+    new AccountHistory("Expenses", "category", "waterfall", "subtract" , "currentToPrevious"),
     // new AccountHistory("Other Income", "type", "waterfall", "add" , "compound"),
     // new AccountHistory("Global Tax Payable", "detailType", "waterfall", "subtract", "compound"),
     new AccountHistory("Net Income", "summary", "waterfall", "add", "compound"),
-    new AccountHistory("Accounts Payable", "subCategory","waterfall", "subtract", "change"),
-    new AccountHistory("Other Current Liabilities", "detailType","waterfall", "subtract", "change"),
-    new AccountHistory("Accounts Receivable", "subCategory", "waterfall", "subtract", "change"),
-    new AccountHistory("Inventory", "detailType", "waterfall", "subtract", "change"),
-    new AccountHistory("Other Current Assets", "subCategory", "waterfall", "add", "change"),
+    new AccountHistory("Depreciation", "detailType", "waterfall", "add", "currentToPrevious"),
+    new AccountHistory("Accounts Payable", "subCategory","waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Other Current Liabilities", "detailType","waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Accounts Receivable", "subCategory", "waterfall", "subtract", "previousToCurrent"),
+    new AccountHistory("Inventory", "detailType", "waterfall", "subtract", "previousToCurrent"),
+    new AccountHistory("Other Current Assets", "subCategory", "waterfall", "add", "previousToCurrent"),
     new AccountHistory("Operating Cash Flow", "summary", "waterfall", "add", "compound"),
-    new AccountHistory("Fixed Assets", "subCategory", "waterfall", "subtract", "change"),
-    new AccountHistory("Intangible Assets", "subCategory", "waterfall", "subtract", "change"),
-    new AccountHistory("Investments Other", "subCategory", "waterfall", "subtract", "change"),
+    new AccountHistory("Fixed Assets", "subCategory", "waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Intangible Assets", "subCategory", "waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Investments Other", "subCategory", "waterfall", "subtract", "currentToPrevious"),
     new AccountHistory("Free Cash Flow", "summary", "waterfall", "add", "compound"),
     new AccountHistory("Interest Expenses", "subCategory", "waterfall", "subtract", "compound"),
-    new AccountHistory("Non-Current Liabilities", "category", "waterfall", "subtract", "change"),
-    new AccountHistory("Dividend Disbursement", "category", "waterfall", "subtract", "compound"),
-    new AccountHistory("Retained Earnings", "subCategory", "waterfall", "add", "change"),
-    new AccountHistory("Equity", "subCategory", "waterfall", "subtract", "change"),
+    new AccountHistory("Non-Current Liabilities", "category", "waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Dividend Disbursement", "category", "waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Retained Earnings", "subCategory", "waterfall", "add", "currentToPrevious"),
+    new AccountHistory("Equity", "subCategory", "waterfall", "subtract", "currentToPrevious"),
     new AccountHistory("Net Cash Flow", "summary", "waterfall", "add", "compound")
   ]
 
@@ -167,9 +168,11 @@ export class LiquidityService {
         var currentPeriodBalance = currentPeriodAcct[0].balance;
         if(prevPeriodAcct[0]===undefined)return;
         var previousPeriodBalance = prevPeriodAcct[0].balance
-        if (account.categoryType === "change") {
+        if (account.categoryType === "currentToPrevious") {
           balance = currentPeriodBalance - previousPeriodBalance;
-        } else {
+        } else if(account.categoryType ==="previousToCurrent"){
+          balance = previousPeriodBalance - currentPeriodBalance ;
+        }else {
           balance = currentPeriodBalance;
         }
         if (account.action === "subtract") {
