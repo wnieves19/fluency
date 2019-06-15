@@ -68,14 +68,15 @@ export class CompanyService {
   }
 
   fetchCompanyUsers(companyId: string){
-    this.companyUsers = [];
     return new Observable((observer) => {
       this.db.list('/company-users/'+companyId).snapshotChanges()
         .subscribe(userKeys => {
+          this.companyUsers = [];
           userKeys.forEach(x => {
             this.db.object<UserModel>('user/' + x.key).valueChanges()
               .subscribe(user => {
                 user.role = x.payload.val().toString();
+                user.id = x.key;
                 this.companyUsers.push(user);
               })
           })
@@ -83,6 +84,30 @@ export class CompanyService {
           observer.complete();
         });
     });
+  }
+
+  removeUserFromCompany(userId: string){
+    return new Observable (observer =>{
+      this.db.object("company-users/"+this.selectedCompany.companyId+"/"+userId).remove()
+        .then(() => {
+          this.db.object("user-companies/"+userId+"/"+this.selectedCompany.companyId).remove()
+            .then(()=>{
+              observer.next();
+              observer.complete()
+            })
+        })
+    })
+  }
+
+  changeUserRole(userToEdit: UserModel,  newRole: string){
+    return new Observable (observer =>{
+      this.db.object("company-users/"+this.selectedCompany.companyId+"/"+userToEdit.id).set(newRole)
+        .then(() => {
+          observer.next();
+          observer.complete()
+        })
+    })
+
   }
 
   createUserInviteRequest(userEmail: string, userRole){
@@ -93,13 +118,13 @@ export class CompanyService {
           observer.next();
           observer.complete()
         }).catch(err =>{
-          observer.error(err.message)
+        observer.error(err.message)
       });
     });
   }
 
   fetchCompanySource(companyId: string, realmId: string){
-    this.dataSource = this.http.post("http://localhost:3000/get_company_data",
+    this.dataSource = this.http.post("https://fluencyanalysis-backend.herokuapp.com/get_company_data",
       {
         "companyId": companyId,
         "realmId": realmId
