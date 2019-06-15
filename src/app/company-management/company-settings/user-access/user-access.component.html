@@ -22,8 +22,8 @@
         <td mat-cell *matCellDef="let user" style="padding-left:10px">
           <div fxLayout="row">
             <mat-chip-list *ngFor="let role of roles" >
-              <mat-chip *ngIf="role===user.role; else showRole" style="margin-left: 8px"  selected >{{role}}</mat-chip>
-              <ng-template  #showRole ><mat-chip style="margin-left: 8px">{{role}}</mat-chip></ng-template>
+              <mat-chip *ngIf="role===user.role; else showRole" style="margin-left: 8px; cursor: pointer"  selected >{{role}}</mat-chip>
+              <ng-template  #showRole><mat-chip style="margin-left: 8px; cursor: pointer" (click)="changeUserRole(user, role)">{{role}}</mat-chip></ng-template>
             </mat-chip-list>
           </div>
         </td>
@@ -35,7 +35,9 @@
           </button>
         </th>
         <td style="padding-right:0px; text-align:right;" mat-cell *matCellDef="let user">
+          <button mat-icon-button (click)="removeUserClicked(user)">
           <mat-icon >cancel</mat-icon>
+          </button>
         </td>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

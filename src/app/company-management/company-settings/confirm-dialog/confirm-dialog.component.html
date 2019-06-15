@@ -1,0 +1,7 @@
+<mat-dialog-content>
+  <p>{{message}}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="okClicked()">OK</button>
+  <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
+</mat-dialog-actions>

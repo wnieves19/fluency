@@ -38,6 +38,7 @@ import {CredentialsInterceptorService} from './interceptor';
 import {LiquidityService} from './company-snapshot/liquidity/liquidity.service';
 import {CompanyService} from './company-management/company.service';
 import { CompanyDetailsFormComponent } from './company-management/company-settings/company-details/company-details-form/company-details-form.component';
+import { ConfirmDialogComponent } from './company-management/company-settings/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { CompanyDetailsFormComponent } from './company-management/company-settin
     LiquidityCashflowWaterfallComponent,
     LiquidityBalanceDialogComponent,
     UserAccountComponent,
-    CompanyDetailsFormComponent
+    CompanyDetailsFormComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +80,7 @@ import { CompanyDetailsFormComponent } from './company-management/company-settin
 
 
   ],
-  entryComponents: [CompanySnapshotComponent, LiquidityBalanceDialogComponent, UserDetailComponent],
+  entryComponents: [CompanySnapshotComponent, LiquidityBalanceDialogComponent, UserDetailComponent, ConfirmDialogComponent],
   providers: [AuthService,CompanyService, LiquidityService,{provide: HTTP_INTERCEPTORS, useClass: CredentialsInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
