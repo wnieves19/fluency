@@ -20,7 +20,7 @@ export class LiquidityService {
     new AccountHistory("Net Income", "runningTotal", "waterfall", "add", "compound"),
     new AccountHistory("Depreciation", "detailType", "waterfall", "add", "currentToPrevious"),
     new AccountHistory("Accounts Payable", "subCategory","waterfall", "subtract", "currentToPrevious"),
-    new AccountHistory("Other Current Liabilities", "detailType","waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Current Liabilities", "category","waterfall", "subtract", "currentToPrevious"),
     new AccountHistory("Accounts Receivable", "subCategory", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Inventory", "detailType", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Other Current Assets", "subCategory", "waterfall", "add", "previousToCurrent"),
