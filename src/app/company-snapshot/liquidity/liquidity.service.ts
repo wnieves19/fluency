@@ -17,7 +17,7 @@ export class LiquidityService {
     new AccountHistory("Expenses", "category", "waterfall", "subtract" , "currentToPrevious"),
     // new AccountHistory("Other Income", "type", "waterfall", "add" , "compound"),
     // new AccountHistory("Global Tax Payable", "detailType", "waterfall", "subtract", "compound"),
-    new AccountHistory("Net Income", "runningTotal", "waterfall", "add", "compound"),
+    new AccountHistory("Net Income", "total", "waterfall", "add", "compound"),
     new AccountHistory("Depreciation", "detailType", "waterfall", "add", "currentToPrevious"),
     new AccountHistory("Accounts Payable", "subCategory","waterfall", "subtract", "currentToPrevious"),
     new AccountHistory("Current Liabilities", "category","waterfall", "subtract", "currentToPrevious"),
@@ -158,31 +158,30 @@ export class LiquidityService {
     var summaryBalance = 0;
     for (let account of this.accountsArray) {
       if (account.component === "waterfall") {
-        var balance = 0;
-        var currentPeriodAcct = account.history.filter(acct => {
-          return acct.startPeriod === period;
-        });
-        var prevPeriodAcct = account.history.filter(acct => {
-          return acct.startPeriod === this.getPreviousPeriod(period);
-        });
-        var currentPeriodBalance = currentPeriodAcct[0].balance;
-        if(prevPeriodAcct[0]===undefined)return;
-        var previousPeriodBalance = prevPeriodAcct[0].balance
-        if (account.categoryType === "currentToPrevious") {
-          balance = currentPeriodBalance - previousPeriodBalance;
-        } else if(account.categoryType ==="previousToCurrent"){
-          balance = previousPeriodBalance - currentPeriodBalance ;
-        }else {
-          balance = currentPeriodBalance;
-        }
-        if (account.action === "subtract") {
-          balance = -balance;
-        }
-        summaryBalance = summaryBalance + balance;
-        if (account.property === "runningTotal" || account.property ==="total") {
-          periodAccounts.push({category: account.accountName, summary: account.property, balance : summaryBalance})
-          summaryBalance = 0;
-        } else {
+        if(account.property === "total"){
+            periodAccounts.push({category: account.accountName, summary: account.property, balance : summaryBalance})
+        }else{
+          var balance = 0;
+          var currentPeriodAcct = account.history.filter(acct => {
+            return acct.startPeriod === period;
+          });
+          var prevPeriodAcct = account.history.filter(acct => {
+            return acct.startPeriod === this.getPreviousPeriod(period);
+          });
+          var currentPeriodBalance = currentPeriodAcct[0].balance;
+          if(prevPeriodAcct[0]===undefined)return;
+          var previousPeriodBalance = prevPeriodAcct[0].balance
+          if (account.categoryType === "currentToPrevious") {
+            balance = currentPeriodBalance - previousPeriodBalance;
+          } else if(account.categoryType ==="previousToCurrent"){
+            balance = previousPeriodBalance - currentPeriodBalance ;
+          }else {
+            balance = currentPeriodBalance;
+          }
+          if (account.action === "subtract") {
+            balance = -balance;
+          }
+          summaryBalance = summaryBalance + balance;
           periodAccounts.push({category: account.accountName, balance: balance})
         }
       }
