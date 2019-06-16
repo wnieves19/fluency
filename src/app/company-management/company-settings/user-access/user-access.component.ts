@@ -22,20 +22,23 @@ export class UserAccessComponent implements OnInit {
   constructor(private authService: AuthService, private dialog: MatDialog, private snackBar: MatSnackBar, private companyService: CompanyService) { }
 
   ngOnInit() {
-    // this.userList = this.companyService.companyUsers;
+
   }
 
   addUserClicked(){
+    if(!this.companyService.isAdmin(this.authService.user.uid)){
+      this.snackBar.open("You don't have admin privileges",'Close',{
+        duration: 2000,
+      })
+      return
+    }
     this.dialog.open(UserDetailComponent, {
       width: '400px'
     });
   }
 
   changeUserRole(userToEdit: UserModel,  newRole: string){
-    var editor = this.companyService.companyUsers.filter(usr=>{
-      return usr.id === this.authService.user.uid;
-    })
-    if(editor[0].role!=="Admin"){
+    if(!this.companyService.isAdmin(this.authService.user.uid)){
       this.snackBar.open("You don't have admin privileges",'Close',{
         duration: 2000,
       })
@@ -67,10 +70,7 @@ export class UserAccessComponent implements OnInit {
    * @param user
    */
   removeUserClicked(user){
-    var editor = this.companyService.companyUsers.filter(usr=>{
-      return usr.id === this.authService.user.uid;
-    })
-    if(editor[0].role!=="Admin"){
+    if(!this.companyService.isAdmin(this.authService.user.uid)){
       this.snackBar.open("You don't have admin privileges",'Close',{
         duration: 2000,
       })

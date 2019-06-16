@@ -123,6 +123,18 @@ export class CompanyService {
     });
   }
 
+  /**
+   * Determines if the user with userId is an Admin
+   * @param {string} userId
+   * @returns {boolean}
+   */
+  isAdmin(userId: string){
+    var editor = this.companyUsers.filter(usr=>{
+      return usr.id === userId;
+    })
+    if(editor[0].role==="Admin")return true;
+    return false;
+  }
   fetchCompanySource(companyId: string, realmId: string){
     this.dataSource = this.http.post("https://fluencyanalysis-backend.herokuapp.com/get_company_data",
       {
