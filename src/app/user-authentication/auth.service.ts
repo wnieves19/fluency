@@ -71,6 +71,22 @@ export class AuthService {
 
   }
 
+  signUpNewUser(userAccount: UserAccount, password){
+    return new Observable((observer)=>{
+      this.afAuth.auth.createUserWithEmailAndPassword(userAccount.email, password)
+        .then(userCredentials =>{
+          //create user
+          const userReference = this.db.object("user/"+userCredentials.user.uid);
+          userReference.set(userAccount)
+            .then(ref=>{
+              observer.next(userCredentials)
+              observer.complete()
+            });
+        }).catch(err=>{
+        observer.error(err.message)
+      })
+    })
+  }
   getCompanyObjetcFromSnapshot(snapshot: DataSnapshot){
     let companyObject =
       {

@@ -26,6 +26,10 @@ export class LoginComponent implements OnInit {
     })
   }
 
+  signUpClicked(){
+    this.router.navigate(['/signup/']);
+  }
+
   loginClicked(){
     this.authService.login(this.email.value, this.password.value)
       .then((user) => {

@@ -29,11 +29,13 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
   initPeriods(){
     var date = new Date();
     var month = date.getMonth() + 1;
-    var i = 3
-    while (i != 0){
-      this.periods.push({value:date.getFullYear() +"-" + ("0" + month).slice(-2) +"-01", name: this.months[month-1]})
-      i--
-      month --;
+    var year = date.getFullYear()
+    for (var i = month; i !== month+1; i--) {
+      if (i == 0) {
+        i = 12;
+        year--;
+      }
+      this.periods.push({value: year +"-" + ("0" + i).slice(-2) +"-01", name: this.months[i-1]})
     }
     this.selectedPeriod = this.periods[0].value;
   }

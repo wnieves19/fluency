@@ -12,7 +12,7 @@ export class LiquidityService {
   waterfallAccounts = new Array();
   accountsArray = [
     new AccountHistory("Cash", "subCategory", "widget", "add", "compound"),
-    new AccountHistory("Revenue", "subCategory", "waterfall", "add" , "currentToPrevious"),
+    new AccountHistory("Revenue", "category", "waterfall", "add" , "currentToPrevious"),
     new AccountHistory("Cost of Sales", "category", "waterfall", "subtract" , "currentToPrevious"),
     new AccountHistory("Expenses", "category", "waterfall", "subtract" , "currentToPrevious"),
     // new AccountHistory("Other Income", "type", "waterfall", "add" , "compound"),
@@ -26,8 +26,8 @@ export class LiquidityService {
     new AccountHistory("Other Current Assets", "subCategory", "waterfall", "add", "previousToCurrent"),
     new AccountHistory("Operating Cash Flow", "total", "waterfall", "add", "compound"),
     new AccountHistory("Fixed Assets", "subCategory", "waterfall", "subtract", "currentToPrevious"),
-    new AccountHistory("Intangible Assets", "subCategory", "waterfall", "subtract", "currentToPrevious"),
-    new AccountHistory("Investments Other", "subCategory", "waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Intangible Assets", "subCategory", "waterfall", "subtract", "previousToCurrent"),
+    new AccountHistory("Investments Other", "subCategory", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Free Cash Flow", "total", "waterfall", "add", "compound"),
     new AccountHistory("Interest Expenses", "subCategory", "waterfall", "subtract", "compound"),
     new AccountHistory("Non-Current Liabilities", "category", "waterfall", "subtract", "currentToPrevious"),

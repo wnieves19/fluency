@@ -6,7 +6,7 @@
   <mat-card-content >
     <form class="my-form">
     <mat-form-field fxLayoutAlign="center center" >
-      <input matInput placeholder="Email" [formControl]="email" required autocomplete="username email">
+      <input  matInput placeholder="Email" [formControl]="email" required autocomplete="username email">
     </mat-form-field>
     <mat-form-field fxLayoutAlign="center center">
       <input fxLayoutAlign="center center" matInput placeholder="Password" [formControl]="password" autocomplete="current-password" required [type]="'password'">
@@ -16,6 +16,7 @@
     </div>
     </form>
     <p style="color:red;">{{error}}</p>
+    <p fxLayoutAlign="center center" style="margin-top: 20px">Don't have an account? <button class="border border-primary" style="margin-left: 10px" (click)="signUpClicked()" mat-raised-button>Sign Up</button></p>
   </mat-card-content>
 </mat-card>
 </div>
