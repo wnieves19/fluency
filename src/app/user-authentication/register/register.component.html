@@ -24,19 +24,19 @@
                 </div>
               </div>
             </div>
-            <!--<div class="form-group" *ngIf="!inviteRequestId">-->
-              <!--<div class="row">-->
-                <!--<div class="col-sm-12">-->
-                  <!--<label>Email:</label>-->
-                  <!--<input placeholder="Email" class="form-control"  formControlName="email"-->
-                         <!--[ngClass]="{'is-invalid': signUpForm.get('email').touched && signUpForm.get('email').invalid}"required>-->
-                  <!--<div *ngIf="{'is-invalid': signUpForm.get('email').touched && signUpForm.get('email').invalid}" class="invalid-feedback">-->
-                    <!--<div *ngIf="signUpForm.get('email').required">Email is Required</div>-->
-                    <!--<div *ngIf="signUpForm.get('email').email">Email must be a valid email </div>-->
-                  <!--</div>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</div>-->
+            <div class="form-group" *ngIf="!inviteRequestId">
+              <div class="row">
+                <div class="col-sm-12">
+                  <label>Email:</label>
+                  <input placeholder="Email" class="form-control"  formControlName="email"
+                         [ngClass]="{'is-invalid': signUpForm.get('email').touched && signUpForm.get('email').invalid && !inviteRequestId}"required>
+                  <div *ngIf="{'is-invalid': signUpForm.get('email').touched && signUpForm.get('email').invalid && !inviteRequestId}" class="invalid-feedback">
+                    <div *ngIf="signUpForm.get('email').required && !inviteRequestId">Email is Required</div>
+                    <div *ngIf="signUpForm.get('email').email && !inviteRequestId">Email must be a valid email </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div class="form-group">
               <div class="row">
                 <div class="col-sm-12">

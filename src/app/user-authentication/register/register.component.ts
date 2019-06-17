@@ -21,7 +21,6 @@ export class RegisterComponent implements OnInit {
     this.signUpForm = new FormGroup({
       name: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
-      // email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', Validators.required),
       confirm: new FormControl('', Validators.required),
     });
@@ -30,6 +29,8 @@ export class RegisterComponent implements OnInit {
       (queryParams: Params) => {
         if (queryParams['inviteId']) {
           this.inviteRequestId = queryParams['inviteId']
+        }else{
+          this.signUpForm.addControl("email", new FormControl('', [Validators.required, Validators.email]))
         }
       })
   }
@@ -39,7 +40,8 @@ export class RegisterComponent implements OnInit {
       this.error = "Passwords don't match";
       return;
     }
-    if(this.inviteRequestId) { //Process User accepting invite
+    /**Process sign up of User accepting app invite */
+    if(this.inviteRequestId) {
       this.db.object('invite-request/' + this.inviteRequestId).query.once("value")
         .then(snapshot => {
           let email = snapshot.val().email;
@@ -56,8 +58,20 @@ export class RegisterComponent implements OnInit {
         }).catch(err => {
         this.error = err.message;
       });
-    }else{//Process sign up normal flow
 
+      /** Process sign up normal flow*/
+    }else{
+      let email = this.signUpForm.get('email').value;
+      let name = this.signUpForm.get('name').value;
+      let lastName = this.signUpForm.get('lastName').value;
+      let userAccount = new UserAccount(name, lastName, email)
+
+      this.authService.signUpNewUser(userAccount, this.signUpForm.get('password').value)
+        .subscribe(userCredential =>{
+
+        }, errorMessage =>{
+          this.error = errorMessage;
+        })
     }
 
   }
