@@ -10,6 +10,7 @@ import {CompanyService} from '../company.service';
 export class CompanySettingsComponent implements OnInit {
   companyId;
   settingsNavigation = [{name: 'Company details', route: 'company-details-form'},
+    {name: 'Accounts', route: 'account-classification'},
     {name: 'User access', route: 'user-access'}
   ];
   constructor(private companyService: CompanyService, private router: Router, private route: ActivatedRoute) { }

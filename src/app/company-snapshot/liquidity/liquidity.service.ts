@@ -156,6 +156,7 @@ export class LiquidityService {
   getWaterfallAccountsForPeriod(period: string) {
     var periodAccounts = new Array();
     var summaryBalance = 0;
+    var depreciationValue;
     for (let account of this.accountsArray) {
       if (account.component === "waterfall") {
         if(account.property === "total"){
@@ -171,6 +172,7 @@ export class LiquidityService {
           var currentPeriodBalance = currentPeriodAcct[0].balance;
           if(prevPeriodAcct[0]===undefined)return;
           var previousPeriodBalance = prevPeriodAcct[0].balance
+
           if (account.categoryType === "currentToPrevious") {
             balance = currentPeriodBalance - previousPeriodBalance;
           } else if(account.categoryType ==="previousToCurrent"){
@@ -178,8 +180,13 @@ export class LiquidityService {
           }else {
             balance = currentPeriodBalance;
           }
-          if (account.action === "subtract") {
-            balance = -balance;
+          if (account.action === "subtract") balance = -balance;
+
+          if(account.accountName==="Depreciation"){
+            depreciationValue = balance;
+          }else if(account.accountName==="Fixed Assets"){
+            balance = balance + depreciationValue;
+            depreciationValue=0;
           }
           summaryBalance = summaryBalance + balance;
           periodAccounts.push({category: account.accountName, balance: balance})

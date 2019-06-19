@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {TrialBalance} from './models/trial-balance.model';
 import 'rxjs/add/operator/map'
 import {UserModel} from './models/user.model';
+import {AccountModel} from './models/account.model';
 
 @Injectable({
   providedIn: 'root'
@@ -49,15 +50,30 @@ export class CompanyService {
     return this.db.list('user-companies/'+this.authService.user.uid).update(company.companyId,company)
   }
 
+  addAccounts(company: Company, trialBalance: TrialBalance){
+    for(let account of trialBalance.accounts){
+      var accountExists = company.companyAccounts.filter(acct =>{
+        return account.id ===acct.id;
+      })
+      if(accountExists.length===0){
+        company.companyAccounts.push(account);
+      }
+    }
+
+  }
+
   fetchTrialBalances(companyId: string): Observable<any>{
     var tbProcessed = 0;
     return new Observable((observer) => {
-      this.getCompanyById(companyId).trialBalanceList=[]
+      var company: Company =  this.getCompanyById(companyId);
+      company.trialBalanceList=[]
+      company.companyAccounts=[]
       this.db.list<TrialBalance>('company-data/' + companyId).valueChanges()
         .subscribe((trialBalanceArray) => {
           trialBalanceArray.forEach(trialBalance => {
-            this.getCompanyById(companyId).trialBalanceList.push(trialBalance);
+            company.trialBalanceList.push(trialBalance);
             tbProcessed++;
+            this.addAccounts(company, trialBalance)
             if (tbProcessed === trialBalanceArray.length) {
               observer.next();
               observer.complete()

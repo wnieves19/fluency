@@ -39,6 +39,7 @@ import {LiquidityService} from './company-snapshot/liquidity/liquidity.service';
 import {CompanyService} from './company-management/company.service';
 import { CompanyDetailsFormComponent } from './company-management/company-settings/company-details/company-details-form/company-details-form.component';
 import { ConfirmDialogComponent } from './company-management/company-settings/confirm-dialog/confirm-dialog.component';
+import { AccountClassificationComponent } from './company-management/company-settings/account-classification/account-classification.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +63,8 @@ import { ConfirmDialogComponent } from './company-management/company-settings/co
     LiquidityBalanceDialogComponent,
     UserAccountComponent,
     CompanyDetailsFormComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    AccountClassificationComponent
   ],
   imports: [
     BrowserModule,
