@@ -7,6 +7,8 @@ import {Observable} from 'rxjs';
 import {TrialBalance} from './models/trial-balance.model';
 import 'rxjs/add/operator/map'
 import {UserModel} from './models/user.model';
+import {AccountModel} from './models/account.model';
+import {ClassificationService} from './classification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,8 @@ export class CompanyService {
   companiesObservable: Observable<any>;
   companyUsers:UserModel[] = new Array();
 
-  constructor(private db: AngularFireDatabase, private authService: AuthService, private http: HttpClient ) {
+  constructor(private db: AngularFireDatabase, private authService: AuthService,
+              private http: HttpClient,private classification: ClassificationService) {
     this.fetchCompanies()
       .subscribe(companiesSnapshot => {
         companiesSnapshot.forEach(company => {
@@ -49,21 +52,64 @@ export class CompanyService {
     return this.db.list('user-companies/'+this.authService.user.uid).update(company.companyId,company)
   }
 
+  addAccounts(company: Company, trialBalance: TrialBalance){
+    for(let account of trialBalance.accounts){
+      var accountExists = company.companyAccounts.filter(acct =>{
+        return account.id ===acct.id;
+      })
+      if(accountExists.length===0){
+        company.companyAccounts.push(account);
+      }
+    }
+
+  }
+
   fetchTrialBalances(companyId: string): Observable<any>{
     var tbProcessed = 0;
     return new Observable((observer) => {
-      this.getCompanyById(companyId).trialBalanceList=[]
+      var company: Company =  this.getCompanyById(companyId);
       this.db.list<TrialBalance>('company-data/' + companyId).valueChanges()
         .subscribe((trialBalanceArray) => {
+          company.trialBalanceList=[]
+          company.companyAccounts=[]
           trialBalanceArray.forEach(trialBalance => {
-            this.getCompanyById(companyId).trialBalanceList.push(trialBalance);
+            company.trialBalanceList.push(trialBalance);
             tbProcessed++;
-            if (tbProcessed === trialBalanceArray.length) {
+            this.addAccounts(company, trialBalance)
+            if (tbProcessed===12 || tbProcessed === trialBalanceArray.length) {
               observer.next();
               observer.complete()
             }
           });
         })
+    })
+  }
+
+  editAccountSubcategory(account: AccountModel, newSubCategory: string){
+    return new Observable(observer=>{
+     var category =  this.classification.classification.filter(acct =>{
+        return acct.subCategory===account.subCategory
+      });
+     //TODO: Check if compayId is set when creating company
+    this.db.list('company-data/'+this.selectedCompany.companyId).query.once("value")
+      .then((trialBalanceArray)=>{
+        trialBalanceArray.forEach(trialBalance => {
+          // console.log(trialBalance.key);
+          this.db.list('/company-data/'+this.selectedCompany.companyId+'/'+trialBalance.key+'/accounts',
+              ref => ref.orderByChild('id').equalTo(account.id)).query.once('value')
+            .then((ref)=>{
+              ref.forEach(acc=>{
+                console.log(acc.key + " " + acc.val().value);
+                this.db.object('/company-data/'+this.selectedCompany.companyId+'/'+trialBalance.key+'/accounts/'+acc.key)
+                  .update({category: category[0].category, subCategory: newSubCategory})
+                  .then(()=>{
+                    observer.next();
+                    observer.complete();
+                  })
+              })
+            })
+        });
+      })
     })
   }
 

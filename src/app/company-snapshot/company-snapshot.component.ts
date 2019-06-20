@@ -13,8 +13,8 @@ export class CompanySnapshotComponent implements OnInit {
   company: Company;
   mobileQuery: MediaQueryList;
   fillerNav = [{name: 'Liquidity', route: 'liquidity'},
-    {name: 'Profitability', route: 'profitability'},
-    {name: 'Performance', route: 'performance'},
+    // {name: 'Profitability', route: 'profitability'},
+    // {name: 'Performance', route: 'performance'},
     {name: 'Company Settings', route: 'settings'}
   ];
 

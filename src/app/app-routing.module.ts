@@ -17,6 +17,7 @@ import {CompanyDetailsComponent} from './company-management/company-settings/com
 import {UserAccessComponent} from './company-management/company-settings/user-access/user-access.component';
 import {CompanyDetailsFormComponent} from './company-management/company-settings/company-details/company-details-form/company-details-form.component';
 import {RegisterComponent} from './user-authentication/register/register.component';
+import {AccountClassificationComponent} from './company-management/company-settings/account-classification/account-classification.component';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent},
@@ -43,6 +44,8 @@ const appRoutes: Routes = [
               {path: ':id', component: CompanyDetailsFormComponent}]},
           {path: 'company-details-form', component: CompanyDetailsFormComponent, children:[
               {path: 'company-details-form/:id', component: CompanyDetailsFormComponent}]},
+          {path: 'account-classification', component: AccountClassificationComponent, children:[
+              {path: ':id', component: AccountClassificationComponent}]}
         ]},
       { path: 'account-details', component: UserAccountComponent}
     ]},
