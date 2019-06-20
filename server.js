@@ -8,9 +8,8 @@ const app = express();
 // app.use(express.static(__dirname + '/dist/fluency'));
 app.use(express.static(__dirname + '/dist/fluency'));
 
-app.get('/', function(req, res) {
-  // res.sendFile('index.html', { root: __dirname });
-  res.sendFile(path.join(__dirname));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist/fluency/index.html'));
 });
 
 
