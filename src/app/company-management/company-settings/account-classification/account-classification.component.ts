@@ -16,7 +16,7 @@ export class AccountClassificationComponent implements OnInit {
   subcategories: string[] = ['Cash', 'Accounts Receivable', 'Other Current Assets', 'Intangible Assets', 'Fixed Assets',
     'Other Assets', 'Accounts Payable', 'Short Term Debt', 'Tax Liability','Other Current Liabilities', 'Long Term Liability',
     'Equity', 'Retained Earnings', 'Revenue', 'Dividend Income', 'Interest Earnings', 'Fixed COS', 'Variable COS', 'Fixed Expenses',
-    'Interest Expense', 'Variable Expenses', 'Taxes Paid', 'Expenses', ''];
+    'Interest Expense', 'Variable Expenses', 'Taxes Paid', 'Expenses'];
 
   dataSource = new MatTableDataSource<AccountModel>(this.companyService.selectedCompany.companyAccounts);
   subcategoryControls = new Array()
@@ -46,8 +46,12 @@ export class AccountClassificationComponent implements OnInit {
     return this.subcategories.filter(option => option.toLowerCase().includes(filterValue));
   }
 
-  changeSelection(option, accountId){
-    console.log(accountId + " " +option);
+  changeSubcategory(account: AccountModel, option ){
+    this.companyService.editAccountSubcategory(account, option)
+      .subscribe(()=>{
+        this.dataSource.data =[];
+        this.dataSource.data = this.companyService.selectedCompany.companyAccounts;
+      })
   }
 
 }

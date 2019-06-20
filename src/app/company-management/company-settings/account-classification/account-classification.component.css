@@ -2,3 +2,9 @@ table {
   width: 100%;
   margin: auto;
 }
+label{
+  font-size: 16px;
+}
+.mat-row:hover{
+  background-color:#40404010;
+}

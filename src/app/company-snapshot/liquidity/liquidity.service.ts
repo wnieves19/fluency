@@ -156,7 +156,7 @@ export class LiquidityService {
   getWaterfallAccountsForPeriod(period: string) {
     var periodAccounts = new Array();
     var summaryBalance = 0;
-    var depreciationValue;
+    var depreciationValue= 0;
     for (let account of this.accountsArray) {
       if (account.component === "waterfall") {
         if(account.property === "total"){
