@@ -8,7 +8,10 @@
   </div>
 
   <div class="toolbar-settings">
-    <button mat-icon-button [routerLink]="['/company-management']">
+    <button matTooltip="Sync source data" (click)="requestDataUpdate()" mat-icon-button>
+      <mat-icon>sync</mat-icon>
+    </button>
+    <button matTooltip="Company management" mat-icon-button [routerLink]="['/company-management']">
       <mat-icon>settings</mat-icon>
     </button>
     <mat-menu #appMenu="matMenu">
@@ -42,3 +45,8 @@
   </mat-sidenav-content>
 </mat-sidenav-container>
 <!-- End sidenav -->
+<div style="height: 150px" class="row">
+  <div class="col-sm-12">
+
+  </div>
+</div>

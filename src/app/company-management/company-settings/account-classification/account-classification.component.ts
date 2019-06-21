@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSnackBar, MatTableDataSource} from '@angular/material';
 import {AccountModel} from '../../models/account.model';
 import {CompanyService} from '../../company.service';
 import {FormControl} from '@angular/forms';
@@ -24,7 +24,7 @@ export class AccountClassificationComponent implements OnInit {
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private companyService: CompanyService) { }
+  constructor(private snackBar: MatSnackBar, private companyService: CompanyService) { }
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
@@ -51,6 +51,11 @@ export class AccountClassificationComponent implements OnInit {
       .subscribe(()=>{
         this.dataSource.data =[];
         this.dataSource.data = this.companyService.selectedCompany.companyAccounts;
+
+        this.snackBar.open("Account updated",'Close',{
+          duration: 2000,
+        })
+
       })
   }
 

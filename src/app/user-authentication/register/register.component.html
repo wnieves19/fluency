@@ -1,6 +1,6 @@
 <div class="col-sm-12" class="signup-form">
   <div fxLayout fxFill fxLayoutAlign="space-around center">
-  <mat-card class="mat-card-signup mat-elevation-z0 "  >
+  <mat-card class="mat-card-signup mat-elevation-z6 "  >
     <mat-card-content >
       <mat-card-title fxLayoutAlign="center center">Sign up</mat-card-title>
       <div class="row" fxLayoutAlign="center center">
@@ -58,6 +58,7 @@
             </div>
           </form>
           <p style="color:red; margin-top:10px">{{error}}</p>
+          <p fxLayoutAlign="center center"><a href="" (click)="returnLogin()">Return to log in</a></p>
         </div>
       </div>
     </mat-card-content>
