@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Params,} from '@angular/router';
+import {ActivatedRoute, Params, Router,} from '@angular/router';
 import {AuthService} from '../auth.service';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {UserAccount} from '../user-account.model';
@@ -15,7 +15,7 @@ export class RegisterComponent implements OnInit {
   signUpForm: FormGroup
   inviteRequestId;
   error
-  constructor(private db: AngularFireDatabase, private authService: AuthService, private route: ActivatedRoute) {}
+  constructor(private db: AngularFireDatabase, private authService: AuthService,private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.signUpForm = new FormGroup({
@@ -74,6 +74,9 @@ export class RegisterComponent implements OnInit {
         })
     }
 
+  }
+  returnLogin(){
+    this.router.navigate(['login']);
   }
 
 }
