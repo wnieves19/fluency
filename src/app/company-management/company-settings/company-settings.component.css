@@ -1,13 +1,15 @@
 .settings-container {
-  width: 80%;
+  width: 90%;
   margin: auto;
 }
 .settings-list{
-  padding-left: 20px
 }
 .inactive{
   color: blue;
   text-decoration:none;
+}
+.mat-list a:hover{
+  background-color:#40404010;
 }
 .active{
   color:black;

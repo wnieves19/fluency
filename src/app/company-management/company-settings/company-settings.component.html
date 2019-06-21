@@ -3,12 +3,11 @@
     <h2>Company Settings</h2>
   </div>
 <div class="row settings-container">
-  <div class="col-md-3 settings-list ">
+  <div class="col-md-2 settings-list ">
     <mat-list>
       <a class="inactive" mat-list-item  routerLink="." routerLinkActive="active"
          [routerLink]="[nav.route,{id:companyId}]"
-         *ngFor="let nav of settingsNavigation">{{nav.name}}
-      </a>
+         *ngFor="let nav of settingsNavigation">{{nav.name}}</a>
     </mat-list>
 
   </div>

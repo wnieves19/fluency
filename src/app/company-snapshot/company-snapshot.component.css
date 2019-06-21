@@ -30,7 +30,6 @@ button:focus {
      causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
   flex: 1;
   background-color: white;
-
 }
 
 .toolbar-is-mobile .app-sidenav-container {
