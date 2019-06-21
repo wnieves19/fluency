@@ -182,7 +182,7 @@ export class CompanyService {
     return false;
   }
   fetchCompanySource(companyId: string, realmId: string){
-    this.dataSource = this.http.post("http://localhost:3000/get_company_data",
+    this.dataSource = this.http.post("https://fluencyanalysis-backend.herokuapp.com/get_company_data",
       {
         "companyId": companyId,
         "realmId": realmId
@@ -192,7 +192,7 @@ export class CompanyService {
   }
 
   updateCompanySource(){
-    this.dataSource = this.http.post("http://localhost:3000/update_company_data",
+    this.dataSource = this.http.post("https://fluencyanalysis-backend.herokuapp.com/update_company_data",
       {
         "companyId": this.selectedCompany.companyId
       })
