@@ -99,7 +99,6 @@ export class CompanyService {
               ref => ref.orderByChild('id').equalTo(account.id)).query.once('value')
             .then((ref)=>{
               ref.forEach(acc=>{
-                console.log(acc.key + " " + acc.val().value);
                 this.db.object('/company-data/'+this.selectedCompany.companyId+'/'+trialBalance.key+'/accounts/'+acc.key)
                   .update({category: category[0].category, subCategory: newSubCategory})
                   .then(()=>{
