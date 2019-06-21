@@ -25,7 +25,7 @@ export class LiquidityService {
     new AccountHistory("Inventory", "detailType", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Other Current Assets", "subCategory", "waterfall", "add", "previousToCurrent"),
     new AccountHistory("Operating Cash Flow", "total", "waterfall", "add", "compound"),
-    new AccountHistory("Fixed Assets", "subCategory", "waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Fixed Assets", "subCategory", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Intangible Assets", "subCategory", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Investments Other", "subCategory", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Free Cash Flow", "total", "waterfall", "add", "compound"),
