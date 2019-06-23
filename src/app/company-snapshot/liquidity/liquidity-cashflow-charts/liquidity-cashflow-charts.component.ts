@@ -80,19 +80,19 @@ export class LiquidityCashflowChartsComponent implements OnInit {
     var revenues = 0;
       currentPeriodTb[0].accounts.forEach(account=>{
       if(account.category ==="Revenue"){
-        currentRevenues = currentRevenues + account.balance;
+        currentRevenues = currentRevenues + Number(account.balance);
       }
 
       if(account.subCategory ==="Accounts Receivable"){
-        currentReceivables = currentReceivables + account.balance;
+        currentReceivables = currentReceivables +  Number(account.balance);
       }
     })
     previousPeriodTb[0].accounts.forEach(account=>{
       if(account.subCategory ==="Accounts Receivable"){
-        previousReceivables = previousReceivables + account.balance;
+        previousReceivables = previousReceivables +  Number(account.balance);
       }
       if(account.category ==="Revenue"){
-        previousRevenues = previousRevenues + account.balance;
+        previousRevenues = previousRevenues + Number(account.balance);
       }
     })
     revenues = currentRevenues - previousRevenues;
