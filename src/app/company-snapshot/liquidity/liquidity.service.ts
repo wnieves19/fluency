@@ -14,10 +14,7 @@ export class LiquidityService {
     new AccountHistory("Cash", "subCategory", "widget", "add", "compound"),
     new AccountHistory("Revenue", "category", "waterfall", "add" , "currentToPrevious"),
     new AccountHistory("Cost of Sales", "category", "waterfall", "subtract" , "currentToPrevious"),
-    new AccountHistory("Expenses", "category", "waterfall", "subtract" , "currentToPrevious"),
-    // new AccountHistory("Other Income", "type", "waterfall", "add" , "compound"),
-    // new AccountHistory("Global Tax Payable", "detailType", "waterfall", "subtract", "compound"),
-    new AccountHistory("Net Income", "total", "waterfall", "add", "compound"),
+    new AccountHistory("Expenses", "category", "waterfall", "subtract" , "currentToPrevious"), new AccountHistory("Net Income", "total", "waterfall", "add", "compound"),
     new AccountHistory("Depreciation", "detailType", "waterfall", "add", "currentToPrevious"),
     new AccountHistory("Accounts Payable", "subCategory","waterfall", "subtract", "currentToPrevious"),
     new AccountHistory("Current Liabilities", "category","waterfall", "subtract", "currentToPrevious"),
@@ -33,7 +30,7 @@ export class LiquidityService {
     new AccountHistory("Non-Current Liabilities", "category", "waterfall", "subtract", "currentToPrevious"),
     new AccountHistory("Dividend Disbursement", "category", "waterfall", "subtract", "currentToPrevious"),
     new AccountHistory("Retained Earnings", "subCategory", "waterfall", "add", "currentToPrevious"),
-    new AccountHistory("Equity", "subCategory", "waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Equity", "category", "waterfall", "subtract", "currentToPrevious"),
     new AccountHistory("Net Cash Flow", "total", "waterfall", "add", "compound")
   ]
 

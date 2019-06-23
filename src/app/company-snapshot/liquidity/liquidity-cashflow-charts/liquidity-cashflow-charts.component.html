@@ -9,7 +9,7 @@
       <kendo-chart-legend position="top"></kendo-chart-legend>
       <kendo-chart-category-axis>
         <kendo-chart-category-axis-item
-          [categories]="categories">
+          [categories]="cashFlowCategories">
         </kendo-chart-category-axis-item>
       </kendo-chart-category-axis>
       <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
@@ -43,16 +43,13 @@
       <kendo-chart-legend position="top"></kendo-chart-legend>
       <kendo-chart-category-axis>
         <kendo-chart-category-axis-item
-          [categories]="categories">
+          [categories]="cashFlowCategories">
         </kendo-chart-category-axis-item>
       </kendo-chart-category-axis>
+      <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
       <kendo-chart-legend position="bottom" orientation="horizontal"></kendo-chart-legend>
       <kendo-chart-series>
-        <kendo-chart-series-item type="line"  [data]="[123, 276, 310, 212, 240, 156, 98, 100, 300, 200, 240, 190]">
-        </kendo-chart-series-item>
-        <kendo-chart-series-item type="line" [data]="[165, 210, 287, 144, 190, 167, 212, 100, 300, 200, 240, 190]">
-        </kendo-chart-series-item>
-        <kendo-chart-series-item type="bar" [color]="'#FFA000'" [data]="[56, 140, 195, 46, 123, 78, 95, 100, 300, 200, 240, 190]">
+        <kendo-chart-series-item [border]="{width:0}" type="line" [data]="receiptsDisbursementSeries" field="receipts" name="Cash Receipts">
         </kendo-chart-series-item>
         <kendo-chart-value-axis>
           <kendo-chart-value-axis-item>
