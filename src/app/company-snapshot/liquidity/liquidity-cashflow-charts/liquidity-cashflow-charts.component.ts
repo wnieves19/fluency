@@ -71,6 +71,7 @@ export class LiquidityCashflowChartsComponent implements OnInit {
         startPeriod: 0 ,
         receipts: 0,
       });
+      return;
     }
 
     var currentRevenues = 0;
