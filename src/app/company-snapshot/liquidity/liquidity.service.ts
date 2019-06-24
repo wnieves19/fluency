@@ -140,9 +140,11 @@ export class LiquidityService {
   }
 
   getPreviousPeriod(period: string){
-    var date = new Date(period);
-    var month = date.getMonth()+1;
-    var year =date.getFullYear()
+    var dateArray = period.split("-");
+    var date = new Date(parseInt(dateArray[0]), parseInt(dateArray[1])-1, parseInt(dateArray[2]));
+    // var date = new Date(period);
+    var month = date.getMonth();
+    var year = date.getFullYear()
     if(month === 0){
       month = 12;
       year --;
