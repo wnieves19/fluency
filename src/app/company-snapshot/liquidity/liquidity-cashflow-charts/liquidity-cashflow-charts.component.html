@@ -49,7 +49,9 @@
       <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
       <kendo-chart-legend position="bottom" orientation="horizontal"></kendo-chart-legend>
       <kendo-chart-series>
-        <kendo-chart-series-item [border]="{width:0}" type="line" [data]="receiptsDisbursementSeries" field="receipts" name="Cash Receipts">
+        <kendo-chart-series-item [border]="{width:0}" [color]="'#009be3'" type="column" [data]="receiptsDisbursementSeries" field="receipts" name="Cash Receipts">
+        </kendo-chart-series-item>
+        <kendo-chart-series-item [border]="{width:0}" [color]="'#54B701'" type="line" [data]="cashFlowSeries" field="cash" name="Cash">
         </kendo-chart-series-item>
         <kendo-chart-value-axis>
           <kendo-chart-value-axis-item>

@@ -103,7 +103,7 @@ export class LiquidityService {
     }
   }
   emptyWaterfallAccounts(){
-      this.waterfallAccounts = [];
+    this.waterfallAccounts = [];
 
   }
   /** Gets data of each account of the waterfall chart for the specified period
@@ -156,29 +156,50 @@ export class LiquidityService {
     var periodAccounts = new Array();
     var summaryBalance = 0;
     var depreciationValue= 0;
+    //For each account in the account array
     for (let account of this.accountsArray) {
+      //If it's part of the waterfall, then proceed (we're calculating the waterfall here only)
       if (account.component === "waterfall") {
+        //If it's a total account, insert the current balance
         if(account.property === "total"){
-            periodAccounts.push({category: account.accountName, summary: account.property, balance : summaryBalance})
-        }else{
+          periodAccounts.push({category: account.accountName, summary: account.property, balance : summaryBalance})
+        }else{//Otherwise
           var balance = 0;
+          //Get the waterfall account for the current period
           var currentPeriodAcct = account.history.filter(acct => {
             return acct.startPeriod === period;
           });
+          //Get the waterfall account for the previous period
           var prevPeriodAcct = account.history.filter(acct => {
             return acct.startPeriod === this.getPreviousPeriod(period);
           });
+          //Get the balance of the account for the current period
           var currentPeriodBalance = currentPeriodAcct[0].balance;
           if(prevPeriodAcct[0]===undefined)return;
-          var previousPeriodBalance = prevPeriodAcct[0].balance
-
+          var previousPeriodBalance = 0;
+          //If the previous period marks the end of a period (e.g. December)
+          if(this.isEndOfPeriod(prevPeriodAcct[0].startPeriod)){
+            //Get the account on the November period
+            var twicePeriodAcct = account.history.filter(acct => {
+              return acct.startPeriod === this.getPreviousPeriod(prevPeriodAcct[0].startPeriod);
+            });
+            //Substract the december - november balances to get the December balance
+            previousPeriodBalance = prevPeriodAcct[0].balance - twicePeriodAcct[0].balance
+          }else{
+            //If it's not an end of period, just get the balance
+            previousPeriodBalance = prevPeriodAcct[0].balance
+          }
+          //If the balance is calculated substracting current - previous balance
           if (account.categoryType === "currentToPrevious") {
             balance = currentPeriodBalance - previousPeriodBalance;
           } else if(account.categoryType ==="previousToCurrent"){
+            //Else if the balance is calculated substracting current - previous balance
             balance = previousPeriodBalance - currentPeriodBalance ;
           }else {
+            //Otherwise just return the balance
             balance = currentPeriodBalance;
           }
+
           if (account.action === "subtract") balance = -balance;
 
           if(account.accountName==="Depreciation"){
@@ -193,6 +214,11 @@ export class LiquidityService {
       }
     }
     return periodAccounts
+  }
+
+  isEndOfPeriod(period){
+    if(this.getMonthFromPeriod(period)==="Dec")return true;
+    return false;
   }
 
   getMonthFromPeriod(dateString: string){
