@@ -46,7 +46,7 @@ export class BalanceClassificationComponent implements OnInit {
 
   getBalanceAccounts(accounts: AccountModel[]){
     return accounts.filter(acct=>{
-      return acct.category === "Revenue" || acct.category ==="Expenses" || acct.category==="Cost of Sales"
+      return acct.category !== "Revenue" || acct.category !=="Expenses" || acct.category!=="Cost of Sales"
     });
   }
 
