@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSnackBar, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSnackBar, MatTabChangeEvent, MatTableDataSource} from '@angular/material';
 import {AccountModel} from '../../models/account.model';
 import {CompanyService} from '../../company.service';
 import {FormControl} from '@angular/forms';
@@ -18,45 +18,84 @@ export class AccountClassificationComponent implements OnInit {
     'Equity', 'Retained Earnings', 'Revenue', 'Dividend Income', 'Interest Earnings', 'Fixed COS', 'Variable COS', 'Fixed Expenses',
     'Interest Expense', 'Variable Expenses', 'Taxes Paid', 'Expenses'];
 
-  dataSource = new MatTableDataSource<AccountModel>(this.companyService.selectedCompany.companyAccounts);
   subcategoryControls = new Array()
   filteredOptions = new Array();
-
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  dataSource = new MatTableDataSource<AccountModel>(this.getPLAccounts(this.companyService.selectedCompany.companyAccounts));
+  tabSelected = 0;
+  @ViewChild('pl', {static: true}) paginator: MatPaginator;
+  @ViewChild('balance', {static: true}) balancePaginator: MatPaginator;
 
   constructor(private snackBar: MatSnackBar, private companyService: CompanyService) { }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    for(var i = 0; i < this.companyService.selectedCompany.companyAccounts.length; i ++){
-      var filterOption: Observable<string[]>
-      var subcategoryControl = new FormControl();
-      this.subcategoryControls.push(subcategoryControl);
-      filterOption = subcategoryControl.valueChanges
-        .pipe(
-          startWith(''),
-          map(value => this._filter(value))
-        );
-      this.filteredOptions.push(filterOption)
+    this.initPagination(this.tabSelected);
+  }
+  private initPagination(tabSelected) {
+    this.filteredOptions = []
+    this.subcategoryControls = []
+
+    if(tabSelected === 0) {
+      this.dataSource.data = this.getPLAccounts(this.companyService.selectedCompany.companyAccounts);
+      this.dataSource.paginator = this.paginator;
+      for (var i = 0; i < this.getPLAccounts(this.companyService.selectedCompany.companyAccounts).length; i++) {
+        var filterOption: Observable<string[]>;
+        var subcategoryControl = new FormControl();
+        this.subcategoryControls.push(subcategoryControl);
+        filterOption = subcategoryControl.valueChanges
+          .pipe(
+            startWith(''),
+            map(value => this._filter(value))
+          );
+        this.filteredOptions.push(filterOption);
+      }
+    }else{
+      this.dataSource.data = this.getBalanceAccounts(this.companyService.selectedCompany.companyAccounts);
+      this.dataSource.paginator = this.balancePaginator
+      for (var i = 0; i < this.getBalanceAccounts(this.companyService.selectedCompany.companyAccounts).length; i++) {
+        var filterOption: Observable<string[]>;
+        var subcategoryControl = new FormControl();
+        this.subcategoryControls.push(subcategoryControl);
+        filterOption = subcategoryControl.valueChanges
+          .pipe(
+            startWith(''),
+            map(value => this._filter(value))
+          );
+        this.filteredOptions.push(filterOption);
+      }
     }
   }
+
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-
     return this.subcategories.filter(option => option.toLowerCase().includes(filterValue));
   }
+
+  getPLAccounts(accounts: AccountModel[]){
+    return accounts.filter(acct=>{
+      return acct.category === "Revenue" || acct.category ==="Expenses" || acct.category==="Cost of Sales"
+    });
+  }
+  getBalanceAccounts(accounts: AccountModel[]){
+    return accounts.filter(acct=>{
+      return acct.category !== "Revenue" &&  acct.category !=="Expenses" && acct.category!=="Cost of Sales"
+    });
+  }
+
 
   changeSubcategory(account: AccountModel, option ){
     this.companyService.editAccountSubcategory(account, option)
       .subscribe(()=>{
         this.dataSource.data =[];
-        this.dataSource.data = this.companyService.selectedCompany.companyAccounts;
-
+        this.initPagination(this.tabSelected)
         this.snackBar.open("Account updated",'Close',{
           duration: 2000,
         })
-
       })
+  }
+
+  tabChanged = (tabChangeEvent: MatTabChangeEvent): void => {
+    this.tabSelected = tabChangeEvent.index;
+    this.initPagination(tabChangeEvent.index)
   }
 
 }

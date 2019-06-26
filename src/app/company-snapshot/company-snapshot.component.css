@@ -1,4 +1,3 @@
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 
 mat-sidenav {
   width: 200px;
@@ -29,7 +28,8 @@ button:focus {
   /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
      causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
   flex: 1;
-  background-color: #f9f9f9;
+  /*background-color: #f9f9f9;*/
+  background-color: white;
 }
 
 .toolbar-is-mobile .app-sidenav-container {
@@ -39,7 +39,10 @@ button:focus {
 }
 mat-toolbar{
   min-height:54px;
-  max-height:54px
+  max-height:54px;
+}
+.mat-toolbar.mat-primary {
+  color:white;
 }
 
 
