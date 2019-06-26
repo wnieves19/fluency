@@ -15,8 +15,7 @@ export class BalanceClassificationComponent implements OnInit {
   displayedColumns: string[] = ['name', 'category', 'subcategory'];
   subcategories: string[] = ['Cash', 'Accounts Receivable', 'Other Current Assets', 'Intangible Assets', 'Fixed Assets',
     'Other Assets', 'Accounts Payable', 'Short Term Debt', 'Tax Liability','Other Current Liabilities', 'Long Term Liability',
-    'Equity', 'Retained Earnings', 'Revenue', 'Dividend Income', 'Interest Earnings', 'Fixed COS', 'Variable COS', 'Fixed Expenses',
-    'Interest Expense', 'Variable Expenses', 'Taxes Paid', 'Expenses'];
+    'Equity', 'Retained Earnings' ];
 
   subcategoryControls = new Array()
   filteredOptions = new Array();
