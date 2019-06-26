@@ -7,3 +7,6 @@ mat-toolbar{
   min-height:54px;
   max-height:54px
 }
+.mat-toolbar.mat-primary {
+  color:white;
+}
