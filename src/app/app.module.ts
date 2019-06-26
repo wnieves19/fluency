@@ -40,6 +40,8 @@ import {CompanyService} from './company-management/company.service';
 import { CompanyDetailsFormComponent } from './company-management/company-settings/company-details/company-details-form/company-details-form.component';
 import { ConfirmDialogComponent } from './company-management/company-settings/confirm-dialog/confirm-dialog.component';
 import { AccountClassificationComponent } from './company-management/company-settings/account-classification/account-classification.component';
+import { PlclassificationComponent } from './company-management/company-settings/account-classification/plclassification/plclassification.component';
+import { BalanceClassificationComponent } from './company-management/company-settings/account-classification/balance-classification/balance-classification.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { AccountClassificationComponent } from './company-management/company-set
     UserAccountComponent,
     CompanyDetailsFormComponent,
     ConfirmDialogComponent,
-    AccountClassificationComponent
+    AccountClassificationComponent,
+    PlclassificationComponent,
+    BalanceClassificationComponent
   ],
   imports: [
     BrowserModule,
