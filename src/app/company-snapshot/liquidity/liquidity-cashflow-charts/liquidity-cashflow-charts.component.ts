@@ -23,7 +23,7 @@ export class LiquidityCashflowChartsComponent implements OnInit {
       var currentPeriodAccounts = this.liquidityService.getWaterfallByPeriod(trialBalance.startPeriod);
       this.cashFlowCategories.splice(0, 0,this.liquidityService.getMonthFromPeriod(trialBalance.startPeriod));
       this.getCashflowBalances(trialBalance, currentPeriodAccounts);
-      // this.getCashReceipts(company.trialBalanceList, trialBalance.startPeriod);
+      this.getCashReceipts(company.trialBalanceList, trialBalance.startPeriod);
       tbCount++;
     })
   }
@@ -58,72 +58,72 @@ export class LiquidityCashflowChartsComponent implements OnInit {
     }
   }
 
-  // getCashReceipts(trialBalanceList: TrialBalance[], period){
-  //   var currentPeriodTb = trialBalanceList.filter(tb => {
-  //     return tb.startPeriod === period;
-  //   })
-  //   var previousPeriodTb = trialBalanceList.filter(tb => {
-  //     return tb.startPeriod === this.liquidityService.getPreviousPeriod(period);
-  //   })
-  //
-  //   if(previousPeriodTb[0]===undefined){
-  //     this.receiptsDisbursementSeries.splice(0, 0, {
-  //       startPeriod: 0 ,
-  //       receipts: 0,
-  //     });
-  //     return;
-  //   }
-  //
-  //   var currentRevenues = 0;
-  //   var previousRevenues = 0;
-  //   var currentReceivables = 0;
-  //   var previousReceivables = 0;
-  //   var revenues = 0;
-  //   var cashBalance = new Array();
-  //   currentPeriodTb[0].accounts.forEach(account=>{
-  //     cashBalance = this.liquidityService.getAccountBalanceByPeriod('Cash', currentPeriodTb[0].startPeriod);
-  //
-  //     if(account.category ==="Revenue"){
-  //       currentRevenues = currentRevenues + Number(account.balance);
-  //     }
-  //
-  //     if(account.subCategory ==="Accounts Receivable"){
-  //       currentReceivables = currentReceivables +  Number(account.balance);
-  //     }
-  //   })
-  //
-  //   previousPeriodTb[0].accounts.forEach(account=>{
-  //     if(account.subCategory ==="Accounts Receivable"){
-  //       previousReceivables = previousReceivables +  Number(account.balance);
-  //     }
-  //
-  //     if (account.category === "Revenue") {
-  //       //if the previous period marks the end of a period
-  //       if(this.liquidityService.isEndOfPeriod(previousPeriodTb[0].startPeriod)) {
-  //         //Get the period before the previous period
-  //         var twicePeriodTb = trialBalanceList.filter(tb => {
-  //           return tb.startPeriod === this.liquidityService.getPreviousPeriod(previousPeriodTb[0].startPeriod);
-  //         })
-  //         //Look for the same account
-  //         var twiceAcct = twicePeriodTb[0].accounts.filter(acct => {
-  //           return acct.value === account.value;
-  //         })
-  //         //Substract the previous period balance to the balance of the period before that and add any balance in revenues
-  //         previousRevenues = (previousRevenues) + (Number(account.balance) - Number(twiceAcct[0].balance))
-  //       }else{
-  //         previousRevenues = previousRevenues + Number(account.balance);
-  //       }
-  //     }
-  //   })
-  //   revenues = currentRevenues - previousRevenues;
-  //   var receiptsBalance = revenues + (currentReceivables - previousReceivables);
-  //   this.receiptsDisbursementSeries.splice(0, 0, {
-  //     startPeriod: period ,
-  //     receipts: receiptsBalance,
-  //     cash: cashBalance
-  //   });
-  //
-  // }
+  getCashReceipts(trialBalanceList: TrialBalance[], period){
+    var currentPeriodTb = trialBalanceList.filter(tb => {
+      return tb.startPeriod === period;
+    })
+    var previousPeriodTb = trialBalanceList.filter(tb => {
+      return tb.startPeriod === this.liquidityService.getPreviousPeriod(period);
+    })
+
+    if(previousPeriodTb[0]===undefined){
+      this.receiptsDisbursementSeries.splice(0, 0, {
+        startPeriod: 0 ,
+        receipts: 0,
+      });
+      return;
+    }
+
+    var currentRevenues = 0;
+    var previousRevenues = 0;
+    var currentReceivables = 0;
+    var previousReceivables = 0;
+    var revenues = 0;
+    var cashBalance = new Array();
+    currentPeriodTb[0].accounts.forEach(account=>{
+      cashBalance = this.liquidityService.getAccountBalanceByPeriod('Cash', currentPeriodTb[0].startPeriod);
+
+      if(account.category ==="Revenue"){
+        currentRevenues = currentRevenues + Number(account.balance);
+      }
+
+      if(account.subCategory ==="Accounts Receivable"){
+        currentReceivables = currentReceivables +  Number(account.balance);
+      }
+    })
+
+    previousPeriodTb[0].accounts.forEach(account=>{
+      if(account.subCategory ==="Accounts Receivable"){
+        previousReceivables = previousReceivables +  Number(account.balance);
+      }
+
+      if (account.category === "Revenue") {
+        //if the previous period marks the end of a period
+        if(this.liquidityService.isEndOfPeriod(previousPeriodTb[0].startPeriod)) {
+          //Get the period before the previous period
+          var twicePeriodTb = trialBalanceList.filter(tb => {
+            return tb.startPeriod === this.liquidityService.getPreviousPeriod(previousPeriodTb[0].startPeriod);
+          })
+          //Look for the same account
+          var twiceAcct = twicePeriodTb[0].accounts.filter(acct => {
+            return acct.value === account.value;
+          })
+          //Substract the previous period balance to the balance of the period before that and add any balance in revenues
+          previousRevenues = (previousRevenues) + (Number(account.balance) - Number(twiceAcct[0].balance))
+        }else{
+          previousRevenues = previousRevenues + Number(account.balance);
+        }
+      }
+    })
+    revenues = currentRevenues - previousRevenues;
+    var receiptsBalance = revenues + (currentReceivables - previousReceivables);
+    this.receiptsDisbursementSeries.splice(0, 0, {
+      startPeriod: period ,
+      receipts: receiptsBalance,
+      cash: cashBalance
+    });
+
+  }
 
   public labelContent = (e: any) => {
     if(e.value < 1000) return "$"+e.value
