@@ -1,11 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {AccountModel} from '../../../models/account.model';
 import {MatPaginator, MatSnackBar, MatTableDataSource} from '@angular/material';
-import {map} from 'rxjs/operators';
+import {map, startWith} from 'rxjs/operators';
 import {FormControl} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {CompanyService} from '../../../company.service';
-import {startWith} from 'rxjs/internal/operators';
 
 @Component({
   selector: 'app-plclassification',
@@ -14,10 +13,8 @@ import {startWith} from 'rxjs/internal/operators';
 })
 export class PlclassificationComponent implements OnInit {
   displayedColumns: string[] = ['name', 'category', 'subcategory'];
-  subcategories: string[] = ['Cash', 'Accounts Receivable', 'Other Current Assets', 'Intangible Assets', 'Fixed Assets',
-    'Other Assets', 'Accounts Payable', 'Short Term Debt', 'Tax Liability','Other Current Liabilities', 'Long Term Liability',
-    'Equity', 'Retained Earnings', 'Revenue', 'Dividend Income', 'Interest Earnings', 'Fixed COS', 'Variable COS', 'Fixed Expenses',
-    'Interest Expense', 'Variable Expenses', 'Taxes Paid', 'Expenses'];
+  subcategories: string[] = [ 'Revenue',  'Fixed COS', 'Variable COS', 'Fixed Expenses',
+    'Interest Expense', 'Variable Expenses',  'Expenses', 'Dividend Income', 'Interest Earnings', "Other Income/Loss"];
 
   subcategoryControls = new Array()
   filteredOptions = new Array();
