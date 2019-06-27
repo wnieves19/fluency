@@ -47,7 +47,7 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
                         setTimeout(() => {
                           this.companyService.fetchCompanyUsers(this.company.companyId).subscribe(user=>{
                             this.companyService.selectedCompany = this.company;
-                            this.router.navigate(['/company-snapshot']);
+                            this.router.navigate(['/account-classification'], {queryParams: { 'isCreating': true }});
                           })
                         }, 2000);
 
