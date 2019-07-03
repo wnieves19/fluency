@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {CompanyService} from '../../company.service';
-import { Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AuthService} from '../../../user-authentication/auth.service';
 import {Subscription} from 'rxjs';
 import {Company} from '../../models/company.model';
@@ -19,6 +19,7 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
   loadingMessage: string;
   constructor(private companyService: CompanyService,
               private authService: AuthService,
+              private route: ActivatedRoute,
               private router: Router) {}
 
   ngOnInit() {
@@ -47,7 +48,8 @@ export class CompanyDetailsComponent implements OnInit, OnDestroy {
                         setTimeout(() => {
                           this.companyService.fetchCompanyUsers(this.company.companyId).subscribe(user=>{
                             this.companyService.selectedCompany = this.company;
-                            this.router.navigate(['/account-classification'], {queryParams: { 'isCreating': true }});
+                            this.editMode=true
+                            this.router.navigate(['account-classification/'], {relativeTo:this.route});
                           })
                         }, 2000);
 

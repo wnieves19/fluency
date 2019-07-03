@@ -42,10 +42,11 @@
 </div>
 <ng-template #companyDetails>
   <div class="header-container">
-    <h1>Company Details</h1>
   </div>
 </ng-template>
 
 <div class="row justify-content-center" *ngIf="editMode">
-<app-company-details-form></app-company-details-form>
+  <div class="col-sm-7">
+<router-outlet></router-outlet>
+  </div>
 </div>

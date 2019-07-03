@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {AuthService} from '../user-authentication/auth.service';
-import {CompanyService} from './company.service';
-
 @Component({
   selector: 'app-company-management',
   templateUrl: './company-management.component.html',

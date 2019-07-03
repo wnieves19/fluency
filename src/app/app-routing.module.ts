@@ -26,11 +26,15 @@ const appRoutes: Routes = [
   { path: 'company-management', canActivate: [AuthGuardService],component: CompanyManagementComponent,  children: [
       {path: '', component: CompanyListComponent},
       {path: 'company-list', component: CompanyListComponent},
-      {path: 'company', component: CompanyDetailsComponent},
+      {path: 'company', component: CompanyDetailsComponent, children:[
+          {path: 'account-classification', component: AccountClassificationComponent}
+        ]},
       {path: 'account-details', component: UserAccountComponent},
-      {path: 'company/:id', component: CompanyDetailsComponent}
+      // {path: 'company/:id', component: CompanyDetailsComponent},
 
     ]},
+
+
   { path: 'company-snapshot',canActivate: [AuthGuardService], component: CompanySnapshotComponent,  children: [
       {path: '', component: LiquidityComponent},
       { path: 'liquidity', component: LiquidityComponent},

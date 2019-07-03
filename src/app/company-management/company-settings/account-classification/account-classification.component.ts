@@ -6,16 +6,12 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
   styleUrls: ['./account-classification.component.css']
 })
 export class AccountClassificationComponent implements OnInit {
-  isCreating = false;
+  isCreating = true;
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(
-      (queryParams: Params) => {
-        if (queryParams['isCreating']) {
-          this.isCreating = queryParams['isCreating']
-        }
-      });
+    var id = this.route.snapshot.params.id;
+    if(id)this.isCreating=false;
   }
 
   nextClicked(){
