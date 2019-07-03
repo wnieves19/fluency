@@ -109,7 +109,9 @@ export class LiquidityCashflowChartsComponent implements OnInit {
             return acct.value === account.value;
           })
           //Substract the previous period balance to the balance of the period before that and add any balance in revenues
-          previousRevenues = (previousRevenues) + (Number(account.balance) - Number(twiceAcct[0].balance))
+          if (twiceAcct[0] !== undefined) {
+            previousRevenues = (previousRevenues) + (Number(account.balance) - Number(twiceAcct[0].balance))
+          }
         }else{
           previousRevenues = previousRevenues + Number(account.balance);
         }
