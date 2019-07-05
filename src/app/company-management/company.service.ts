@@ -69,14 +69,14 @@ export class CompanyService {
     return new Observable((observer) => {
       var company: Company =  this.getCompanyById(companyId);
       this.db.list<TrialBalance>('company-data/' + companyId,
-        ref => ref.orderByChild("startPeriod")).query.once('value')
-          .then((ref) =>{
+        ref => ref.orderByChild("startPeriod")).valueChanges()
+          .subscribe((ref) =>{
             company.trialBalanceList=[]
             company.companyAccounts=[]
             ref.forEach(trialBalance => {
-              company.trialBalanceList.splice(0,0,trialBalance.val());
-              this.addAccounts(company, trialBalance.val())
-              var  t = ref.numChildren()
+              company.trialBalanceList.splice(0,0,trialBalance);
+              this.addAccounts(company, trialBalance)
+              var  t = ref.length
               if (tbProcessed === t-1) {
                 observer.next();
                 observer.complete()
