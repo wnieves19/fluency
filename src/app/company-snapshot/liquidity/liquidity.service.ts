@@ -51,11 +51,15 @@ export class LiquidityService {
   }
 
   getAccountHistory (accountName: string){
+    var accountHistoryArray = new Array();
     for(let account of this.accountsArray){
       if(account.accountName === accountName){
-        return account.history;
+        for(var i = account.history.length; i > 1 ; i--){
+          accountHistoryArray.splice(0,0,account.history[i-1]);
+        }
       }
     }
+    return accountHistoryArray;
   }
 
   insertAccountSummary(trialBalance: TrialBalance){
