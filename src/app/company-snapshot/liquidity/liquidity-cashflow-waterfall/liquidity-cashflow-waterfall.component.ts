@@ -65,7 +65,8 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
     if (point.value > 0) {
       return '#54B701';
     } else {
-      return '#D10C21';
+      // return '#D10C21';
+      return '#FF9800';
     }
   }
   public seriesLabels(point: any) {

@@ -68,20 +68,23 @@ export class CompanyService {
     var tbProcessed = 0;
     return new Observable((observer) => {
       var company: Company =  this.getCompanyById(companyId);
-      this.db.list<TrialBalance>('company-data/' + companyId).valueChanges()
-        .subscribe((trialBalanceArray) => {
-          company.trialBalanceList=[]
-          company.companyAccounts=[]
-          trialBalanceArray.forEach(trialBalance => {
-            company.trialBalanceList.push(trialBalance);
-            tbProcessed++;
-            this.addAccounts(company, trialBalance)
-            if (tbProcessed===12 || tbProcessed === trialBalanceArray.length) {
-              observer.next();
-              observer.complete()
-            }
-          });
-        })
+      this.db.list<TrialBalance>('company-data/' + companyId,
+        ref => ref.orderByChild("startPeriod")).query.once('value')
+          .then((ref) =>{
+            company.trialBalanceList=[]
+            company.companyAccounts=[]
+            ref.forEach(trialBalance => {
+              company.trialBalanceList.splice(0,0,trialBalance.val());
+              this.addAccounts(company, trialBalance.val())
+              var  t = ref.numChildren()
+              if (tbProcessed === t-1) {
+                observer.next();
+                observer.complete()
+                return
+              }
+              tbProcessed++;
+            });
+          })
     })
   }
 
