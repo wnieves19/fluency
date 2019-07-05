@@ -19,7 +19,7 @@ export class LiquidityCashflowChartsComponent implements OnInit {
     let company: Company = this.companyService.getCompanyById(this.companyService.selectedCompany.companyId);
     var tbCount = 0;
     company.trialBalanceList.forEach(trialBalance => {
-      if(tbCount>12)return;
+      if(tbCount>11)return;
       var currentPeriodAccounts = this.liquidityService.getWaterfallByPeriod(trialBalance.startPeriod);
       this.cashFlowCategories.splice(0, 0,this.liquidityService.getMonthFromPeriod(trialBalance.startPeriod));
       this.getCashflowBalances(trialBalance, currentPeriodAccounts);
