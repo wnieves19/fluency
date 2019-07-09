@@ -183,29 +183,42 @@ export class LiquidityService {
           if(prevPeriodAcct[0]===undefined)return;
           var previousPeriodBalance = 0;
           //If the previous period marks the end of a period (e.g. December)
-          if(this.isEndOfPeriod(prevPeriodAcct[0].startPeriod)){
-            //Get the account on the November period
-            var twicePeriodAcct = account.history.filter(acct => {
-              return acct.startPeriod === this.getPreviousPeriod(prevPeriodAcct[0].startPeriod);
-            });
-            //Substract the december - november balances to get the December balance
-            previousPeriodBalance = prevPeriodAcct[0].balance - twicePeriodAcct[0].balance
+          if(this.isEndOfPeriod(prevPeriodAcct[0].startPeriod )){
+            if(account.accountName==="Revenue" || account.accountName==="Cost of Sales" ||
+              account.accountName==="Expenses" || account.accountName==="Depreciation" ) {
+              previousPeriodBalance = 0
+            }else{
+              previousPeriodBalance = prevPeriodAcct[0].balance
+            }
           }else{
             //If it's not an end of period, just get the balance
             previousPeriodBalance = prevPeriodAcct[0].balance
           }
           //If the balance is calculated substracting current - previous balance
           if (account.categoryType === "currentToPrevious") {
-            balance = currentPeriodBalance - previousPeriodBalance;
+            if(previousPeriodBalance>0) {
+              balance = currentPeriodBalance - previousPeriodBalance;
+            }else{
+              balance = currentPeriodBalance + previousPeriodBalance;
+            }
           } else if(account.categoryType ==="previousToCurrent"){
             //Else if the balance is calculated substracting current - previous balance
-            balance = previousPeriodBalance - currentPeriodBalance ;
+            if(currentPeriodBalance>0) {
+              balance = previousPeriodBalance - currentPeriodBalance;
+            }else{
+              balance = previousPeriodBalance + currentPeriodBalance;
+            }
           }else {
             //Otherwise just return the balance
             balance = currentPeriodBalance;
           }
 
-          if (account.action === "subtract") balance = -balance;
+          if (account.action === "subtract"  ) {
+            if(account.accountName==="Revenue" || account.accountName==="Cost of Sales" ||
+              account.accountName==="Expenses" || account.accountName==="Depreciation" ) {
+              balance = -balance
+            }
+          }
 
           if(account.accountName==="Depreciation"){
             depreciationValue = balance;
