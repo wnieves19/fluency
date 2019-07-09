@@ -100,18 +100,7 @@ export class LiquidityCashflowChartsComponent implements OnInit {
       if (account.category === "Revenue") {
         //if the previous period marks the end of a period
         if(this.liquidityService.isEndOfPeriod(previousPeriodTb[0].startPeriod)) {
-          //Get the period before the previous period
-          var twicePeriodTb = trialBalanceList.filter(tb => {
-            return tb.startPeriod === this.liquidityService.getPreviousPeriod(previousPeriodTb[0].startPeriod);
-          })
-          //Look for the same account
-          var twiceAcct = twicePeriodTb[0].accounts.filter(acct => {
-            return acct.value === account.value;
-          })
-          //Substract the previous period balance to the balance of the period before that and add any balance in revenues
-          if (twiceAcct[0] !== undefined) {
-            previousRevenues = (previousRevenues) + (Number(account.balance) - Number(twiceAcct[0].balance))
-          }
+          previousRevenues = 0
         }else{
           previousRevenues = previousRevenues + Number(account.balance);
         }
@@ -126,12 +115,15 @@ export class LiquidityCashflowChartsComponent implements OnInit {
     });
 
   }
+  public catLabels = (e:any)=>{
+    return {top:100}
+  };
 
   public labelContent = (e: any) => {
-    if(e.value < 1000) return "$"+e.value
-    if (e.value >999 && e.value < 1000000){
+    if(e.value>-1000 && e.value < 1000) return "$"+e.value
+    if (e.value >999 && e.value < 1000000 ||  e.value > -1000000 && e.value <-999){
       return  "$"+ e.value/1000 + "K"
-    }else if(e.value > 999999 && e.value < 1000000000){
+    }else if(e.value > 999999 && e.value < 1000000000 || e.value > -1000000000 && e.value < -999999 ){
       return  "$"+ e.value/1000 + "M"
     }
   }
