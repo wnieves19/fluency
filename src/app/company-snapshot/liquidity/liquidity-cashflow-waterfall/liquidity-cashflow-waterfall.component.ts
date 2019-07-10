@@ -61,7 +61,7 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
   public pointColor(point: any): string {
     var summary = point.dataItem.summary;
     if (summary) {
-      return '#BDBDBD';
+      return '#9E9E9E';
     }
     if (point.value > 0) {
       return '#54B701';
@@ -81,7 +81,7 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
     if (summary) {
       return {
         visible: true,
-        padding: {right:10},
+        padding: {left:30},
         position:"insideBase",
         font: 'bold 20px Arial, sans-serif',
         format: "{0:c}"
@@ -90,7 +90,7 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
     if (category) {
       return {
         visible: true, // Note that visible defaults to false
-        padding: {right:10},
+        padding: {left:30},
         font: '12px Arial, sans-serif',
         position: 'insideBase',
         format: "{0:c}"
