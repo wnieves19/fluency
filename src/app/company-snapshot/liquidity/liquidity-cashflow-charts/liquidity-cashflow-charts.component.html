@@ -9,9 +9,7 @@
       <kendo-chart-legend position="top"></kendo-chart-legend>
       <kendo-chart-category-axis >
         <kendo-chart-category-axis-item
-          [categories]="cashFlowCategories">
-          <kendo-chart-category-axis-item-labels [padding]="catLabels">
-          </kendo-chart-category-axis-item-labels>
+          [categories]="cashFlowCategories" [labels]="catLabels">
         </kendo-chart-category-axis-item>
       </kendo-chart-category-axis >
       <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
@@ -45,7 +43,7 @@
       <kendo-chart-legend position="top"></kendo-chart-legend>
       <kendo-chart-category-axis>
         <kendo-chart-category-axis-item
-          [categories]="cashFlowCategories">
+          [categories]="cashFlowCategories" [labels]="catLabels">
         </kendo-chart-category-axis-item>
       </kendo-chart-category-axis>
       <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>

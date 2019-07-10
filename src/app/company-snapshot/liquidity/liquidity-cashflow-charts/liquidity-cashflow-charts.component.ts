@@ -3,6 +3,7 @@ import {LiquidityService} from '../liquidity.service';
 import {Company} from '../../../company-management/models/company.model';
 import {CompanyService} from '../../../company-management/company.service';
 import {TrialBalance} from '../../../company-management/models/trial-balance.model';
+import {CategoryAxisLabels} from '@progress/kendo-angular-charts';
 
 @Component({
   selector: 'app-liquidity-cashflow-charts',
@@ -115,8 +116,8 @@ export class LiquidityCashflowChartsComponent implements OnInit {
     });
 
   }
-  public catLabels = (e:any)=>{
-    return {top:100}
+  public catLabels: CategoryAxisLabels = {
+    position: "start"
   };
 
   public labelContent = (e: any) => {

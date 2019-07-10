@@ -10,9 +10,16 @@
     </mat-select>
   </mat-form-field>
 </div>
-<kendo-chart style="height: 600px;" [categoryAxis]="{ categories: categories}">
+<kendo-chart style="height: 600px;" >
   <kendo-chart-axis-defaults [majorGridLines]="{ visible : false}" >
   </kendo-chart-axis-defaults>
+  <kendo-chart-category-axis >
+    <kendo-chart-category-axis-item
+      [categories]="categories" [labels]="catLabels">
+      <!--<kendo-chart-category-axis-item-labels [padding]="{right:300}">-->
+      <!--</kendo-chart-category-axis-item-labels>-->
+    </kendo-chart-category-axis-item>
+  </kendo-chart-category-axis >
   <kendo-chart-legend [visible]="false"></kendo-chart-legend>
   <kendo-chart-tooltip format="{0:c}"></kendo-chart-tooltip>
   <kendo-chart-series>
