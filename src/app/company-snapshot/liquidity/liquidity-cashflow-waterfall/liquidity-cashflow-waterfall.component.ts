@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LiquidityService} from '../liquidity.service';
+import {CategoryAxisLabels} from '@progress/kendo-angular-charts';
 
 @Component({
   selector: 'app-liquidity-cashflow-waterfall',
@@ -60,7 +61,7 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
   public pointColor(point: any): string {
     var summary = point.dataItem.summary;
     if (summary) {
-      return 'gray';
+      return '#BDBDBD';
     }
     if (point.value > 0) {
       return '#54B701';
@@ -69,14 +70,19 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
       return '#FF9800';
     }
   }
+  public catLabels: CategoryAxisLabels = {
+    position: "start"
+  };
+
   public seriesLabels(point: any) {
     var summary = point.dataItem.summary;
     var category = point.dataItem.category;
 
     if (summary) {
       return {
-        visible: true, // Note that visible defaults to false
-        padding: 3,
+        visible: true,
+        padding: {right:10},
+        position:"insideBase",
         font: 'bold 20px Arial, sans-serif',
         format: "{0:c}"
       };
@@ -84,9 +90,9 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
     if (category) {
       return {
         visible: true, // Note that visible defaults to false
-        padding: 3,
+        padding: {right:10},
         font: '12px Arial, sans-serif',
-        position: 'insideEnd',
+        position: 'insideBase',
         format: "{0:c}"
       };
     }
