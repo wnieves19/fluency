@@ -119,7 +119,8 @@ export class LiquidityService {
     waterfall = this.waterfallAccounts.filter(acct => {
       return acct.startPeriod === period
     });
-    return waterfall[0].accounts;
+    if(waterfall[0]!==undefined) return waterfall[0].accounts;
+
   }
   /** Returns the balance of an account in a specified period*/
   getAccountBalanceByPeriod(accountName: string, period: string){
@@ -127,7 +128,7 @@ export class LiquidityService {
     var per = history.filter(history =>{
       return history.startPeriod === period;
     })
-    return per[0].balance
+    if(per[0]!==undefined) return per[0].balance
   }
   /** Gets data of each account of the waterfall chart */
   initWaterfallAccounts(){
