@@ -15,24 +15,26 @@ export class LiquidityService {
     new AccountHistory("Revenue", "category", "waterfall", "add" , "currentToPrevious"),
     new AccountHistory("Cost of Sales", "category", "waterfall", "subtract" , "currentToPrevious"),
     new AccountHistory("Expenses", "category", "waterfall", "subtract" , "currentToPrevious"),
-    new AccountHistory("Net Income", "total", "waterfall", "add", "compound"),
+    new AccountHistory("Net Income", "total", "waterfall", "add", "total"),
     new AccountHistory("Depreciation", "detailType", "waterfall", "add", "currentToPrevious"),
     new AccountHistory("Accounts Payable", "subCategory","waterfall", "subtract", "currentToPrevious"),
     new AccountHistory("Current Liabilities", "category","waterfall", "subtract", "currentToPrevious"),
     new AccountHistory("Accounts Receivable", "subCategory", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Inventory", "detailType", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Other Current Assets", "subCategory", "waterfall", "add", "previousToCurrent"),
-    new AccountHistory("Operating Cash Flow", "total", "waterfall", "add", "compound"),
+    new AccountHistory("Operating Cash Flow", "total", "waterfall", "add", "total"),
     new AccountHistory("Fixed Assets", "subCategory", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Intangible Assets", "subCategory", "waterfall", "subtract", "previousToCurrent"),
     new AccountHistory("Investments Other", "subCategory", "waterfall", "subtract", "previousToCurrent"),
-    new AccountHistory("Free Cash Flow", "total", "waterfall", "add", "compound"),
+    new AccountHistory("Free Cash Flow", "total", "waterfall", "add", "total"),
     new AccountHistory("Interest Expenses", "subCategory", "waterfall", "subtract", "compound"),
     new AccountHistory("Non-Current Liabilities", "category", "waterfall", "subtract", "currentToPrevious"),
-    new AccountHistory("Dividend Disbursement", "category", "waterfall", "subtract", "currentToPrevious"),
+    new AccountHistory("Dividend Disbursement", "category", "waterfall", "subtract", "compound"),
     new AccountHistory("Retained Earnings", "subCategory", "waterfall", "add", "currentToPrevious"),
     new AccountHistory("Equity", "category", "waterfall", "subtract", "currentToPrevious"),
-    new AccountHistory("Net Cash Flow", "total", "waterfall", "add", "compound")
+    new AccountHistory("Net Cash Flow", "total", "waterfall", "add", "total"),
+    new AccountHistory("Beginning Cash Flow", "previousPeriod", "waterfall", "add", "total"),
+    new AccountHistory("Ending Cash Flow", "total", "waterfall", "add", "total")
   ]
 
   constructor(private companyService: CompanyService) {
@@ -63,7 +65,6 @@ export class LiquidityService {
   }
 
   insertAccountSummary(trialBalance: TrialBalance){
-
     for(var i=0; i<this.accountsArray.length; i++){
 
       var account
@@ -215,7 +216,8 @@ export class LiquidityService {
 
           if (account.action === "subtract"  ) {
             if(account.accountName==="Revenue" || account.accountName==="Cost of Sales" ||
-              account.accountName==="Expenses" || account.accountName==="Depreciation" ) {
+              account.accountName==="Expenses" || account.accountName==="Depreciation"
+              || account.accountName==="Current Liabilities" && balance >0) {
               balance = -balance
             }
           }
@@ -226,7 +228,12 @@ export class LiquidityService {
             balance = balance + depreciationValue;
             depreciationValue=0;
           }
+          if(account.property==="previousPeriod"){
+            var balance = this.getAccountBalanceByPeriod('Cash', prevPeriodAcct[0].startPeriod);
+          }
+
           summaryBalance = summaryBalance + balance;
+
           periodAccounts.push({category: account.accountName, balance: balance})
         }
       }
