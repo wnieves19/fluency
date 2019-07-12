@@ -230,7 +230,7 @@ export class LiquidityService {
             depreciationValue=0;
           }
           if(account.property==="previousPeriod"){
-            var balance = this.getAccountBalanceByPeriod('Cash', prevPeriodAcct[0].startPeriod);
+            var balance: number = this.getAccountBalanceByPeriod('Cash', prevPeriodAcct[0].startPeriod);
           }
 
           summaryBalance = summaryBalance + balance;

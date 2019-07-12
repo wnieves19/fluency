@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {LiquidityService} from '../liquidity.service';
-import {CategoryAxisLabels, SeriesLabels, SeriesLabelsVisualArgs} from '@progress/kendo-angular-charts';
-import {Group, Path} from '@progress/kendo-drawing';
-import { Image, Surface, Path, Text, Group, LinearGradient, GradientStop, Rect, geometry } from '@progress/kendo-drawing';
-const { Rect: RectGeometry, Point, Size, transform } = geometry;
+import {CategoryAxisLabels, SeriesLabelsVisualArgs} from '@progress/kendo-angular-charts';
 @Component({
   selector: 'app-liquidity-cashflow-waterfall',
   templateUrl: './liquidity-cashflow-waterfall.component.html',
@@ -102,37 +99,37 @@ export class LiquidityCashflowWaterfallComponent implements OnInit {
 
 
   }
-
-  public labelVisual = (e: SeriesLabelsVisualArgs) => {
-    const rect = new RectGeometry(
-      new Point(0, 0),
-      new Size(200, 20)
-    );
-    const gradient = new LinearGradient({
-      name: "LG1",
-      stops: [
-        new GradientStop(0, "gray", 0),
-        new GradientStop(1, "gray", 0.8)
-      ]
-    });
-
-    const drawingRect = new Rect(rect, {
-      stroke: {
-        color: "#9999b6",
-        width: 0
-      },
-      fill: gradient
-    });
-
-    // Place all the shapes in a group.
-    const group = new Group();
-    group.append(drawingRect);
-
-    // Translate the group.
-    group.transform(
-      transform().translate(50, 50)
-    );
-    return group
-  }
+  //
+  // public labelVisual = (e: SeriesLabelsVisualArgs) => {
+  //   const rect = new RectGeometry(
+  //     new Point(0, 0),
+  //     new Size(200, 20)
+  //   );
+  //   const gradient = new LinearGradient({
+  //     name: "LG1",
+  //     stops: [
+  //       new GradientStop(0, "gray", 0),
+  //       new GradientStop(1, "gray", 0.8)
+  //     ]
+  //   });
+  //
+  //   const drawingRect = new Rect(rect, {
+  //     stroke: {
+  //       color: "#9999b6",
+  //       width: 0
+  //     },
+  //     fill: gradient
+  //   });
+  //
+  //   // Place all the shapes in a group.
+  //   const group = new Group();
+  //   group.append(drawingRect);
+  //
+  //   // Translate the group.
+  //   group.transform(
+  //     transform().translate(50, 50)
+  //   );
+  //   return group
+  // }
 
 }
