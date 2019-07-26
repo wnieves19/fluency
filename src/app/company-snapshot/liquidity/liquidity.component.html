@@ -1,17 +1,22 @@
 <mat-tab-group [dynamicHeight]="true">
   <mat-tab label="Cash Flow Analysis">
-    <div class="row" fxLayoutAlign="center">
-      <div class="col-sm-12" >
-    <app-liquidity-balance-widget></app-liquidity-balance-widget>
-      </div></div>
-    <div class="row">
-      <div class="col-sm-7">
-        <app-liquidity-cashflow-waterfall></app-liquidity-cashflow-waterfall>
+    <kendo-pdf-export #pdf paperSize="A1" margin="0cm">
+      <div class="row" fxLayoutAlign="center">
+        <div class="col-sm-12" >
+          <!--<button kendo-button (click)="pdf.saveAs('report.pdf')">-->
+            <!--Save As PDF...-->
+          <!--</button>-->
+          <app-liquidity-balance-widget></app-liquidity-balance-widget>
+        </div></div>
+      <div class="row">
+        <div class="col-sm-7">
+          <app-liquidity-cashflow-waterfall></app-liquidity-cashflow-waterfall>
+        </div>
+        <div class="col-sm-5">
+          <app-liquidity-cashflow-charts></app-liquidity-cashflow-charts>
+        </div>
       </div>
-      <div class="col-sm-5">
-        <app-liquidity-cashflow-charts></app-liquidity-cashflow-charts>
-      </div>
-    </div>
+    </kendo-pdf-export>
   </mat-tab>
   <!--<mat-tab label="Cash Flow Projections">-->
   <!--</mat-tab>-->

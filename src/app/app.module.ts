@@ -25,7 +25,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import {AngularFireAuthModule} from 'angularfire2/auth';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import {FlexLayoutModule} from '@angular/flex-layout';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { LiquidityBalanceWidgetComponent } from './company-snapshot/liquidity/liquidity-balance-widget/liquidity-balance-widget.component';
 import { LiquidityCashflowChartsComponent } from './company-snapshot/liquidity/liquidity-cashflow-charts/liquidity-cashflow-charts.component';
@@ -42,6 +42,9 @@ import { ConfirmDialogComponent } from './company-management/company-settings/co
 import { AccountClassificationComponent } from './company-management/company-settings/account-classification/account-classification.component';
 import { PlclassificationComponent } from './company-management/company-settings/account-classification/plclassification/plclassification.component';
 import { BalanceClassificationComponent } from './company-management/company-settings/account-classification/balance-classification/balance-classification.component';
+import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
+import { IntlModule } from '@progress/kendo-angular-intl';
+import { GridModule } from '@progress/kendo-angular-grid';
 
 @NgModule({
   declarations: [
@@ -68,7 +71,8 @@ import { BalanceClassificationComponent } from './company-management/company-set
     ConfirmDialogComponent,
     AccountClassificationComponent,
     PlclassificationComponent,
-    BalanceClassificationComponent
+    BalanceClassificationComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -83,6 +87,9 @@ import { BalanceClassificationComponent } from './company-management/company-set
     FlexLayoutModule,
     KendoChartsModule,
     FormsModule,
+    IntlModule,
+    GridModule,
+    PDFExportModule
 
 
   ],
