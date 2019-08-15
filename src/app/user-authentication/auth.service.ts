@@ -14,7 +14,7 @@ export class AuthService {
   user: User;
   account: UserAccount;
   accountListner: Observable<any>;
-  constructor(private db: AngularFireDatabase, public  afAuth:  AngularFireAuth, private router: Router) {
+  constructor(private db: AngularFireDatabase, public  afAuth: AngularFireAuth, private router: Router) {
 
     this.afAuth.authState.subscribe(user => {
       if (user){
@@ -65,7 +65,7 @@ export class AuthService {
                 })
             });
         }).catch(err=>{
-          observer.error(err.message)
+        observer.error(err.message)
       })
     })
 
@@ -87,6 +87,20 @@ export class AuthService {
       })
     })
   }
+
+  sendPasswordResetEmail(email: string){
+    return new Observable((observer)=> {
+      this.afAuth.auth.sendPasswordResetEmail(email)
+        .then(function(){
+          observer.next()
+          observer.complete()
+        }).catch(function (error) {
+          observer.error(error)
+          console.log(error)
+      })
+    });
+  }
+
   getCompanyObjetcFromSnapshot(snapshot: DataSnapshot){
     let companyObject =
       {

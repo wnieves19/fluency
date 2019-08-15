@@ -18,10 +18,12 @@ import {UserAccessComponent} from './company-management/company-settings/user-ac
 import {CompanyDetailsFormComponent} from './company-management/company-settings/company-details/company-details-form/company-details-form.component';
 import {RegisterComponent} from './user-authentication/register/register.component';
 import {AccountClassificationComponent} from './company-management/company-settings/account-classification/account-classification.component';
+import {PasswordResetComponent} from './user-authentication/password-reset/password-reset.component';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent},
   { path: 'signup', component: RegisterComponent},
+  { path: 'password-reset', component: PasswordResetComponent},
   { path: 'user-authentication', component: UserAuthenticationComponent},
   { path: 'company-management', canActivate: [AuthGuardService],component: CompanyManagementComponent,  children: [
       {path: '', component: CompanyListComponent},
