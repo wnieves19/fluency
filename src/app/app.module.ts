@@ -45,6 +45,7 @@ import { BalanceClassificationComponent } from './company-management/company-set
 import { PDFExportModule } from '@progress/kendo-angular-pdf-export';
 import { IntlModule } from '@progress/kendo-angular-intl';
 import { GridModule } from '@progress/kendo-angular-grid';
+import { PasswordResetComponent } from './user-authentication/password-reset/password-reset.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { GridModule } from '@progress/kendo-angular-grid';
     AccountClassificationComponent,
     PlclassificationComponent,
     BalanceClassificationComponent,
+    PasswordResetComponent,
 
   ],
   imports: [

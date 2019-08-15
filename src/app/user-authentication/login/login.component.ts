@@ -30,6 +30,10 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['/signup/']);
   }
 
+  passwordResetClicked(){
+    this.router.navigate(['/password-reset/']);
+  }
+
   loginClicked(){
     this.authService.login(this.email.value, this.password.value)
       .then((user) => {
